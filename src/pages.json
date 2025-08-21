@@ -1,0 +1,157 @@
+{
+  "pages": [
+    {
+      "path": "pages/startlife/index/index",
+      "style": {
+        "navigationBarTitleText": "startlife-index"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/labubuResult",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-labubuResult"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/labubuTest",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-labubuTest"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/labubu",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-labubu"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/index",
+      "style": {
+        "navigationBarTitleText": "startlife-mine"
+      }
+    },
+    {
+      "path": "pages/startlife/every/index",
+      "style": {
+        "navigationBarTitleText": "startlife-every"
+      }
+    },
+
+    {
+      "path": "pages/startlife/progress/index",
+      "style": {
+        "navigationBarTitleText": "startlife-progress"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/login",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-login"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/useBook",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-useBook"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/someWords",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-someWords"
+      }
+    },
+    {
+      "path": "pages/startlife/index/create",
+      "style": {
+        "navigationBarTitleText": "startlife-index-create"
+      }
+    },
+    {
+      "path": "pages/startlife/index/createTips",
+      "style": {
+        "navigationBarTitleText": "startlife-index-createTips"
+      }
+    },
+    {
+      "path": "pages/startlife/index/detail",
+      "style": {
+        "navigationBarTitleText": "startlife-index-detail"
+      }
+    },
+    {
+      "path": "pages/startlife/index/count",
+      "style": {
+        "navigationBarTitleText": "startlife-index-count"
+      }
+    },
+    {
+      "path": "pages/startlife/index/generate",
+      "style": {
+        "navigationBarTitleText": "startlife-index-count"
+      }
+    },
+    {
+      "path": "pages/pinia/index",
+      "style": {
+        "navigationBarTitleText": "状态管理工具（pinia）"
+      }
+    },
+    {
+      "path": "pages/axios/index",
+      "style": {
+        "navigationBarTitleText": "Axios（网络请求示例）"
+      }
+    },
+    {
+      "path": "pages/unocss/index",
+      "style": {
+        "navigationBarTitleText": "UnoCSS 示例"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#00000000",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
+    "backgroundColor": "#00000000"
+  },
+  "easycom": {
+    "custom": {
+      "^u-(.*)": "vk-uview-ui/components/u-$1/u-$1.vue"
+    }
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/startlife/index/index",
+        "text": "首页",
+        "iconPath": "static/icon/home.png",
+        "selectedIconPath": "static/icon/home-active.png"
+      },
+      {
+        "pagePath": "pages/startlife/every/index",
+        "text": "打卡",
+        "iconPath": "static/icon/movie.png",
+        "selectedIconPath": "static/icon/movie-active.png"
+      },
+      {
+        "pagePath": "pages/startlife/progress/index",
+        "text": "进度",
+        "iconPath": "static/icon/daily.png",
+        "selectedIconPath": "static/icon/daily-active.png"
+      },
+      {
+        "pagePath": "pages/startlife/mine/index",
+        "text": "我的",
+        "iconPath": "static/icon/read.png",
+        "selectedIconPath": "static/icon/read-active.png"
+      }
+    ]
+  }
+}

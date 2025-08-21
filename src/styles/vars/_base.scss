@@ -1,0 +1,51 @@
+$title-size: 40rpx;
+$title-color: #bd34fe;
+$main-color: #8ad2b3;
+$main-color-heavily: #4f9679;
+$main-color-light: #98e0c0;
+
+::v-deep .u-btn--primary {
+  background-image: linear-gradient(to right, #8ad2b3 0%, #4f9679 100%);
+}
+
+::v-deep .u-btn.u-btn--default.u-default-hover {
+  color: $main-color !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+::v-deep .u-btn.u-btn--primary.u-primary-hover {
+  background-image: linear-gradient(
+    to right,
+    #8ad2b3 0%,
+    #4f9679 100%
+  ) !important;
+  color: #fff !important;
+}
+
+::v-deep .u-model__footer__button {
+  color: $main-color !important;
+}
+
+.u-opacity-5 {
+  opacity: 0.5;
+}
+
+.u-opacity-10 {
+  opacity: 1;
+}
+
+.u-bg-active {
+  background-color: #83cbac;
+}
+
+.u-bg-inactive {
+  background-color: #f5f5f5;
+}
+
+.u-color-white {
+  color: #fff;
+}
+
+.u-color-main {
+  color: $main-color;
+}
