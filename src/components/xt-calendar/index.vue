@@ -370,6 +370,7 @@ onMounted(() => {
 .weekdays {
   display: flex;
   border-bottom: 1px solid #eee;
+  margin-bottom: 6px;
 }
 
 .weekday {
@@ -391,7 +392,7 @@ onMounted(() => {
 
 .date-item {
   width: 14.2857%; /* 7列，每列占1/7 */
-  height: 44px;
+  aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -403,9 +404,9 @@ onMounted(() => {
 }
 
 /* 清除每行最后一个元素的右边框 */
-.date-item:nth-child(7n) {
-  border-right: none;
-}
+// .date-item:nth-child(7n) {
+//   border-right: none;
+// }
 
 /* 上个月和下个月的日期样式 */
 .prev-month,

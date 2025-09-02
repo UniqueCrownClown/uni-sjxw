@@ -94,7 +94,7 @@
     </view>
     <u-popup v-model="showPoster" mode="center" border-radius="14">
       <view class="u-p-20" style="background: transparent; width: 100vw">
-        <view class="u-text-center" v-if="showPoster">
+        <view class="u-text-center" style="margin-top: 60rpx" v-if="showPoster">
           <dynamic-poster
             ref="dynamicPosterRef"
             :text-items="textItems"
@@ -104,30 +104,30 @@
             :autoBackground="true"
           ></dynamic-poster>
         </view>
-        <view class="u-flex u-row-between u-p-20 u-m-t-40">
+        <view class="u-flex u-row-between u-p-20 u-m-t-20">
           <view @click="sharePoster">
             <view class="u-text-center">
-              <u-icon name="share-fill" size="80" color="#83cbac"></u-icon>
+              <u-icon name="share-fill" size="40" color="#83cbac"></u-icon>
             </view>
             <view class="u-font-xl u-color-white">发送给朋友</view>
           </view>
           <view @click="collectPoster">
             <view class="u-text-center">
-              <u-icon name="gift-fill" size="80" color="#83cbac"></u-icon>
+              <u-icon name="gift-fill" size="40" color="#83cbac"></u-icon>
             </view>
             <view class="u-font-xl u-color-white">收藏</view>
           </view>
           <view @click="savePoster">
             <view class="u-text-center">
-              <u-icon name="bookmark-fill" size="80" color="#83cbac"></u-icon>
+              <u-icon name="bookmark-fill" size="40" color="#83cbac"></u-icon>
             </view>
             <view class="u-font-xl u-color-white">保存图片</view>
           </view>
         </view>
-        <view class="u-flex u-row-center u-m-t-40">
+        <view class="u-flex u-row-center u-m-t-20">
           <u-icon
             name="close-circle"
-            size="80"
+            size="60"
             color="#83cbac"
             @click="showPoster = false"
           ></u-icon>
@@ -140,7 +140,7 @@
 import { computed, ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 import { formateDate } from "@/utils/common";
-import { aboutTips, feedbackTips } from "@/utils/tips";
+import { aboutTips, feedbackTips, chengjiuTips } from "@/utils/tips";
 import { getUserInfo, clearUserInfo, getPlans } from "@/api/modules/startlife";
 import dynamicPoster from "@/components/dynamic-poster/index.vue";
 
@@ -317,7 +317,7 @@ const dynamicPosterRef = ref<any>();
 const showPoster = ref(false);
 
 const { windowWidth } = uni.getWindowInfo();
-const width = windowWidth - 160;
+const width = windowWidth - 100;
 
 const height = (width * 16) / 9;
 
@@ -325,34 +325,42 @@ const canvasSize = ref({
   width,
   height,
 });
+
 const textItems = ref([
   {
     text: "7天觉醒者",
-    x: 80,
+    x: 9999,
     y: 240,
     font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
-    color: "#ffffff",
+    color: "#333333",
   },
   {
     text: `达成时间:${formateDate(new Date(), "yyyy-mm-dd")}`,
-    x: 40,
+    x: 9999,
     y: 260,
     font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
-    color: "#ffffff",
+    color: "#666666",
+  },
+  {
+    text: chengjiuTips,
+    x: 9999,
+    y: height - 80,
+    font: "500 14px PingFang SC,Microsoft YaHei,sans-serif",
+    color: "#f5a623",
   },
 ]);
 const imageItems = ref([
   {
     src: "https://s21.ax1x.com/2025/08/18/pVBVKrq.md.png",
-    x: 40,
-    y: 20,
+    x: width / 2 - 80,
+    y: 30,
     width: 160,
     height: 160,
   },
 ]);
 const qrOptions = ref({
-  src: "https://s21.ax1x.com/2025/08/22/pVD6779.jpg",
-  x: width - 60,
+  src: "",
+  x: width - 80,
   y: height - 60,
   width: 50,
   height: 50,
@@ -370,6 +378,12 @@ const handleChengjiuClick = (item: {
       icon: "none",
     });
   } else {
+    textItems.value[0].text = item.name;
+    textItems.value[1].text = `达成时间:${formateDate(
+      new Date(),
+      "yyyy-mm-dd"
+    )}`;
+    imageItems.value[0].src = item.icon;
     showPoster.value = true;
   }
 };
@@ -404,7 +418,7 @@ const checkUnLock = () => {
   });
   // 测试
   // chengjiuList.value.forEach((item: any) => {
-  //   if (item.id === 7) {
+  //   if (item.id === 21) {
   //     // eslint-disable-next-line no-param-reassign
   //     item.unlock = true;
   //   }

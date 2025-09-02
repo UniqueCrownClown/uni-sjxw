@@ -43,8 +43,8 @@
           style="width: 90%; border-radius: 20rpx"
         >
           <view class="progress-block-main-item u-flex u-row-center">
-            <u-icon name="/static/assets/svg/10008.svg" size="32"></u-icon>
-            <text class="u-font-lg u-p-10" style="color: #333">进度日历</text>
+            <u-icon name="/static/assets/svg/10008.svg" size="40"></u-icon>
+            <text class="u-font-lg u-p-10 u-m-l-10" style="color: #333">进度日历</text>
           </view>
           <view
             class="progress-block-main-item u-font-xl"

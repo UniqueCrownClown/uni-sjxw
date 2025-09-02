@@ -94,22 +94,22 @@ const initData = () => {
   let content = [
     {
       text: `PROJECT50挑战`,
-      x: (windowWidth - 200) / 2,
-      y: 130,
+      x: 9999,
+      y: 150,
       color: "#000000",
       font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
     },
     {
       text: `Day ${recordDay.value} |${currentDate.value}`,
-      x: (windowWidth - 200) / 2,
-      y: 150,
+      x: 9999,
+      y: 170,
       color: "#000000",
       font: "14px PingFang SC, sans-serif",
     },
     {
       text: "今日已完成",
-      x: 50,
-      y: 180,
+      x: 60,
+      y: 210,
       color: "#000000",
       font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
     },
@@ -117,8 +117,8 @@ const initData = () => {
   recordList.value.forEach((item, index) => {
     content.push({
       text: `${item}`,
-      x: 40,
-      y: 210 + index * 20,
+      x: 70,
+      y: 230 + index * 20,
       color: "#666666",
       font: "14px PingFang SC, sans-serif",
     });
@@ -129,7 +129,7 @@ const initData = () => {
       ? [
           {
             text: `挑战者: ${userName.value}`,
-            x: 50,
+            x: 60,
             y: height - 120,
             color: "#666666",
             font: "14px PingFang SC, sans-serif",
@@ -138,7 +138,7 @@ const initData = () => {
       : []),
     {
       text: `From:${navName.value}`,
-      x: 50,
+      x: 60,
       y: height - 100,
       color: "#666666",
       font: "14px PingFang SC, sans-serif",
@@ -146,8 +146,8 @@ const initData = () => {
   ];
   textItems.value = content;
   qrOptions.value = {
-    src: "https://s21.ax1x.com/2025/08/22/pVD6779.jpg",
-    x: 50,
+    src: "",
+    x: 60,
     y: height - 200,
     width: 50,
     height: 50,
@@ -159,7 +159,7 @@ const initData = () => {
 const dynamicPosterRef = ref<any>();
 
 // 自定义海报内容
-const posterBg = ref("https://s21.ax1x.com/2025/08/19/pVBanNF.jpg");
+const posterBg = ref("https://s21.ax1x.com/2025/09/02/pVgZQaj.png");
 
 const saveImageToLocal = async () => {
   dynamicPosterRef.value.savePoster();

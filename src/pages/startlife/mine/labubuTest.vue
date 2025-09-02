@@ -41,7 +41,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import { questionList, answerList } from "@/utils/labubuTips";
 import { useLabubuStore } from "@/store/modules/labubuStore";
@@ -55,8 +55,8 @@ onLoad(() => {
 const step = 9;
 const current = ref(0);
 const indexPage = ref(1);
-const question = ref(questionList[0]);
-const answer = ref(answerList[0].split("||"));
+const question = computed(() => questionList[indexPage.value - 1]);
+const answer = computed(() => answerList[indexPage.value - 1].split("||"));
 
 const handlePrev = () => {
   if (indexPage.value === 1) {
@@ -67,8 +67,6 @@ const handlePrev = () => {
     return;
   }
   labubuStore.popAnswer();
-  question.value = questionList[indexPage.value - 1];
-  answer.value = answerList[indexPage.value - 1].split("||");
   indexPage.value -= 1;
   current.value -= step;
 };
@@ -84,9 +82,6 @@ const handleClick = (_: any, index: number) => {
   }
   indexPage.value += 1;
   current.value += step;
-
-  question.value = questionList[indexPage.value - 1];
-  answer.value = answerList[indexPage.value - 1].split("||");
   uni.showToast({
     title: "下一题",
     icon: "none",

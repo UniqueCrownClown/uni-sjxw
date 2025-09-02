@@ -131,3 +131,5 @@ export const zhangTips = [
     content: "连续坚持 50 天，实力进阶",
   },
 ];
+
+export const chengjiuTips = "给时光以生命,而不是给生命以时光";

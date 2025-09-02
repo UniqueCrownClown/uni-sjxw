@@ -244,9 +244,23 @@ export default defineComponent({
           item?.font || "500 16px PingFang SC,Microsoft YaHei,sans-serif";
 
         (canvasContext.value as CanvasRenderingContext2D).textBaseline =
-          "middle";
+          item?.textBaseline || "middle";
 
-        canvasContext.value?.fillText(item.text, item.x, item.y);
+        // 设置水平对齐 (left|right|center|start|end)
+        (canvasContext.value as CanvasRenderingContext2D).textAlign =
+          item?.textAlign || "left";
+        let adjustedX = item.x;
+        // 配置为9999的时候自动居中
+        if (adjustedX === 9999) {
+          // 获取文本宽度
+          const textWidth =
+            canvasContext.value?.measureText(item.text).width ||
+            canvasWidth.value;
+          // 根据宽度调整位置
+          adjustedX = canvasWidth.value / 2 - textWidth / 2; // 居中
+        }
+
+        canvasContext.value?.fillText(item.text, adjustedX, item.y);
       });
     };
     // 绘制图片

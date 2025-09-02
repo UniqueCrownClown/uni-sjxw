@@ -461,21 +461,21 @@ const handleShare = () => {
   textItems.value = [
     {
       text: `我正在挑战[${currentPlan.value}]`,
-      x: 20,
+      x: 9999,
       y: 30,
       font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
       color: "#ffffff",
     },
     {
       text: `${currentZhangTips.value}`,
-      x: 20,
-      y: height - 20,
+      x: 9999,
+      y: height - 120,
       font: "14px PingFang SC, sans-serif",
       color: "#666",
     },
   ];
   qrOptions.value = {
-    src: "https://s21.ax1x.com/2025/08/22/pVD6779.jpg",
+    src: "",
     x: width - 80,
     y: height - 60,
     width: 50,

@@ -30,7 +30,7 @@
         <view style="color: #bfb35f; font-size: 40rpx">{{ name }}</view>
       </view>
       <view class="u-p-20 u-flex u-row-center">
-        <view style="color: #9B9934; font-size: 40rpx"> {{ title }}</view>
+        <view style="color: #9b9934; font-size: 40rpx"> {{ title }}</view>
       </view>
       <view class="u-p-20 u-flex u-row-center">
         <view> {{ description }}</view>
@@ -38,11 +38,10 @@
       <view class="u-p-20 u-flex u-row-center">
         <view> {{ trait }}</view>
       </view>
-      <!-- <view class="u-p-20 u-flex u-row-center">
-        <view> {{ signature }}</view>
-      </view> -->
       <view class="u-p-20 u-flex u-row-center">
-        <view class="u-text-center"> <image :src="bg"></image></view>
+        <view class="u-text-center" style="width: 100%"
+          ><u-image :src="bg" mode="widthFix"></u-image
+        ></view>
       </view>
     </view>
   </view>
@@ -59,7 +58,6 @@ const name = ref("");
 const title = ref("");
 const description = ref("");
 const trait = ref("");
-const signature = ref("");
 const bg = ref("");
 
 onLoad(() => {
@@ -78,7 +76,6 @@ onLoad(() => {
   title.value = result.title;
   description.value = result.description;
   trait.value = result.trait;
-  signature.value = result.signature;
   bg.value = result.bg;
 
   // 清空答案
