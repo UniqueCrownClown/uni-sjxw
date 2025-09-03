@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <view class="u-m-l-20">
+    <view class="u-m-l-20 u-m-t-20">
       <u-icon name="home" color="#fff" size="40" @click="handleTomine"></u-icon>
     </view>
     <view class="u-p-20 u-m-t-40" style="font-size: 28px; color: #4b2910"

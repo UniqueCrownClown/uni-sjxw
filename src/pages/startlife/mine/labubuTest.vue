@@ -32,6 +32,16 @@
         <text>{{ indexPage }}/12</text>
       </view>
     </view>
+    <view class="u-m-t-40 u-m-b-40 u-flex u-row-center">
+      <view style="width: 200rpx">
+        <u-image
+          src="https://s21.ax1x.com/2025/09/03/pVgBShR.png"
+          width="100%"
+          height="100%"
+          mode="widthFix"
+        ></u-image>
+      </view>
+    </view>
     <view class="u-flex u-row-center">
       <view class="labubu-test-btn" @click="handlePrev">
         <u-icon name="arrow-leftward" color="#ffffff" size="28"></u-icon

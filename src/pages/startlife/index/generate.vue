@@ -130,7 +130,7 @@ const initData = () => {
           {
             text: `挑战者: ${userName.value}`,
             x: 60,
-            y: height - 120,
+            y: height - 100,
             color: "#666666",
             font: "14px PingFang SC, sans-serif",
           },
@@ -139,18 +139,18 @@ const initData = () => {
     {
       text: `From:${navName.value}`,
       x: 60,
-      y: height - 100,
+      y: height - 80,
       color: "#666666",
       font: "14px PingFang SC, sans-serif",
     },
   ];
   textItems.value = content;
   qrOptions.value = {
-    src: "",
+    src: "https://crownclown.xyz/qrcode.jpg",
     x: 60,
-    y: height - 200,
-    width: 50,
-    height: 50,
+    y: height - 220,
+    width: 80,
+    height: 80,
   };
 };
 

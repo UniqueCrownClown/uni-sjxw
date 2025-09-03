@@ -134,6 +134,7 @@ export {
   getPlans,
   deletePlan,
   updatePlan,
+  getRecords,
   getRecord,
   addRecord,
   deleteRecord,

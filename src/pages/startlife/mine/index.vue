@@ -94,7 +94,7 @@
     </view>
     <u-popup v-model="showPoster" mode="center" border-radius="14">
       <view class="u-p-20" style="background: transparent; width: 100vw">
-        <view class="u-text-center" style="margin-top: 60rpx" v-if="showPoster">
+        <view class="u-text-center" style="margin-top: 80rpx" v-if="showPoster">
           <dynamic-poster
             ref="dynamicPosterRef"
             :text-items="textItems"
@@ -105,29 +105,64 @@
           ></dynamic-poster>
         </view>
         <view class="u-flex u-row-between u-p-20 u-m-t-20">
-          <view @click="sharePoster">
-            <view class="u-text-center">
-              <u-icon name="share-fill" size="40" color="#83cbac"></u-icon>
+          <view
+            class="share-wrapper"
+            style="
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            "
+          >
+            <view
+              class="u-text-center u-p-20"
+              style="background: rgba(0, 0, 0, 0.3); border-radius: 10rpx"
+            >
+              <button
+                open-type="share"
+                class="invisible-btn"
+                hover-class="none"
+                :plain="true"
+                size="mini"
+                style="
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  opacity: 0;
+                  z-index: 1;
+                  background: rgba(0, 0, 0, 0.3);
+                  border-radius: 10rpx;
+                "
+              ></button>
+              <u-icon name="share-fill" size="60" color="#83cbac" />
             </view>
-            <view class="u-font-xl u-color-white">发送给朋友</view>
+            <view class="u-font-sm u-color-white u-text-center">分享</view>
           </view>
           <view @click="collectPoster">
-            <view class="u-text-center">
-              <u-icon name="gift-fill" size="40" color="#83cbac"></u-icon>
+            <view
+              class="u-text-center u-p-20"
+              style="background: rgba(0, 0, 0, 0.3); border-radius: 10rpx"
+            >
+              <u-icon name="gift-fill" size="60" color="#83cbac"></u-icon>
             </view>
-            <view class="u-font-xl u-color-white">收藏</view>
+            <view class="u-font-sm u-color-white u-text-center">收藏</view>
           </view>
           <view @click="savePoster">
-            <view class="u-text-center">
-              <u-icon name="bookmark-fill" size="40" color="#83cbac"></u-icon>
+            <view
+              class="u-text-center u-p-20"
+              style="background: rgba(0, 0, 0, 0.3); border-radius: 10rpx"
+            >
+              <u-icon name="bookmark-fill" size="60" color="#83cbac"></u-icon>
             </view>
-            <view class="u-font-xl u-color-white">保存图片</view>
+            <view class="u-font-sm u-color-white u-text-center">保存</view>
           </view>
         </view>
-        <view class="u-flex u-row-center u-m-t-20">
+        <view class="u-flex u-row-center u-m-t-40">
           <u-icon
             name="close-circle"
-            size="60"
+            size="80"
             color="#83cbac"
             @click="showPoster = false"
           ></u-icon>
@@ -138,7 +173,7 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { onShow } from "@dcloudio/uni-app";
+import { onShow, onShareAppMessage } from "@dcloudio/uni-app";
 import { formateDate } from "@/utils/common";
 import { aboutTips, feedbackTips, chengjiuTips } from "@/utils/tips";
 import { getUserInfo, clearUserInfo, getPlans } from "@/api/modules/startlife";
@@ -344,7 +379,7 @@ const textItems = ref([
   {
     text: chengjiuTips,
     x: 9999,
-    y: height - 80,
+    y: height - 100,
     font: "500 14px PingFang SC,Microsoft YaHei,sans-serif",
     color: "#f5a623",
   },
@@ -359,11 +394,11 @@ const imageItems = ref([
   },
 ]);
 const qrOptions = ref({
-  src: "",
+  src: "https://crownclown.xyz/qrcode.jpg",
   x: width - 80,
-  y: height - 60,
-  width: 50,
-  height: 50,
+  y: height - 80,
+  width: 60,
+  height: 60,
 });
 
 const handleChengjiuClick = (item: {
@@ -386,10 +421,6 @@ const handleChengjiuClick = (item: {
     imageItems.value[0].src = item.icon;
     showPoster.value = true;
   }
-};
-
-const sharePoster = () => {
-  dynamicPosterRef.value.sharePoster();
 };
 
 const collectPoster = () => {
@@ -437,6 +468,14 @@ const initData = () => {
 
 onShow(() => {
   initData();
+});
+
+onShareAppMessage(() => {
+  return {
+    title: "快来小屋和我一起快乐打卡吧~~",
+    path: "/pages/startlife/index/index",
+    imageUrl: "https://s21.ax1x.com/2025/09/03/pVgdO2V.jpg",
+  };
 });
 </script>
 <style lang="scss" scoped>

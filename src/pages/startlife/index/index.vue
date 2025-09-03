@@ -74,7 +74,8 @@
             :key="item.name"
             class="u-m-20 u-p-20"
             :style="{
-              background: 'linear-gradient(to bottom right, #4f9679 0%, #98e0c0 100%)',
+              background:
+                'linear-gradient(to bottom right, #4f9679 0%, #98e0c0 100%)',
               color: '#fff',
               borderRadius: '20rpx',
             }"
@@ -120,8 +121,10 @@
 import { ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 import { usePlanStore } from "@/store/modules/planStore";
-import { getPlans } from "@/api/modules/startlife";
+import { getPlans, getRecords, PlanRecord } from "@/api/modules/startlife";
+
 import { monthWords } from "@/utils/tips";
+import { formateDate } from "@/utils/common";
 
 const planStore = usePlanStore();
 
@@ -180,6 +183,26 @@ const handleTips = () => {
 };
 
 const handleGenerate = () => {
+  const records = getRecords();
+  if (!records || records.length === 0) {
+    uni.showToast({
+      title: "暂无记录",
+      icon: "none",
+    });
+    return;
+  }
+  if (
+    records.every(
+      (item: PlanRecord) => item.time !== formateDate(new Date(), "yyyy-mm-dd")
+    )
+  ) {
+    uni.showToast({
+      title: "今日还未打卡,请先去打卡吧!",
+      icon: "none",
+    });
+    return;
+  }
+
   uni.navigateTo({
     url: "/pages/startlife/index/generate",
   });

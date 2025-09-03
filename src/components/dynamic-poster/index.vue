@@ -144,6 +144,7 @@ export default defineComponent({
       canvas = await getCanvas();
       // 获取2D上下文
       const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+      const dpr = uni.getSystemInfoSync().pixelRatio;
       if (ctx) {
         canvasContext.value = ctx;
 
@@ -157,9 +158,9 @@ export default defineComponent({
         // canvasWidth.value = canvas.width;
         // canvasHeight.value = canvas.height;
 
-        canvas.width = canvasWidth.value;
-        canvas.height = canvasHeight.value;
-
+        canvas.width = canvasWidth.value * dpr;
+        canvas.height = canvasHeight.value * dpr;
+        ctx.scale(dpr, dpr);
         return true;
       }
       return false;
