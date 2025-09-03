@@ -209,14 +209,14 @@ export default defineComponent({
             };
             // Handle image load errors
             img.onerror = function (error: any) {
-              console.log(error);
               uni.showToast({ title: "Image load failed", icon: "error" });
               resolve(false);
+              throw error;
             };
           },
-          fail: (err) => {
-            console.error("获取图片失败:", err);
+          fail: (error) => {
             resolve(false);
+            throw error;
           },
         });
       });
@@ -346,12 +346,11 @@ export default defineComponent({
               canvasId: "posterCanvas",
               canvas,
               success: (res) => {
-                console.log("canvas转换成功", res); // 添加日志
                 resolve(res.tempFilePath);
               },
               fail: (err) => {
-                console.error("canvas转换失败", err); // 添加错误日志
                 reject(err);
+                throw err;
               },
             },
             instance
@@ -362,13 +361,13 @@ export default defineComponent({
         showCanvas.value = false; // 隐藏画布，显示图片
         isGenerating.value = false;
       } catch (error) {
-        console.error("生成海报失败:", error);
         uni.hideLoading();
         uni.showToast({
           title: "生成海报失败",
           icon: "none",
         });
         isGenerating.value = false;
+        throw error;
       } finally {
         uni.hideLoading();
       }
@@ -412,11 +411,11 @@ export default defineComponent({
           icon: "success",
         });
       } catch (error) {
-        console.error("保存图片失败:", error);
         uni.showToast({
           title: "保存失败",
           icon: "none",
         });
+        throw error;
       }
     };
     // 收藏海报
@@ -440,11 +439,11 @@ export default defineComponent({
             icon: "none",
           }),
         fail: (error: any) => {
-          console.error("分享图片失败:", error);
           uni.showToast({
             title: "分享失败",
             icon: "none",
           });
+          throw error;
         },
       });
     };

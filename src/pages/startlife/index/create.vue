@@ -38,24 +38,27 @@
         </u-form-item>
         <u-form-item label="计划周期" prop="birthday">
           <view class="u-flex u-row-center">
-            <view
+            <!-- <view
               @click="handleStartTime"
               class="u-p-l-20 u-p-r-20"
               style="background-color: #ffffff"
               >{{ form.startTime }}</view
+            > -->
+            <picker
+              mode="date"
+              :value="form.startTime"
+              :start="startDate"
+              :end="endDate"
+              @change="bindDateChange"
             >
+              <view class="uni-input">{{ form.startTime }}</view>
+            </picker>
             <view class="u-p-10">至</view>
             <view class="u-p-10">{{ form.endTime }}</view>
           </view>
           <view v-if="isEdit" class="u-text-center" style="color: #dd6161"
             >计划周期不可改变</view
           >
-          <u-picker
-            mode="time"
-            v-model="show"
-            :params="params"
-            @confirm="handleConfirmPicker"
-          ></u-picker>
         </u-form-item>
         <u-form-item label="激励标语(可选)" prop="intro"
           ><u-input
@@ -87,7 +90,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 
 import { usePlanStore } from "@/store/modules/planStore";
@@ -111,17 +114,32 @@ const form = ref<Plan>({
   count: 0,
 });
 
-const params = ref({
-  year: true,
-  month: true,
-  day: true,
-  hour: false,
-  minute: false,
-  second: false,
+const getDate = (type: string) => {
+  const date = new Date();
+  let year = date.getFullYear();
+  let month: any = date.getMonth() + 1;
+  let day: any = date.getDate();
+
+  if (type === "start") {
+    year -= 5;
+  } else if (type === "end") {
+    year += 5;
+  }
+  month = month > 9 ? month : `0${month}`;
+  day = day > 9 ? day : `0${day}`;
+  return `${year}-${month}-${day}`;
+};
+
+const startDate = computed(() => {
+  return getDate("start");
 });
-const show = ref(false);
-const handleConfirmPicker = (e: any) => {
-  form.value.startTime = `${e.year}-${e.month}-${e.day}`;
+
+const endDate = computed(() => {
+  return getDate("end");
+});
+
+const bindDateChange = (e: any) => {
+  form.value.startTime = e.detail.value;
   form.value.endTime = getDateAfter(new Date(form.value.startTime), 50);
 };
 
@@ -148,12 +166,6 @@ const handleSubmit = () => {
         url: "/pages/startlife/index/index",
       });
     });
-};
-
-const handleStartTime = () => {
-  if (!isEdit.value) {
-    show.value = true;
-  }
 };
 
 const handleCancel = () => {
