@@ -18,12 +18,38 @@
       class="poster-canvas"
       v-if="showCanvas"
     ></canvas>
-    <u-action-sheet
-      :list="actionList"
-      v-model="showActionSheet"
-      @click="handleActionClick"
-      :cancel-btn="true"
-    ></u-action-sheet>
+    <u-popup v-model="showActionSheet" mode="bottom" :closeable="true">
+      <view class="u-p-t-20 u-p-b-30">
+        <view
+          class="operation-btn"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+          "
+          ><text>转发</text>
+          <button
+            open-type="share"
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              z-index: 1;
+            "
+          >
+            转发
+          </button>
+        </view>
+        <view class="operation-btn" @click="handleActionClick(1)"
+          >保存图片</view
+        >
+        <view class="operation-btn" @click="handleActionClick(2)">收藏</view>
+      </view>
+    </u-popup>
     <!-- 操作按钮 -->
     <view class="button-group" v-if="false">
       <button
@@ -49,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { onReady } from "@dcloudio/uni-app";
+import { onReady, onShareAppMessage } from "@dcloudio/uni-app";
 import { defineComponent, ref, getCurrentInstance } from "vue";
 
 export default defineComponent({
@@ -453,18 +479,6 @@ export default defineComponent({
       showCanvas.value = true;
     };
 
-    // 操作列表
-    const actionList = ref([
-      {
-        text: "转发",
-      },
-      {
-        text: "保存图片",
-      },
-      {
-        text: "收藏",
-      },
-    ]);
     // 操作弹窗
     const showActionSheet = ref(false);
     const handleActionClick = (index: number) => {
@@ -495,20 +509,13 @@ export default defineComponent({
       generatePoster();
     });
 
-    // 自定义分享内容
-    const onShareAppMessage = (res: any) => {
-      // res.from 可判断触发来源：button（按钮点击）或 menu（右上角菜单）
-      if (res.from === "button") {
-        // 从按钮触发的分享，可根据按钮信息动态生成内容
-        console.log(res.target);
-      }
-
+    onShareAppMessage(() => {
       return {
-        title: "时记小屋", // 分享卡片标题
+        title: "快来时记小屋和我一起快乐打卡吧~~", // 分享卡片标题
         path: "/pages/startlife/index/index", // 分享后打开的页面路径（可带参数）
         imageUrl: posterImageUrl.value,
       };
-    };
+    });
 
     return {
       canvasWidth,
@@ -522,7 +529,6 @@ export default defineComponent({
       sharePoster,
       resetPoster,
       handleLongPress,
-      actionList,
       showActionSheet,
       handleActionClick,
       onShareAppMessage,
@@ -531,7 +537,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .poster-container {
   width: 100%;
   max-height: 100vh;
@@ -556,13 +562,14 @@ export default defineComponent({
 
 .operation-btn {
   width: 100%;
-  padding: 15rpx 0;
-  border-radius: 8rpx;
+  padding: 24rpx 0;
+  border-radius: 12rpx;
   font-size: 32rpx;
+  text-align: center;
 }
 
 .operation-btn.primary {
-  background-color: #007aff;
+  background-color: $main-color;
   color: white;
 }
 </style>

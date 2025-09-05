@@ -18,11 +18,11 @@
     <view class="u-p-10 u-text-center">
       <text>长按图片可分享至微信好友</text>
     </view>
-    <view class="u-p-20 u-m-b-40">
+    <!-- <view class="u-p-20 u-m-b-40">
       <u-button @click="saveImageToLocal" class="save-btn">
         保存到相册
       </u-button>
-    </view>
+    </view> -->
   </view>
 </template>
 <script lang="ts" setup>
@@ -43,10 +43,11 @@ const userName = ref("");
 const currentDate = ref(formateDate(new Date(), "yyyy-mm-dd"));
 
 const { windowWidth } = uni.getWindowInfo();
-const height = ((windowWidth - 20) * 16) / 9;
+const width = windowWidth - 30;
+const height = (width * 16) / 9;
 
 const canvasSize = ref({
-  width: windowWidth - 20,
+  width,
   height,
 });
 
@@ -161,9 +162,9 @@ const dynamicPosterRef = ref<any>();
 // 自定义海报内容
 const posterBg = ref("https://s21.ax1x.com/2025/09/02/pVgZQaj.png");
 
-const saveImageToLocal = async () => {
-  dynamicPosterRef.value.savePoster();
-};
+// const saveImageToLocal = async () => {
+//   dynamicPosterRef.value.savePoster();
+// };
 
 onReady(() => {
   initData();

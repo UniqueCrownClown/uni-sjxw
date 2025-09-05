@@ -199,13 +199,34 @@
         </view>
       </view>
     </u-popup>
+    <u-popup
+      v-model="successShow"
+      mode="center"
+      border-radius="14"
+      :closeable="true"
+      @close="handleSuccessClose"
+    >
+      <view class="u-p-20 u-text-center">
+        <view class="u-text-center u-flex u-row-center">
+          <u-image
+            width="200"
+            src="https://crownclown.xyz/zan.gif"
+            mode="widthFix"
+          ></u-image>
+        </view>
+        <view class="u-p-10 u-text-center u-font-lg">
+          <text>打卡成功啦~~</text>
+        </view>
+        <view class="u-p-10 u-text-center u-font-sm">{{ dingWords }}</view>
+      </view>
+    </u-popup>
   </view>
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 import { formateDate } from "@/utils/common";
-import { recordTips, zhangTips } from "@/utils/tips";
+import { dingImgArr, dingTips, recordTips, zhangTips } from "@/utils/tips";
 
 import dynamicPoster from "@/components/dynamic-poster/index.vue";
 import xtCalendar from "@/components/xt-calendar/index.vue";
@@ -309,6 +330,15 @@ const checkUnlock = () => {
       });
     }
   });
+
+  // 测试 start
+  // wallList.value.forEach((item: any) => {
+  //   if (item.id === 1) {
+  //     // eslint-disable-next-line no-param-reassign
+  //     item.unlock = true;
+  //   }
+  // });
+  // 测试 end
 };
 
 const eventDates = ref([]);
@@ -350,6 +380,15 @@ const getEventDates = (planName: string) => {
   return records.map((item: any) => new Date(item.time));
 };
 
+const successShow = ref(false);
+const dingWords = ref("");
+
+const handleSuccessClose = () => {
+  successShow.value = false;
+  // 刷新一下当前月的事件
+  eventDates.value = getEventDates(currentPlan.value);
+};
+
 const handleRecord = () => {
   if (!canCard.value) {
     return;
@@ -376,14 +415,16 @@ const handleRecord = () => {
     // 检查是否解锁
     checkUnlock();
 
-    uni.showToast({
-      title: "打卡成功",
-      icon: "success",
-      success: () => {
-        // 刷新一下当前月的事件
-        eventDates.value = getEventDates(currentPlan.value);
-      },
-    });
+    // uni.showToast({
+    //   title: "打卡成功",
+    //   icon: "success",
+    //   success: () => {
+    //     // 刷新一下当前月的事件
+    //     eventDates.value = getEventDates(currentPlan.value);
+    //   },
+    // });
+    successShow.value = true;
+    dingWords.value = dingTips[Math.floor(Math.random() * dingTips.length)];
   } else {
     // 取消打卡
     deleteRecord(currentPlan.value, cardDate.value);
@@ -449,7 +490,7 @@ const handleZhangClick = (data: {
 
 const dynamicPosterRef = ref<any>(null);
 // 自定义海报内容
-const posterBg = ref("https://s21.ax1x.com/2025/08/19/pVBB7QJ.png");
+const posterBg = ref("");
 
 // 动态文字内容
 const textItems = ref<any>([]);
@@ -458,25 +499,26 @@ const textItems = ref<any>([]);
 const qrOptions = ref<any>({});
 
 const handleShare = () => {
+  posterBg.value = dingImgArr[Math.floor(Math.random() * dingImgArr.length)];
   textItems.value = [
     {
       text: `我正在挑战[${currentPlan.value}]`,
       x: 9999,
-      y: 30,
+      y: 20,
       font: "500 16px PingFang SC,Microsoft YaHei,sans-serif",
       color: "#ffffff",
     },
     {
       text: `${currentZhangTips.value}`,
       x: 9999,
-      y: height - 120,
-      font: "14px PingFang SC, sans-serif",
-      color: "#666",
+      y: 50,
+      font: "14px PingFang SC,Microsoft YaHei,sans-serif",
+      color: "#fff",
     },
   ];
   qrOptions.value = {
-    src: "",
-    x: width - 80,
+    src: "https://crownclown.xyz/qrcode.jpg",
+    x: width - 60,
     y: height - 60,
     width: 50,
     height: 50,

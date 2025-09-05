@@ -38,26 +38,32 @@ export const progressTips = [
   {
     progress: "0",
     words: "刚刚起步，坚持下去",
+    emotion: "/static/assets/svg/emotion/wink.svg",
   },
   {
     progress: "20",
     words: "继续保持，你会有好的结果！",
+    emotion: "/static/assets/svg/emotion/tongue.svg",
   },
   {
     progress: "40",
     words: "你已经有了不错的进展，继续加油！",
+    emotion: "/static/assets/svg/emotion/kiss.svg",
   },
   {
     progress: "60",
     words: "你已经有了不错的结果，继续保持！",
+    emotion: "/static/assets/svg/emotion/kiss.svg",
   },
   {
     progress: "80",
     words: "你已经保持了很好的进展，继续加油！",
+    emotion: "/static/assets/svg/emotion/smile.svg",
   },
   {
     progress: "100",
     words: "恭喜你，完成了挑战！",
+    emotion: "/static/assets/svg/emotion/cool.svg",
   },
 ];
 
@@ -133,3 +139,21 @@ export const zhangTips = [
 ];
 
 export const chengjiuTips = "给时光以生命,而不是给生命以时光";
+
+export const dingTips = [
+  "每一次打卡都是成长的印记,真棒!",
+  "坚持的路上没有失败，只有暂时的停顿！",
+  "成功不是偶然，而是每天坚持的结果！",
+  "小小的坚持，成就大大的改变！",
+  "每一次坚持，都是对自己的一种挑战，一种提升！",
+  "今天你打败了87%的拖延症患者！",
+];
+
+export const dingImgArr = [
+  "https://crownclown.xyz/bg1.jpeg",
+  "https://crownclown.xyz/bg2.jpeg",
+  "https://crownclown.xyz/bg3.jpeg",
+  "https://crownclown.xyz/bg4.jpeg",
+  "https://crownclown.xyz/bg5.jpeg",
+  "https://crownclown.xyz/bg6.jpeg",
+];

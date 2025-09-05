@@ -6,6 +6,8 @@ $main-color-light: #98e0c0;
 
 ::v-deep .u-btn--primary {
   background-image: linear-gradient(to right, #8ad2b3 0%, #4f9679 100%);
+  background-color: $main-color !important;
+  border-color: $main-color !important;
 }
 
 ::v-deep .u-btn.u-btn--default.u-default-hover {
@@ -20,6 +22,8 @@ $main-color-light: #98e0c0;
     #4f9679 100%
   ) !important;
   color: #fff !important;
+  background-color: $main-color !important;
+  border-color: $main-color !important;
 }
 
 ::v-deep .u-model__footer__button {

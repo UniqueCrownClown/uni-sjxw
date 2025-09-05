@@ -97,7 +97,7 @@
                 <view>
                   <text>已坚持 {{ item.count }}/50天</text>
                 </view>
-                <view style="width: 260rpx">
+                <view>
                   <u-button
                     shape="circle"
                     size="medium"
@@ -106,7 +106,7 @@
                       color: '#fff',
                     }"
                     @click="handleClock(item)"
-                    >去打卡</u-button
+                    >{{ getCardBtnTips(item) }}</u-button
                   >
                 </view>
               </view>
@@ -121,7 +121,13 @@
 import { ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 import { usePlanStore } from "@/store/modules/planStore";
-import { getPlans, getRecords, PlanRecord } from "@/api/modules/startlife";
+import {
+  getPlans,
+  getRecord,
+  getRecords,
+  Plan,
+  PlanRecord,
+} from "@/api/modules/startlife";
 
 import { monthWords } from "@/utils/tips";
 import { formateDate } from "@/utils/common";
@@ -131,7 +137,7 @@ const planStore = usePlanStore();
 const list = ref<Array<any>>([
   {
     image: "https://s21.ax1x.com/2025/08/19/pVBNi5Q.png",
-    title: "微习惯&保持自律",
+    title: "微习惯&保持自律&养成习惯",
   },
   {
     image: "https://s21.ax1x.com/2025/08/19/pVBNkCj.png",
@@ -154,13 +160,7 @@ const noticeList = ref([monthWords[new Date().getMonth()]]);
 
 const isEmptyPlan = ref(false);
 
-const planList = ref([
-  {
-    name: "50天计划",
-    count: 10,
-    content: "昨夜星辰昨夜风，画楼西畔桂堂东",
-  },
-]);
+const planList = ref<Plan[]>([]);
 
 const handleInfo = (item: any) => {
   planStore.setSelectedPlan(item);
@@ -206,6 +206,18 @@ const handleGenerate = () => {
   uni.navigateTo({
     url: "/pages/startlife/index/generate",
   });
+};
+
+const getCardBtnTips = (data: Plan) => {
+  const records = getRecord(data.name);
+  if (
+    records.some(
+      (item: PlanRecord) => item.time === formateDate(new Date(), "yyyy-mm-dd")
+    )
+  ) {
+    return "今日已打卡";
+  }
+  return "去打卡";
 };
 
 onShow(() => {
