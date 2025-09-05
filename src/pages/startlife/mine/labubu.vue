@@ -43,7 +43,7 @@ const handleTomine = () => {
 <style lang="scss" scoped>
 .container {
   padding: 20px;
-  background-image: url("https://s21.ax1x.com/2025/08/26/pVyhzc9.jpg");
+  background-image: url("https://crownclown.xyz/labubu_bg.jpeg");
   background-size: cover;
   min-height: 100vh;
   .labubu-test-btn {

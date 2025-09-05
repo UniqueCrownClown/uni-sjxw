@@ -160,7 +160,7 @@ const initData = () => {
 const dynamicPosterRef = ref<any>();
 
 // 自定义海报内容
-const posterBg = ref("https://s21.ax1x.com/2025/09/02/pVgZQaj.png");
+const posterBg = ref("https://crownclown.xyz/notecard.png");
 
 // const saveImageToLocal = async () => {
 //   dynamicPosterRef.value.savePoster();

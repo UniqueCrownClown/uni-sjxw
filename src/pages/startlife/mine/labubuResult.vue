@@ -132,7 +132,7 @@ onShareAppMessage(() => {
   return {
     title: "看看你是labubu家族中的谁吧~~",
     path: "/pages/startlife/mine/labubu",
-    imageUrl: "https://s21.ax1x.com/2025/09/03/pVgdO2V.jpg",
+    imageUrl: "https://crownclown.xyz/labubu_share.jpg",
   };
 });
 </script>

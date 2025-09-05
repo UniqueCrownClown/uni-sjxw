@@ -21,8 +21,11 @@
       <view class="u-font-sm u-text-center u-m-b-20">
         <text> 创建计划后将可视化展示完成天数</text>
       </view>
-      <view class="u-text-center">
-        <image src="https://s21.ax1x.com/2025/08/19/pVBNi5Q.png"></image>
+      <view class="u-text-center u-p-20">
+        <image
+          src="https://s21.ax1x.com/2025/08/19/pVBNi5Q.png"
+          style="width: 100%"
+        ></image>
       </view>
     </view>
     <view v-else>
@@ -44,7 +47,9 @@
         >
           <view class="progress-block-main-item u-flex u-row-center">
             <u-icon name="/static/assets/svg/10008.svg" size="40"></u-icon>
-            <text class="u-font-lg u-p-10 u-m-l-10" style="color: #333">进度日历</text>
+            <text class="u-font-lg u-p-10 u-m-l-10" style="color: #333"
+              >进度日历</text
+            >
           </view>
           <view
             class="progress-block-main-item u-font-xl"
@@ -137,7 +142,7 @@ const handleClick = () => {
   });
 };
 
-const isEmptyPlan = ref(false);
+const isEmptyPlan = ref(true);
 
 const currentDay = ref(0);
 const cStartTime = ref("");
@@ -191,13 +196,10 @@ const initData = () => {
     isEmptyPlan.value = true;
   } else {
     isEmptyPlan.value = false;
-
     // 取默认的plan来计算
     const data = getPlans();
-
     cStartTime.value = data.find((item: Plan) => item.checked)?.startTime;
     cEndTime.value = data.find((item: Plan) => item.checked)?.endTime;
-
     currentDay.value = calcCurrentDay(cStartTime.value);
     const getDayCount = (name: string, startTime: string) => {
       const recordData = getRecord(name);
@@ -205,7 +207,6 @@ const initData = () => {
         .map((item: any) => calcCurrentDay(startTime, item.time))
         .join(",");
     };
-
     planList.value = data.map((item: any) => {
       return {
         ...item,

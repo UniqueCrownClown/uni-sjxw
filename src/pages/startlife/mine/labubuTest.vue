@@ -35,7 +35,7 @@
     <view class="u-m-t-40 u-m-b-40 u-flex u-row-center">
       <view style="width: 200rpx">
         <u-image
-          src="https://s21.ax1x.com/2025/09/03/pVgBShR.png"
+          src="https://crownclown.xyz/labubu_progress.png"
           width="100%"
           height="100%"
           mode="widthFix"
