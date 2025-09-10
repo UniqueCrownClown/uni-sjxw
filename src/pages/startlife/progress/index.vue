@@ -23,7 +23,7 @@
       </view>
       <view class="u-text-center u-p-20">
         <image
-          src="https://s21.ax1x.com/2025/08/19/pVBNi5Q.png"
+          src="https://crownclown.xyz/hua_1.jpg"
           style="width: 100%"
         ></image>
       </view>

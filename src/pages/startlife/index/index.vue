@@ -136,15 +136,15 @@ const planStore = usePlanStore();
 
 const list = ref<Array<any>>([
   {
-    image: "https://s21.ax1x.com/2025/08/19/pVBNi5Q.png",
+    image: "https://crownclown.xyz/hua_2.jpg",
     title: "微习惯&保持自律&养成习惯",
   },
   {
-    image: "https://s21.ax1x.com/2025/08/19/pVBNkCj.png",
+    image: "https://crownclown.xyz/hua_1.jpg",
     title: "每天进步一点点,重塑更好的自己",
   },
   {
-    image: "https://s21.ax1x.com/2025/08/19/pVBNE2n.png",
+    image: "https://crownclown.xyz/hua_3.jpg",
     title: "让坚持能够被看见",
   },
 ]);
