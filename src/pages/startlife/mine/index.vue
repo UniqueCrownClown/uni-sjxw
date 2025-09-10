@@ -235,9 +235,14 @@ const btnList = ref([
     iconPath: "/static/assets/svg/10006.svg",
   },
   {
+    id: "moment",
+    name: "时刻轻松记",
+    iconPath: "/static/assets/svg/10002.svg",
+  },
+  {
     id: "labubu",
-    name: "labubu测试",
-    iconPath: "/static/assets/svg/10003.svg",
+    name: "labubu性格测试",
+    iconPath: "/static/assets/svg/10001.svg",
   },
 ]);
 
@@ -253,6 +258,12 @@ const content = ref("");
 const modalTitle = ref("");
 
 const handleCommand = (item: { id: string; name: string }) => {
+  if (item.id === "moment") {
+    uni.navigateTo({
+      url: "/pages/startlife/mine/moment",
+    });
+    return;
+  }
   if (item.id === "labubu") {
     uni.navigateTo({
       url: "/pages/startlife/mine/labubu",

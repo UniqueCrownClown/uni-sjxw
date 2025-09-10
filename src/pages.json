@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/mine/moment",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-moment"
+      }
+    },
+    {
       "path": "pages/startlife/mine/labubuResult",
       "style": {
         "navigationBarTitleText": "startlife-mine-labubuResult"
