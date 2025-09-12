@@ -215,34 +215,39 @@ const btnList = ref([
   //   iconPath: "/static/assets/svg/10002.svg",
   // },
   {
-    id: "manual",
-    name: "使用手册",
-    iconPath: "/static/assets/svg/10003.svg",
-  },
-  {
-    id: "somewords",
-    name: "想说的话",
-    iconPath: "/static/assets/svg/10004.svg",
-  },
-  {
-    id: "about",
-    name: "关于我们",
-    iconPath: "/static/assets/svg/10005.svg",
-  },
-  {
-    id: "feedback",
-    name: "用户反馈",
-    iconPath: "/static/assets/svg/10006.svg",
-  },
-  {
     id: "moment",
     name: "时刻轻松记",
-    iconPath: "/static/assets/svg/10002.svg",
+    iconPath: "/static/assets/svg/10001.svg",
   },
   {
     id: "labubu",
     name: "labubu性格测试",
-    iconPath: "/static/assets/svg/10001.svg",
+    iconPath: "/static/assets/svg/10002.svg",
+  },
+  {
+    id: "coinToy",
+    name: "选择抛硬币",
+    iconPath: "/static/assets/svg/10003.svg",
+  },
+  {
+    id: "manual",
+    name: "使用手册",
+    iconPath: "/static/assets/svg/10004.svg",
+  },
+  {
+    id: "somewords",
+    name: "想说的话",
+    iconPath: "/static/assets/svg/10005.svg",
+  },
+  {
+    id: "about",
+    name: "关于我们",
+    iconPath: "/static/assets/svg/10006.svg",
+  },
+  {
+    id: "feedback",
+    name: "用户反馈",
+    iconPath: "/static/assets/svg/10007.svg",
   },
 ]);
 
@@ -267,6 +272,18 @@ const handleCommand = (item: { id: string; name: string }) => {
   if (item.id === "labubu") {
     uni.navigateTo({
       url: "/pages/startlife/mine/labubu",
+    });
+    return;
+  }
+  if (item.id === "labubu") {
+    uni.navigateTo({
+      url: "/pages/startlife/mine/labubu",
+    });
+    return;
+  }
+  if (item.id === "coinToy") {
+    uni.navigateTo({
+      url: "/pages/startlife/mine/coinToy",
     });
     return;
   }

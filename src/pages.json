@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/mine/coinToy",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-coinToy"
+      }
+    },
+    {
       "path": "pages/startlife/mine/moment",
       "style": {
         "navigationBarTitleText": "startlife-mine-moment"
