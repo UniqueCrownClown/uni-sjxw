@@ -1,6 +1,7 @@
 export interface Moment {
   name: string;
   time: string;
+  timeType: "lunar" | "solar";
   type: "0" | "1" | "2"; // 0-不重复 1-月重复 2-年重复
   remind?: boolean;
   toTop?: boolean;

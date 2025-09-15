@@ -33,13 +33,19 @@
         </view>
         <view class="u-p-10 u-text-center u-font-xl">{{ item.name }}</view>
         <view class="u-p-10 u-text-center">
-          <text> {{ getTimeDesc(item.type, item.time)[0] }} </text>
-          <text class="u-p-20" style="font-size: 60rpx">
-            {{ getTimeDesc(item.type, item.time)[1] }}
+          <text>
+            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[0] }}
           </text>
-          <text> {{ getTimeDesc(item.type, item.time)[2] }} </text>
+          <text class="u-p-20" style="font-size: 64rpx">
+            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[1] }}
+          </text>
+          <text>
+            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[2] }}
+          </text>
         </view>
-        <view class="u-p-10 u-text-center">{{ getTime(item.time) }}</view>
+        <view class="u-p-10 u-text-center u-font-lg">{{
+          getTime(item.time, item.timeType == "lunar")
+        }}</view>
       </view>
     </view>
     <u-popup
@@ -50,6 +56,11 @@
       :adjust-position="true"
     >
       <view style="background-color: #fff">
+        <view class="u-m-t-10 u-p-t-10 u-text-center" style="font-size: 44rpx">创建美好时刻</view>
+        <view class="u-p-b-10 u-text-center u-font-xl u-content-color"
+          >create beautiful moment</view
+        >
+
         <view class="u-p-20">
           <u-form :model="form" ref="formRef" label-width="160">
             <u-form-item label="时刻名称" prop="name"
@@ -70,9 +81,19 @@
             </u-form-item>
             <u-form-item label="计划周期" prop="birthday">
               <view class="u-flex u-row-left">
-                <picker mode="date" :value="form.time" @change="bindDateChange">
+                <!-- <picker mode="date" :value="form.time" @change="bindDateChange">
                   <view class="uni-input">{{ form.time }}</view>
-                </picker>
+                </picker> -->
+                <view class="uni-input" @click="showCalendar = true">{{
+                  transformText(form.time, form.timeType)
+                }}</view>
+                <wan-calendar
+                  ref="betterCalendarRef"
+                  :showCalendar="showCalendar"
+                  @confirm="selectDate"
+                  @cancel="showCalendar = false"
+                  :selectOptions="selectOptions"
+                ></wan-calendar>
               </view>
             </u-form-item>
             <u-form-item label="日历提醒" v-if="false">
@@ -97,11 +118,21 @@
         </view>
       </view>
     </u-popup>
-    <u-popup v-model="showContent" mode="center" border-radius="20">
+    <u-popup
+      v-model="showContent"
+      mode="center"
+      border-radius="20"
+      :mask-custom-style="{ background: 'rgba(0,0,0, 0.6)' }"
+    >
       <view style="width: calc(100vw - 200rpx)">
         <view
           class="moment-block"
-          style="width: 100%; margin: 0; background-color: rgba(0, 0, 0, 0.5)"
+          style="
+            width: 100%;
+            height: 160px;
+            margin: 0;
+            background: linear-gradient(to bottom right, #4f9679 0%, #98e0c0 100%)
+          "
         >
           <view class="u-flex u-row-left">
             <view class="moment-block-badge">
@@ -110,13 +141,37 @@
           </view>
           <view class="u-p-10 u-text-center u-font-xl">{{ current.name }}</view>
           <view class="u-p-10 u-text-center">
-            <text> {{ getTimeDesc(current.type, current.time)[0] }} </text>
-            <text class="u-p-20" style="font-size: 60rpx">
-              {{ getTimeDesc(current.type, current.time)[1] }}
+            <text>
+              {{
+                getTimeDesc(
+                  current.type,
+                  current.time,
+                  current.timeType == "lunar"
+                )[0]
+              }}
             </text>
-            <text> {{ getTimeDesc(current.type, current.time)[2] }} </text>
+            <text class="u-p-20" style="font-size: 64rpx">
+              {{
+                getTimeDesc(
+                  current.type,
+                  current.time,
+                  current.timeType == "lunar"
+                )[1]
+              }}
+            </text>
+            <text>
+              {{
+                getTimeDesc(
+                  current.type,
+                  current.time,
+                  current.timeType == "lunar"
+                )[2]
+              }}
+            </text>
           </view>
-          <view class="u-p-10 u-text-center">{{ getTime(current.time) }}</view>
+          <view class="u-p-10 u-text-center u-font-lg">{{
+            getTime(current.time, current.timeType == "lunar")
+          }}</view>
         </view>
         <view class="u-flex u-p-20">
           <view
@@ -175,6 +230,8 @@ import {
   updateMoment,
   deleteMoment,
 } from "@/api/modules/moment";
+import WanCalendar from "@/components/wan-calendar/wan-calendar.vue";
+import conversion from "@/components/wan-calendar/calendar";
 
 const title = ref("时刻轻松记");
 
@@ -200,62 +257,179 @@ const isLeapYear = (year: number): boolean => {
 
 const getTimeDesc = (
   type: RepeatType,
-  time: string = "2025-09-08"
+  time: string = "2025-09-08",
+  isLunar: boolean = false
 ): string[] => {
-  // 验证日期格式是否有效
-  const parseDate = (dateStr: string): Date | null => {
-    const date = new Date(dateStr);
-    return Number.isNaN(date.getTime()) ? null : date;
-  };
-
-  const targetDate = parseDate(time);
-  if (!targetDate) {
-    throw new Error("日期无效");
-  }
-
   // 统一设置为中午12点避免时区和夏令时影响
   const now = new Date();
   now.setHours(12, 0, 0, 0);
 
-  const target = new Date(targetDate);
-  target.setHours(12, 0, 0, 0);
+  let target: Date;
 
-  // 处理重复类型
-  if (type !== "0") {
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth();
+  // 如果是农历日期处理
+  if (isLunar) {
+    try {
+      // 解析农历日期格式 "2025-09-15"
+      const [yearStr, monthStr, dayStr] = time.split("-");
+      const lunarYear = parseInt(yearStr);
+      const lunarMonth = parseInt(monthStr);
+      const lunarDay = parseInt(dayStr);
 
-    // 每月重复
-    if (type === "1") {
-      // 计算需要偏移的月份数
-      let offsetMonths = 0;
-      if (target < now) {
-        // 目标日期在当前日期之前，计算需要多少个月才能超过当前日期
-        const targetDay = target.getDate();
-        const tempDate = new Date(currentYear, currentMonth, targetDay);
-        tempDate.setHours(12, 0, 0, 0);
+      // 获取当前农历年份
+      const nowSolarDate: any = conversion.solar2lunar(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        now.getDate()
+      );
+      const currentLunarYear = nowSolarDate.lYear;
+      const currentLunarMonth = nowSolarDate.lMonth;
+      const currentLunarDay = nowSolarDate.lDay;
 
-        offsetMonths = tempDate < now ? 1 : 0;
+      // 目标农历日期对象
+      const targetLunar = {
+        year: lunarYear,
+        month: lunarMonth,
+        day: lunarDay,
+        isLeap: false, // 默认不是闰月
+      };
+
+      // 计算目标公历日期
+      let targetSolarDate;
+
+      // 处理重复类型
+      if (type === "1") {
+        // 每月重复
+        // 计算当前农历月份，如果目标日期已过，则计算下个月
+        let tempLunarMonth = currentLunarMonth;
+        let tempLunarYear = currentLunarYear;
+
+        // 检查当前农历日期是否已过目标日期
+        const isCurrentDatePassed =
+          currentLunarMonth > lunarMonth ||
+          (currentLunarMonth === lunarMonth && currentLunarDay > lunarDay);
+
+        if (isCurrentDatePassed) {
+          tempLunarMonth += 1;
+          if (tempLunarMonth > 12) {
+            tempLunarMonth = 1;
+            tempLunarYear += 1;
+          }
+        } else {
+          tempLunarMonth = lunarMonth;
+        }
+
+        // 转换为公历日期
+        targetSolarDate = conversion.lunar2solar(
+          tempLunarYear,
+          tempLunarMonth,
+          lunarDay,
+          targetLunar.isLeap
+        );
+      } else if (type === "2") {
+        // 每年重复
+        // 计算目标农历年份
+        let tempLunarYear = currentLunarYear;
+
+        // 检查当前农历日期是否已过目标日期
+        const isCurrentDatePassed =
+          currentLunarYear > lunarYear ||
+          (currentLunarYear === lunarYear && currentLunarMonth > lunarMonth) ||
+          (currentLunarYear === lunarYear &&
+            currentLunarMonth === lunarMonth &&
+            currentLunarDay > lunarDay);
+
+        if (isCurrentDatePassed) {
+          tempLunarYear += 1;
+        } else {
+          tempLunarYear = lunarYear;
+        }
+
+        // 转换为公历日期
+        targetSolarDate = conversion.lunar2solar(
+          tempLunarYear,
+          lunarMonth,
+          lunarDay,
+          targetLunar.isLeap
+        );
+      } else {
+        // 唯一日期
+        targetSolarDate = conversion.lunar2solar(
+          lunarYear,
+          lunarMonth,
+          lunarDay,
+          targetLunar.isLeap
+        );
       }
 
-      target.setFullYear(currentYear, currentMonth + offsetMonths);
-
-      // 处理月末日期溢出问题（如3月31日转到4月30日）
-      if (target.getDate() !== targetDate.getDate()) {
-        target.setDate(0); // 设置为当月最后一天
+      // 验证转换结果
+      if (!targetSolarDate || targetSolarDate === -1) {
+        throw new Error("农历日期转换失败");
       }
+
+      // 创建目标日期对象
+      target = new Date(
+        `${targetSolarDate.cYear}-${targetSolarDate.cMonth}-${targetSolarDate.cDay}`
+      );
+      target.setHours(12, 0, 0, 0);
+    } catch (error) {
+      console.error("农历日期处理错误:", error);
+      // 出错时使用原日期作为备选
+      target = new Date(time);
+      target.setHours(12, 0, 0, 0);
+    }
+  } else {
+    // 原有公历逻辑
+    // 验证日期格式是否有效
+    const parseDate = (dateStr: string): Date | null => {
+      const date = new Date(dateStr);
+      return Number.isNaN(date.getTime()) ? null : date;
+    };
+
+    const targetDate = parseDate(time);
+    if (!targetDate) {
+      throw new Error("日期无效");
     }
 
-    // 每年重复
-    if (type === "2") {
-      // 计算年份偏移
-      const offsetYears = target < now ? 1 : 0;
-      target.setFullYear(currentYear + offsetYears);
+    target = new Date(targetDate);
+    target.setHours(12, 0, 0, 0);
 
-      // 处理闰年2月29日特殊情况
-      if (targetDate.getMonth() === 1 && targetDate.getDate() === 29) {
-        if (!isLeapYear(target.getFullYear())) {
-          target.setDate(28);
+    // 处理重复类型
+    if (type !== "0") {
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth();
+
+      // 每月重复
+      if (type === "1") {
+        // 计算需要偏移的月份数
+        let offsetMonths = 0;
+        if (target < now) {
+          // 目标日期在当前日期之前，计算需要多少个月才能超过当前日期
+          const targetDay = target.getDate();
+          const tempDate = new Date(currentYear, currentMonth, targetDay);
+          tempDate.setHours(12, 0, 0, 0);
+
+          offsetMonths = tempDate < now ? 1 : 0;
+        }
+
+        target.setFullYear(currentYear, currentMonth + offsetMonths);
+
+        // 处理月末日期溢出问题（如3月31日转到4月30日）
+        if (target.getDate() !== targetDate.getDate()) {
+          target.setDate(0); // 设置为当月最后一天
+        }
+      }
+
+      // 每年重复
+      if (type === "2") {
+        // 计算年份偏移
+        const offsetYears = target < now ? 1 : 0;
+        target.setFullYear(currentYear + offsetYears);
+
+        // 处理闰年2月29日特殊情况
+        if (targetDate.getMonth() === 1 && targetDate.getDate() === 29) {
+          if (!isLeapYear(target.getFullYear())) {
+            target.setDate(28);
+          }
         }
       }
     }
@@ -271,7 +445,19 @@ const getTimeDesc = (
   return ["", "今天", ""];
 };
 
-const getTime = (time: string) => {
+const getLunarTime = (time: string) => {
+  const date = new Date(time);
+  const year = conversion.toChinaYear(date.getFullYear());
+  const month = conversion.toChinaMonth(date.getMonth() + 1);
+  const day = conversion.toChinaDay(date.getDate());
+  // console.log(data);
+  return `${year}年${month}${day}`;
+};
+
+const getTime = (time: string, isLunar: boolean = false) => {
+  if (isLunar) {
+    return getLunarTime(time);
+  }
   const date = new Date(time);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -282,6 +468,7 @@ const getTime = (time: string) => {
 const form = ref<Moment>({
   name: "",
   type: "0",
+  timeType: "solar",
   time: formateDate(new Date(), "yyyy-mm-dd"),
   remind: false,
   toTop: false,
@@ -289,9 +476,9 @@ const form = ref<Moment>({
 
 const isEdit = ref(false);
 
-const bindDateChange = (e: any) => {
-  form.value.time = e.detail.value;
-};
+// const bindDateChange = (e: any) => {
+//   form.value.time = e.detail.value;
+// };
 
 const showPopup = ref(false);
 const handleAddClick = () => {
@@ -299,6 +486,7 @@ const handleAddClick = () => {
     name: "",
     time: formateDate(new Date(), "yyyy-mm-dd"),
     type: "0",
+    timeType: "solar",
     toTop: false,
   };
   isEdit.value = false;
@@ -309,6 +497,7 @@ const showContent = ref(false);
 const current = ref<Moment>({
   name: "",
   time: formateDate(new Date(), "yyyy-mm-dd"),
+  timeType: "solar",
   type: "0",
 });
 
@@ -352,6 +541,10 @@ const handleEditClick = () => {
 };
 
 const handleLongPress = (item: Moment) => {
+  if (item.showDeleteIcon) {
+    item.showDeleteIcon = false;
+    return;
+  }
   //展示删除按钮并把其他块的删除按钮恢复
   blockList.value.forEach((item) => {
     item.showDeleteIcon = false;
@@ -390,6 +583,7 @@ const initData = () => {
     addMoment({
       name: "记下重要的时刻~",
       time: formateDate(new Date(), "yyyy-mm-dd"),
+      timeType: "solar",
       type: "0",
       toTop: true,
     });
@@ -413,7 +607,32 @@ const handleTomine = () => {
   });
 };
 
+const selectOptions = ref([48, 9, 15, 1]);
+const showCalendar = ref(false);
+
+const transformText = (time: string, timeType: string) => {
+  if (timeType === "lunar") {
+    return getLunarTime(time);
+  }
+  return time;
+};
+
+const setCurrentDate = () => {
+  const year = new Date().getFullYear() - 1950;
+  const month = new Date().getMonth();
+  const day = new Date().getDate() - 1;
+  selectOptions.value = [year, month, day, 0];
+};
+
+const selectDate = (data: any) => {
+  console.log(data);
+  form.value.time = data.date;
+  form.value.timeType = data.type;
+  showCalendar.value = false;
+};
+
 onLoad(() => {
+  setCurrentDate();
   initData();
 });
 

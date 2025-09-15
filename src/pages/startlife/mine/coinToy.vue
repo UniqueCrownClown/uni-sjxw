@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <view class="u-m-l-20 u-m-t-50 u-text-left" style="width: 100%">
+    <view class="u-m-l-20 u-m-t-20 u-text-left" style="width: 100%">
       <u-icon
         name="home"
         color="#8ad2b3"
@@ -65,7 +65,7 @@
           ><text>出现概率为{{ tailProb }}%</text></view
         >
 
-        <view class="u-p-10 u-content-color u-text-center u-font-md"
+        <view class="u-p-10 u-content-color u-text-center u-font-lg"
           ><text
             >抛硬币不会告诉你答案，而是落入手中的一瞬间，让你明白你内心深处的答案！</text
           ></view
@@ -173,9 +173,9 @@ onLoad(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  height: 240px;
   width: 100%;
-  margin: 50px 0;
+  margin: 30px 0;
 }
 
 .coin {
@@ -219,11 +219,15 @@ onLoad(() => {
 }
 
 .coin0 {
-  background-image: url("https://s21.ax1x.com/2025/09/12/pVW1f56.jpg");
+  background-color: $main-color;
+  //background-image: url("https://s21.ax1x.com/2025/09/12/pVW1f56.jpg");
+  background-image: url("https://crownclown.xyz/icon_back.jpg");
 }
 
 .coin1 {
-  background-image: url("https://s21.ax1x.com/2025/09/12/pVW1WUx.jpg");
+  background-color: #fff;
+  // background-image: url("https://s21.ax1x.com/2025/09/12/pVW1WUx.jpg");
+  background-image: url("https://crownclown.xyz/icon_front.jpg");
   transform: rotateY(180deg); /* 反面初始旋转180度 */
 }
 
