@@ -87,6 +87,8 @@ export default {
     },
     selectOptions(newVal, oldVal) {
       console.log('修改了默认值需要回显', newVal)
+      // 先切换到公历
+      this.switchBtn('solar')
       this.selectValue = newVal
     },
   },
