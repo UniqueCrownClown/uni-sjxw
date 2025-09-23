@@ -472,7 +472,7 @@ onShareAppMessage(() => {
 <style lang="scss" scoped>
 .moment-container {
   padding: 20px;
-  background-image: url("https://crownclown.xyz/labubu_bg.jpeg");
+  background-image: url("https://crownclown.xyz/moment.jpeg");
   background-size: cover;
   min-height: 100vh;
 }

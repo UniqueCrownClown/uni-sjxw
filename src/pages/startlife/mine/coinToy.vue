@@ -3,7 +3,7 @@
     <view class="u-m-l-20 u-m-t-20 u-text-left" style="width: 100%">
       <u-icon
         name="home"
-        color="#8ad2b3"
+        color="#D9D919"
         size="50"
         @click="handleTomine"
       ></u-icon>

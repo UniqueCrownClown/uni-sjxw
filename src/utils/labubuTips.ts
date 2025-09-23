@@ -38,7 +38,8 @@ export const labubuResultList = [
     description:
       "你像Labubu一样，是天生的团队焦点，敢说敢做的性格让你自带感染力。虽然有时会坚持己见，但面对真正在意的人，总会默默收起棱角，用笨拙的方式保护对方。收集玩具时喜欢主导选择权，却愿意把最好的分享给朋友。",
     signature: "「听我的，不会错——但你要是坚持，我陪你」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcqh1x.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcqh1x.png",
+    bg: "https://crownclown.xyz/labubu_test/1.jpeg",
   },
   {
     id: 2,
@@ -48,7 +49,8 @@ export const labubuResultList = [
     description:
       "你像Zimomo一样，永远保持着对世界的好奇心，看到新奇玩具就想立刻拆开探索。喜欢挑战常规玩法，哪怕失败也笑得开心。社交中是活跃气氛的存在，总能发现别人忽略的趣味细节，是团队里的「惊喜制造机」。",
     signature: "「这个看起来好玩！走，试试去？」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbDdH.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbDdH.png",
+    bg: "https://crownclown.xyz/labubu_test/2.jpeg",
   },
   {
     id: 3,
@@ -58,7 +60,8 @@ export const labubuResultList = [
     description:
       "你像Mokoko一样，是朋友眼中的「治愈系存在」。收到礼物会偷偷开心很久，看到别人难过会默默递上安慰。收藏玩具时更在意它们的「故事感」，哪怕是基础款也会精心布置场景，相信每个玩具都有灵魂。",
     signature: "「这个给你… 它会保佑你今天顺利的」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbwLD.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbwLD.png",
+    bg: "https://crownclown.xyz/labubu_test/3.jpeg",
   },
   {
     id: 4,
@@ -68,7 +71,8 @@ export const labubuResultList = [
     description:
       "你像Tycoco一样，走到哪里都能和人打成一片。拆盲盒时会先对着盒子说「拜托给我可爱的那个呀」，收藏柜里总少不了食物主题的款式。朋友聚会永远是你组织，因为你坚信「分享快乐就是双倍快乐」。",
     signature: "「拆盒前先吃块糖！运气会变好哦～」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbyFA.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbyFA.png",
+    bg: "https://crownclown.xyz/labubu_test/4.jpeg",
   },
   {
     id: 5,
@@ -78,7 +82,8 @@ export const labubuResultList = [
     description:
       "你像Vos一样，看似不苟言笑，却会在朋友拆到重复款时默默递上自己的隐藏款。收藏柜整理得一丝不苟，每个玩具都有固定位置。不喜欢喧哗，但关键时刻总能挺身而出，用实力解决问题。",
     signature: "「嗯。需要帮忙的话，叫我」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbrod.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbrod.png",
+    bg: "https://crownclown.xyz/labubu_test/5.jpeg",
   },
   {
     id: 6,
@@ -88,7 +93,8 @@ export const labubuResultList = [
     description:
       "你像Yaya一样，拆盲盒前会做足功课分析概率，收藏的玩具总能在几年后成为绝版款。朋友纠结时喜欢找你参谋，因为你总能一针见血指出问题核心。相信「万物有灵」，会和玩具说悄悄话。",
     signature: "「我早说过，这个系列值得等」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbBee.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbBee.png",
+    bg: "https://crownclown.xyz/labubu_test/6.jpeg",
   },
   {
     id: 7,
@@ -98,7 +104,8 @@ export const labubuResultList = [
     description:
       "你像Pipo一样，总把玩具摆成搞笑造型拍表情包，拆盒时故意学机器人说话逗朋友。擅长给普通款玩具改造成「限量款」，比如给Labubu画墨镜、给Zimomo加小披风。生活里充满奇思妙想，是大家的「快乐源泉」。",
     signature: "「看我的！这样玩才有意思～」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcb2SP.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcb2SP.png",
+    bg: "https://crownclown.xyz/labubu_test/7.jpeg",
   },
   {
     id: 8,
@@ -108,7 +115,8 @@ export const labubuResultList = [
     description:
       "你像Spooky一样，对暗黑系、哥特风玩具情有独钟，收藏柜总在夜晚亮着小灯。看似难以接近，却会记住朋友无意中说的话，悄悄准备惊喜。相信「孤独是创作的源泉」，经常对着玩具发呆构思故事。",
     signature: "「夜晚的玩具，才会露出真面目哦」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbRQf.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbRQf.png",
+    bg: "https://crownclown.xyz/labubu_test/8.jpeg",
   },
   {
     id: 9,
@@ -118,7 +126,8 @@ export const labubuResultList = [
     description:
       "你像Pato一样，拆到重复款也会笑着说「正好可以组CP」，永远相信下一个就是隐藏款。玩具摆得歪歪扭扭也不介意，觉得「这样才生动」。朋友emo时只要有你在，总能被你的傻乐感染，瞬间治愈。",
     signature: "「哈哈！你看这个歪脖子的样子，好可爱啊」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcb6JI.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcb6JI.png",
+    bg: "https://crownclown.xyz/labubu_test/9.jpeg",
   },
   {
     id: 10,
@@ -128,7 +137,8 @@ export const labubuResultList = [
     description:
       "你像Boo一样，会把玩具藏在朋友包里突然出现，拆盒时故意发出「哇——」的夸张叫声。收藏的玩具大多是搞怪造型，比如吐舌头的、做鬼脸的。虽然爱恶作剧，但分寸感极好，永远不会真的让人不快。",
     signature: "「嘘—— 等下吓他们一跳！」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcLPEQ.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcLPEQ.png",
+    bg: "https://crownclown.xyz/labubu_test/10.jpeg",
   },
   {
     id: 11,
@@ -138,7 +148,8 @@ export const labubuResultList = [
     description:
       "你像Toko一样，会为玩具制作专属底座和场景，甚至自己捏黏土配件。拆盒时先检查每个细节，有瑕疵会想办法修复而不是抱怨。收藏对你来说是「创作的延续」，每个玩具都承载着你的巧思。",
     signature: "「再等一下，这个角度还能更完美」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcq5jK.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcq5jK.png",
+    bg: "https://crownclown.xyz/labubu_test/11.jpeg",
   },
   {
     id: 12,
@@ -148,7 +159,8 @@ export const labubuResultList = [
     description:
       "你像特别款星耀Labubu一样，有时热情似Tycoco，有时沉静如Spooky，拆盒时可能冲动也可能理性。收藏的玩具风格跨度极大，从暗黑到治愈无所不包。你不被单一标签定义，认为「多变才是真实的自己」。",
     signature: "「我？我就是我，不一样的烟火呀」",
-    bg: "https://s21.ax1x.com/2025/09/01/pVcbcWt.png",
+    // bg: "https://s21.ax1x.com/2025/09/01/pVcbcWt.png",
+    bg: "https://crownclown.xyz/labubu_test/12.jpeg",
   },
 ];
 
