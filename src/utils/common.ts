@@ -213,19 +213,25 @@ export const getTimeDesc = (
       if (type === "1") {
         // 计算需要偏移的月份数
         let offsetMonths = 0;
-        if (target < now) {
-          // 目标日期在当前日期之前，计算需要多少个月才能超过当前日期
-          const targetDay = target.getDate();
-          const tempDate = new Date(currentYear, currentMonth, targetDay);
-          tempDate.setHours(12, 0, 0, 0);
-
-          offsetMonths = tempDate < now ? 1 : 0;
+        
+        // 获取目标日期的日期号（如1号、15号等）
+        const targetDay = targetDate.getDate();
+        
+        // 创建当前月份中与目标日期同号的日期
+        const tempDate = new Date(currentYear, currentMonth, targetDay);
+        tempDate.setHours(12, 0, 0, 0);
+        
+        // 判断是否需要偏移：如果当前月份的目标日期已过，则偏移1个月
+        if (tempDate < now) {
+          offsetMonths = 1;
         }
 
-        target.setFullYear(currentYear, currentMonth + offsetMonths);
+        // 设置目标日期为当前年月加上偏移月份
+        target = new Date(currentYear, currentMonth + offsetMonths, targetDay);
+        target.setHours(12, 0, 0, 0);
 
         // 处理月末日期溢出问题（如3月31日转到4月30日）
-        if (target.getDate() !== targetDate.getDate()) {
+        if (target.getDate() !== targetDay) {
           target.setDate(0); // 设置为当月最后一天
         }
       }
@@ -254,4 +260,37 @@ export const getTimeDesc = (
   if (days > 0) return ["剩", days.toString(), "天"];
   if (days < 0) return ["已", (-days).toString(), "天"];
   return ["", "今天", ""];
+};
+
+// 保存文件
+export const saveFile = (fileName: string) => {
+  console.log(`${(uni as any).env.USER_DATA_PATH}/${fileName}`);
+  const fs = uni.getFileSystemManager();
+  const data = { message: "这是要保存的数据" };
+  fs.writeFile({
+    filePath: `${(uni as any).env.USER_DATA_PATH}/${fileName}`,
+    data: JSON.stringify(data),
+    encoding: "utf8",
+    success(res) {
+      console.log("文件保存成功", res);
+    },
+    fail(err) {
+      console.error("文件保存失败", err);
+    },
+  });
+};
+// 读取文件
+export const readFile = (fileName: string) => {
+  const fs = uni.getFileSystemManager();
+  fs.readFile({
+    filePath: `${(uni as any).env.USER_DATA_PATH}/${fileName}`,
+    encoding: "utf8",
+    success(res) {
+      const parsedData = JSON.parse((res as any).data);
+      console.log("读取到的数据", parsedData);
+    },
+    fail(err) {
+      console.error("文件读取失败", err);
+    },
+  });
 };

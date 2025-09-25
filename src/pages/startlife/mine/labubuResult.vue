@@ -11,7 +11,7 @@
       <view class="slot-wrap u-m-l-20" style="">
         <u-icon
           name="home"
-          color="#f0a6b3"
+          color="#D9D919"
           size="40"
           @click="handleClick"
         ></u-icon>

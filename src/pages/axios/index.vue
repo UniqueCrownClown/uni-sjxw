@@ -4,6 +4,8 @@
     <input type="number" v-model="phone" />
     <button @click="getCode">获取验证码(GET)</button>
     <button @click="showCalendar = true">选择日期</button>
+    <button @click="saveFile('test.txt')">保存文件</button>
+    <button @click="readFile('test.txt')">读取文件</button>
     <wan-calendar
       ref="betterCalendarRef"
       :showCalendar="showCalendar"
@@ -18,6 +20,7 @@ import { ref } from "vue";
 import { userApi } from "@/api";
 import WanCalendar from "@/components/wan-calendar/wan-calendar.vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { saveFile, readFile } from "@/utils/common";
 
 const phone = ref("12345678901");
 

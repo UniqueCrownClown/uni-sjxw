@@ -19,7 +19,7 @@
       v-if="showCanvas"
     ></canvas>
     <u-popup v-model="showActionSheet" mode="bottom" :closeable="true">
-      <view class="u-p-t-20 u-p-b-30">
+      <view class="u-p-t-60 u-p-b-30">
         <view
           class="operation-btn"
           style="
@@ -511,7 +511,7 @@ export default defineComponent({
 
     onShareAppMessage(() => {
       return {
-        title: "快来时记小屋和我一起快乐打卡吧~~", // 分享卡片标题
+        title: "快来和我一起快乐打卡吧~~", // 分享卡片标题
         path: "/pages/startlife/index/index", // 分享后打开的页面路径（可带参数）
         imageUrl: posterImageUrl.value,
       };

@@ -497,7 +497,7 @@ onShow(() => {
 
 onShareAppMessage(() => {
   return {
-    title: "快来时记小屋和我一起快乐打卡吧~~",
+    title: "快来和我一起快乐打卡吧~~",
     path: "/pages/startlife/index/index",
     imageUrl: "https://s21.ax1x.com/2025/09/03/pVgdO2V.jpg",
   };

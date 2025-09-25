@@ -1,57 +1,86 @@
 <template>
   <view class="moment-container">
-    <view class="u-m-l-20 u-m-t-50">
+    <view class="u-m-l-20 u-m-t-50 moment-header">
       <u-icon name="home" color="#fff" size="50" @click="handleTomine"></u-icon>
     </view>
-    <view class="u-p-20 u-flex u-row-left u-flex-wrap">
-      <view class="moment-block u-flex u-row-center" @click="handleAddClick">
-        <u-icon name="plus" color="#fff" size="100"></u-icon>
-      </view>
-      <view
-        class="moment-block"
-        @click="handleUpdateClick(item)"
-        @longpress="handleLongPress(item)"
-        v-for="item in blockList"
-        :key="item.name"
-      >
-        <view class="u-flex u-row-between">
-          <view class="moment-block-badge u-font-xs">
-            {{
-              item.name === "记下重要的时刻~"
-                ? "长按删除示例"
-                : getTypeDesc(item.type)
-            }}
-          </view>
-          <view class="u-p-10" @click.stop="handleDeleteClick($event, item)">
-            <u-icon
-              name="trash-fill"
-              color="#fa3534"
-              size="50"
-              v-if="item.showDeleteIcon"
-            ></u-icon>
-          </view>
+    <view class="moment-main">
+      <view class="u-p-20 u-flex u-row-left u-flex-wrap">
+        <view class="moment-block u-flex u-row-center" @click="handleAddClick">
+          <u-icon name="plus" color="#fff" size="100"></u-icon>
         </view>
         <view
-          class="u-p-10 u-text-center u-font-xl"
-          style="white-space: nowrap"
-          >{{ item.name }}</view
+          class="moment-block"
+          @click="handleUpdateClick(item)"
+          @longpress="handleLongPress(item)"
+          v-for="item in blockList"
+          :key="item.name"
         >
-        <view class="u-p-10 u-text-center">
-          <text>
-            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[0] }}
-          </text>
-          <text class="u-p-20" style="font-size: 64rpx">
-            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[1] }}
-          </text>
-          <text>
-            {{ getTimeDesc(item.type, item.time, item.timeType == "lunar")[2] }}
-          </text>
+          <view class="u-flex u-row-between">
+            <view class="moment-block-badge u-font-xs">
+              {{
+                item.name === "记下重要的时刻~"
+                  ? "长按删除示例"
+                  : getTypeDesc(item.type)
+              }}
+            </view>
+            <view class="u-p-10" @click.stop="handleDeleteClick($event, item)">
+              <u-icon
+                name="trash-fill"
+                color="#fa3534"
+                size="50"
+                v-if="item.showDeleteIcon"
+              ></u-icon>
+            </view>
+          </view>
+          <view
+            class="u-p-10 u-text-center u-font-xl"
+            style="white-space: nowrap"
+            >{{ item.name }}</view
+          >
+          <view class="u-p-10 u-text-center">
+            <text>
+              {{
+                getTimeDesc(item.type, item.time, item.timeType == "lunar")[0]
+              }}
+            </text>
+            <text class="u-p-20" style="font-size: 64rpx">
+              {{
+                getTimeDesc(item.type, item.time, item.timeType == "lunar")[1]
+              }}
+            </text>
+            <text>
+              {{
+                getTimeDesc(item.type, item.time, item.timeType == "lunar")[2]
+              }}
+            </text>
+          </view>
+          <view class="u-p-10 u-text-center u-font-lg">{{
+            getTime(item.time, item.timeType == "lunar")
+          }}</view>
         </view>
-        <view class="u-p-10 u-text-center u-font-lg">{{
-          getTime(item.time, item.timeType == "lunar")
-        }}</view>
       </view>
     </view>
+    <view class="moment-footer safe-area-inset-bottom">
+      <u-icon
+        name="question-circle"
+        color="#ffffff"
+        size="50"
+        @click="momentPopup = true"
+      ></u-icon>
+    </view>
+    <u-popup v-model="momentPopup" mode="center" width="90%" :closeable="true">
+      <view
+        class="u-p-40 u-p-t-80 u-content-color u-text-center u-font-lg"
+        style="
+          background-color: rgba(255, 255, 255, 0.8);
+          line-height: 50rpx;
+          color: #606266;
+        "
+        ><text
+          >总有一些时刻弥足珍贵,不应该忘记，忘性大星人快用时刻轻松记来记录这些动人的时刻吧！！</text
+        ></view
+      >
+    </u-popup>
     <u-popup
       v-model="showPopup"
       mode="bottom"
@@ -70,7 +99,10 @@
         <view class="u-p-20">
           <u-form :model="form" ref="formRef" label-width="160">
             <u-form-item label="时刻名称" prop="name"
-              ><u-input v-model="form.name" placeholder="输入时刻名称"
+              ><u-input
+                v-model="form.name"
+                placeholder="输入时刻名称"
+                :disabled="isEdit"
             /></u-form-item>
             <u-form-item label="打卡方式" prop="type">
               <u-radio-group v-model="form.type">
@@ -309,7 +341,7 @@ const current = ref<Moment>({
 });
 
 const handleUpdateClick = (item: Moment) => {
-  current.value = item;
+  current.value = JSON.parse(JSON.stringify(item));
   showContent.value = true;
 };
 
@@ -457,6 +489,8 @@ const selectDate = (data: any) => {
   showCalendar.value = false;
 };
 
+const momentPopup = ref(false);
+
 onLoad(() => {
   setCurrentDate();
   initData();
@@ -471,10 +505,44 @@ onShareAppMessage(() => {
 </script>
 <style lang="scss" scoped>
 .moment-container {
-  padding: 20px;
+  padding: 0;
   background-image: url("https://crownclown.xyz/moment.jpeg");
   background-size: cover;
   min-height: 100vh;
+  /* 确保占满整个视口高度 */
+  height: 100vh;
+  /* 使用Flex布局 */
+  display: flex;
+  flex-direction: column;
+  /* 隐藏可能的滚动条 */
+  overflow: hidden;
+  .moment-header {
+    /* 固定头部高度和位置 */
+    height: 100rpx;
+    padding: 20rpx;
+    display: flex;
+    align-items: center;
+  }
+
+  .moment-main {
+    /* 占满剩余空间 */
+    flex: 1;
+    /* 支持垂直滚动 */
+    overflow-y: auto;
+    /* 添加内边距，保持内容与边缘的距离 */
+    padding: 20rpx;
+    /* 隐藏横向滚动条 */
+    overflow-x: hidden;
+  }
+
+  .moment-footer {
+    /* 固定底部高度和位置 */
+    padding-top: 20rpx;
+    margin-bottom: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .moment-block {
   width: 46%;

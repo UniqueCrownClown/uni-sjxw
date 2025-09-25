@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <view class="u-m-l-20 u-m-t-20 u-text-left" style="width: 100%">
+    <view class="u-m-l-20 u-m-t-50 u-text-left" style="width: 100%">
       <u-icon
         name="home"
         color="#D9D919"

@@ -1,7 +1,7 @@
 {
   "name": "uni-sjxw",
   "appid": "__UNI__DA16D5F",
-  "description": "基于uni-app的微信小程序时记小屋",
+  "description": "基于uni-app的微信小程序",
   "versionName": "1.0.0",
   "versionCode": "100",
   "transformPx": false,
