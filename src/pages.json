@@ -7,9 +7,39 @@
       }
     },
     {
+      "path": "pages/startlife/mine/circleToy",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-circleToy"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/index",
+      "style": {
+        "navigationBarTitleText": "startlife-mine"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/zhanbu",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-zhanbu"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/zhanbuResult",
+      "style": {
+        "navigationBarTitleText": "占卜结果"
+      }
+    },
+    {
       "path": "pages/startlife/mine/coinToy",
       "style": {
         "navigationBarTitleText": "startlife-mine-coinToy"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/decisionTools",
+      "style": {
+        "navigationBarTitleText": "决策工具"
       }
     },
     {
@@ -34,12 +64,6 @@
       "path": "pages/startlife/mine/labubu",
       "style": {
         "navigationBarTitleText": "startlife-mine-labubu"
-      }
-    },
-    {
-      "path": "pages/startlife/mine/index",
-      "style": {
-        "navigationBarTitleText": "startlife-mine"
       }
     },
     {

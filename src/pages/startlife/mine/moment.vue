@@ -249,6 +249,17 @@
         </view>
       </view>
     </u-popup>
+    <!-- 在template中添加，放在最外层view的末尾 -->
+    <canvas
+      canvas-id="shareCanvas"
+      style="
+        width: 500px;
+        height: 400px;
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+      "
+    ></canvas>
   </view>
 </template>
 <script setup lang="ts">
@@ -257,7 +268,7 @@ import { onLoad, onShareAppMessage } from "@dcloudio/uni-app";
 import { formateDate, getTimeDesc } from "@/utils/common";
 import {
   Moment,
-  addMoment,
+addMoment,
   getMoments,
   updateMoment,
   deleteMoment,
@@ -340,8 +351,16 @@ const current = ref<Moment>({
   type: "0",
 });
 
-const handleUpdateClick = (item: Moment) => {
+const handleUpdateClick = async (item: Moment) => {
   current.value = JSON.parse(JSON.stringify(item));
+
+  // 预生成分享图片
+  try {
+    await generateShareImage();
+  } catch (error) {
+    console.error("预生成分享图片失败:", error);
+  }
+
   showContent.value = true;
 };
 
@@ -496,17 +515,106 @@ onLoad(() => {
   initData();
 });
 
-onShareAppMessage(() => {
-  return {
-    title: "分享给你一个重要的时刻~~",
-    path: "/pages/startlife/mine/moment",
-  };
+// 生成分享图片
+const generateShareImage: () => Promise<string> = () => {
+  return new Promise((resolve, reject) => {
+    const ctx = uni.createCanvasContext("shareCanvas");
+
+    // 设置背景
+    ctx.setFillStyle("#4f9679");
+    ctx.fillRect(0, 0, 500, 400);
+
+    // 绘制标题
+    ctx.setFillStyle("#FFFFFF");
+    ctx.setFontSize(38); // 从32改为38，增加6个字号
+    ctx.setTextAlign("center");
+    ctx.fillText(current.value.name, 250, 100);
+
+    // 绘制时间信息
+    const timeDesc = getTimeDesc(
+      current.value.type,
+      current.value.time,
+      current.value.timeType == "lunar"
+    );
+
+    // 计算总宽度，用于横向居中排列
+    ctx.setFontSize(28);
+    const width1 = ctx.measureText(timeDesc[0]).width;
+    ctx.setFontSize(40);
+    const width2 = ctx.measureText(timeDesc[1]).width;
+    ctx.setFontSize(28);
+    const width3 = ctx.measureText(timeDesc[2]).width;
+    
+    const totalWidth = width1 + width2 + width3 + 40; // 加上间距
+    let startX = (500 - totalWidth) / 2; // 计算起始x坐标，使整体居中
+    
+    // 绘制第一部分
+    ctx.setFontSize(28);
+    ctx.fillText(timeDesc[0], startX, 200);
+    startX += width1 + 20; // 更新x坐标，添加间距
+    
+    // 绘制第二部分（较大字体）
+    ctx.setFontSize(40);
+    ctx.fillText(timeDesc[1], startX, 200);
+    startX += width2 + 20; // 更新x坐标，添加间距
+    
+    // 绘制第三部分
+    ctx.setFontSize(28);
+    ctx.fillText(timeDesc[2], startX, 200);
+
+    // 绘制完整日期
+    ctx.setFontSize(32); 
+    ctx.fillText(
+      getTime(current.value.time, current.value.timeType == "lunar"),
+      250,
+      300
+    );
+
+    // 绘制类型标签
+    // ctx.setFillStyle("#FFFFFF");
+    // ctx.setFontSize(22);
+    // ctx.fillText(getTypeDesc(current.value.type), 250, 350);
+
+    ctx.draw(false, () => {
+      // 将Canvas转换为临时图片
+      uni.canvasToTempFilePath({
+        canvasId: "shareCanvas",
+        success: (res) => {
+          resolve(res.tempFilePath);
+        },
+        fail: (err) => {
+          reject(err);
+        },
+      });
+    });
+  });
+};
+
+onShareAppMessage(async () => {
+  try {
+    // 生成分享图片
+    const shareImageUrl = await generateShareImage();
+
+    return {
+      title: `分享给你一个重要的时刻：${current.value.name}`,
+      path: "/pages/startlife/mine/moment",
+      imageUrl: shareImageUrl, // 使用动态生成的图片
+    };
+  } catch (error) {
+    console.error("生成分享图片失败:", error);
+
+    // 如果生成失败，使用默认图片
+    return {
+      title: "分享给你一个重要的时刻~~",
+      path: "/pages/startlife/mine/moment",
+    };
+  }
 });
 </script>
 <style lang="scss" scoped>
 .moment-container {
   padding: 0;
-  background-image: url("https://crownclown.xyz/moment.jpeg");
+  background-image: url("https://crownclown.xyz/moment.png");
   background-size: cover;
   min-height: 100vh;
   /* 确保占满整个视口高度 */

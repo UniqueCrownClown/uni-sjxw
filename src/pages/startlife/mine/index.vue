@@ -185,7 +185,7 @@ const userInfo = ref({
 });
 const loginTips = computed(() => {
   return userInfo.value.nickName === "未登录"
-    ? "点击登录以使用完整功能"
+    ? "点击登录体验完整功能"
     : "已登录";
 });
 
@@ -215,19 +215,24 @@ const btnList = ref([
   //   iconPath: "/static/assets/svg/10002.svg",
   // },
   {
-    id: "moment",
-    name: "时刻轻松记",
+    id: "labubu",
+    name: "labubu测试",
     iconPath: "/static/assets/svg/10001.svg",
   },
   {
-    id: "labubu",
-    name: "labubu性格测试",
+    id: "moment",
+    name: "时刻轻松记",
     iconPath: "/static/assets/svg/10002.svg",
   },
   {
-    id: "coinToy",
-    name: "选择抛硬币",
+    id: "decisionTools",
+    name: "决策工具",
     iconPath: "/static/assets/svg/10003.svg",
+  },
+  {
+    id: "zhanbu",
+    name: "AI占卜",
+    iconPath: "/static/assets/svg/10008.svg",
   },
   {
     id: "manual",
@@ -275,15 +280,21 @@ const handleCommand = (item: { id: string; name: string }) => {
     });
     return;
   }
+  if (item.id === "zhanbu") {
+    uni.navigateTo({
+      url: "/pages/startlife/mine/zhanbu",
+    });
+    return;
+  }
   if (item.id === "labubu") {
     uni.navigateTo({
       url: "/pages/startlife/mine/labubu",
     });
     return;
   }
-  if (item.id === "coinToy") {
+  if (item.id === "decisionTools") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/coinToy",
+      url: "/pages/startlife/mine/decisionTools",
     });
     return;
   }
