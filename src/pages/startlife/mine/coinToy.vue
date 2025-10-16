@@ -1,13 +1,11 @@
 <template>
   <view class="container">
-    <view class="u-m-l-20 u-m-t-50 u-text-left" style="width: 100%">
-      <u-icon
-        name="home"
-        color="#D9D919"
-        size="50"
-        @click="handleTomine"
-      ></u-icon>
-    </view>
+    <u-navbar
+      title="抛硬币决策"
+      :background="{ backgroundColor: '#83cbac' }"
+      title-color="#fff"
+      back-icon-color="#fff"
+    ></u-navbar>
     <view class="coin-container">
       <view
         class="coin"
@@ -79,12 +77,6 @@
 import { ref } from "vue";
 import { getCoin, addCoin } from "@/api/modules/coin";
 import { onLoad } from "@dcloudio/uni-app";
-
-const handleTomine = () => {
-  uni.switchTab({
-    url: "/pages/startlife/mine/index",
-  });
-};
 
 const isRotating = ref(false);
 const showResult = ref(false);

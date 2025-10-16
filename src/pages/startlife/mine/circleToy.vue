@@ -4,6 +4,7 @@
       title="转盘决策"
       :background="{ backgroundColor: '#83cbac' }"
       title-color="#fff"
+      back-icon-color="#fff"
     ></u-navbar>
 
     <view class="content">
