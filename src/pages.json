@@ -7,15 +7,21 @@
       }
     },
     {
-      "path": "pages/startlife/mine/circleToy",
-      "style": {
-        "navigationBarTitleText": "startlife-mine-circleToy"
-      }
-    },
-    {
       "path": "pages/startlife/mine/index",
       "style": {
         "navigationBarTitleText": "startlife-mine"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/mbti",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-mbti"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/circleToy",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-circleToy"
       }
     },
     {

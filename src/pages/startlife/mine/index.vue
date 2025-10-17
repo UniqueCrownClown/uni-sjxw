@@ -66,7 +66,7 @@
       </view>
     </view>
     <view class="mine-box" style="padding-bottom: 0">
-      <view class="mine-group-header">其他功能</view>
+      <view class="mine-group-header">应用说明</view>
       <view>
         <u-cell-group>
           <u-cell-item
@@ -91,6 +91,28 @@
           <rich-text :nodes="content"></rich-text>
         </view>
       </u-modal>
+    </view>
+    <view class="mine-box" style="padding-bottom: 0">
+      <view class="mine-group-header">其他探索</view>
+      <view>
+        <u-cell-group>
+          <u-cell-item
+            :arrow="true"
+            arrow-direction="right"
+            v-for="item in otherExploreList"
+            :key="item.id"
+            :title="item.name"
+            @click="handleCommand(item)"
+          >
+            <template v-slot:icon>
+              <image
+                :src="item.iconPath"
+                style="width: 40rpx; height: 40rpx; padding: 0 20rpx"
+              ></image>
+            </template>
+          </u-cell-item>
+        </u-cell-group>
+      </view>
     </view>
     <u-popup v-model="showPoster" mode="center" border-radius="14">
       <view class="u-p-20" style="background: transparent; width: 100vw">
@@ -215,6 +237,29 @@ const btnList = ref([
   //   iconPath: "/static/assets/svg/10002.svg",
   // },
   {
+    id: "manual",
+    name: "使用手册",
+    iconPath: "/static/assets/svg/10004.svg",
+  },
+  {
+    id: "somewords",
+    name: "想说的话",
+    iconPath: "/static/assets/svg/10005.svg",
+  },
+  {
+    id: "about",
+    name: "关于我们",
+    iconPath: "/static/assets/svg/10006.svg",
+  },
+  {
+    id: "feedback",
+    name: "用户反馈",
+    iconPath: "/static/assets/svg/10007.svg",
+  },
+]);
+
+const otherExploreList = ref([
+  {
     id: "labubu",
     name: "labubu测试",
     iconPath: "/static/assets/svg/10001.svg",
@@ -235,24 +280,9 @@ const btnList = ref([
     iconPath: "/static/assets/svg/10008.svg",
   },
   {
-    id: "manual",
-    name: "使用手册",
-    iconPath: "/static/assets/svg/10004.svg",
-  },
-  {
-    id: "somewords",
-    name: "想说的话",
-    iconPath: "/static/assets/svg/10005.svg",
-  },
-  {
-    id: "about",
-    name: "关于我们",
-    iconPath: "/static/assets/svg/10006.svg",
-  },
-  {
-    id: "feedback",
-    name: "用户反馈",
-    iconPath: "/static/assets/svg/10007.svg",
+    id: "mbti",
+    name: "MBTI测试",
+    iconPath: "/static/assets/svg/10009.svg",
   },
 ]);
 
@@ -286,9 +316,9 @@ const handleCommand = (item: { id: string; name: string }) => {
     });
     return;
   }
-  if (item.id === "labubu") {
+  if (item.id === "mbti") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/labubu",
+      url: "/pages/startlife/mine/mbti",
     });
     return;
   }
