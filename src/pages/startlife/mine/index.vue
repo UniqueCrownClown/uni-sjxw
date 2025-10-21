@@ -239,22 +239,22 @@ const btnList = ref([
   {
     id: "manual",
     name: "使用手册",
-    iconPath: "/static/assets/svg/10004.svg",
+    iconPath: "/static/assets/svg/10001.svg",
   },
   {
     id: "somewords",
     name: "想说的话",
-    iconPath: "/static/assets/svg/10005.svg",
+    iconPath: "/static/assets/svg/10002.svg",
   },
   {
     id: "about",
     name: "关于我们",
-    iconPath: "/static/assets/svg/10006.svg",
+    iconPath: "/static/assets/svg/10003.svg",
   },
   {
     id: "feedback",
     name: "用户反馈",
-    iconPath: "/static/assets/svg/10007.svg",
+    iconPath: "/static/assets/svg/10004.svg",
   },
 ]);
 
@@ -277,12 +277,17 @@ const otherExploreList = ref([
   {
     id: "zhanbu",
     name: "AI占卜",
-    iconPath: "/static/assets/svg/10008.svg",
+    iconPath: "/static/assets/svg/10004.svg",
   },
   {
     id: "mbti",
     name: "MBTI测试",
-    iconPath: "/static/assets/svg/10009.svg",
+    iconPath: "/static/assets/svg/10005.svg",
+  },
+  {
+    id: "sakura",
+    name: "每日一签",
+    iconPath: "/static/assets/svg/10006.svg",
   },
 ]);
 
@@ -325,6 +330,12 @@ const handleCommand = (item: { id: string; name: string }) => {
   if (item.id === "decisionTools") {
     uni.navigateTo({
       url: "/pages/startlife/mine/decisionTools",
+    });
+    return;
+  }
+  if (item.id === "sakura") {
+    uni.navigateTo({
+      url: "/pages/startlife/mine/sakura",
     });
     return;
   }

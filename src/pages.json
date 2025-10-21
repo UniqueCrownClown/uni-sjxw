@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/mine/sakura",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-sakura"
+      }
+    },
+    {
       "path": "pages/startlife/mine/index",
       "style": {
         "navigationBarTitleText": "startlife-mine"
