@@ -260,13 +260,13 @@ const btnList = ref([
 
 const otherExploreList = ref([
   {
-    id: "labubu",
-    name: "labubu测试",
+    id: "moment",
+    name: "时刻轻松记",
     iconPath: "/static/assets/svg/10001.svg",
   },
   {
-    id: "moment",
-    name: "时刻轻松记",
+    id: "testTools",
+    name: "测试工具",
     iconPath: "/static/assets/svg/10002.svg",
   },
   {
@@ -276,13 +276,8 @@ const otherExploreList = ref([
   },
   {
     id: "zhanbu",
-    name: "AI占卜",
+    name: "赛博占卜",
     iconPath: "/static/assets/svg/10004.svg",
-  },
-  {
-    id: "mbti",
-    name: "MBTI测试",
-    iconPath: "/static/assets/svg/10005.svg",
   },
   {
     id: "sakura",
@@ -309,21 +304,15 @@ const handleCommand = (item: { id: string; name: string }) => {
     });
     return;
   }
-  if (item.id === "labubu") {
+  if (item.id === "testTools") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/labubu",
+      url: "/pages/startlife/mine/testTools",
     });
     return;
   }
   if (item.id === "zhanbu") {
     uni.navigateTo({
       url: "/pages/startlife/mine/zhanbu",
-    });
-    return;
-  }
-  if (item.id === "mbti") {
-    uni.navigateTo({
-      url: "/pages/startlife/mine/mbti",
     });
     return;
   }

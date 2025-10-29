@@ -251,7 +251,8 @@
     </u-popup>
     <!-- 在template中添加，放在最外层view的末尾 -->
     <canvas
-      canvas-id="shareCanvas"
+      id="shareCanvas"
+      type="2d"
       style="
         width: 500px;
         height: 400px;
@@ -518,75 +519,93 @@ onLoad(() => {
 // 生成分享图片
 const generateShareImage: () => Promise<string> = () => {
   return new Promise((resolve, reject) => {
-    const ctx = uni.createCanvasContext("shareCanvas");
+    // 使用 Canvas 2D 接口
+    const query = uni.createSelectorQuery();
+    query.select('#shareCanvas')
+      .fields({ node: true, size: true } as any, (result) => console.log(result))
+      .exec((res) => {
+        const canvas = res[0].node;
+        const ctx = canvas.getContext('2d');
+        
+        // 设置 canvas 尺寸
+        const dpr = uni.getSystemInfoSync().pixelRatio;
+        canvas.width = res[0].width * dpr;
+        canvas.height = res[0].height * dpr;
+        ctx.scale(dpr, dpr);
 
-    // 设置背景
-    ctx.setFillStyle("#4f9679");
-    ctx.fillRect(0, 0, 500, 400);
+        // 设置背景
+        ctx.fillStyle = "#4f9679";
+        ctx.fillRect(0, 0, 500, 400);
 
-    // 绘制标题
-    ctx.setFillStyle("#FFFFFF");
-    ctx.setFontSize(38); // 从32改为38，增加6个字号
-    ctx.setTextAlign("center");
-    ctx.fillText(current.value.name, 250, 100);
+        // 绘制标题
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "38px sans-serif"; // 从32改为38，增加6个字号
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(current.value.name, 250, 100);
 
-    // 绘制时间信息
-    const timeDesc = getTimeDesc(
-      current.value.type,
-      current.value.time,
-      current.value.timeType == "lunar"
-    );
+        // 绘制时间信息
+        const timeDesc = getTimeDesc(
+          current.value.type,
+          current.value.time,
+          current.value.timeType == "lunar"
+        );
 
-    // 计算总宽度，用于横向居中排列
-    ctx.setFontSize(28);
-    const width1 = ctx.measureText(timeDesc[0]).width;
-    ctx.setFontSize(40);
-    const width2 = ctx.measureText(timeDesc[1]).width;
-    ctx.setFontSize(28);
-    const width3 = ctx.measureText(timeDesc[2]).width;
-    
-    const totalWidth = width1 + width2 + width3 + 40; // 加上间距
-    let startX = (500 - totalWidth) / 2; // 计算起始x坐标，使整体居中
-    
-    // 绘制第一部分
-    ctx.setFontSize(28);
-    ctx.fillText(timeDesc[0], startX, 200);
-    startX += width1 + 20; // 更新x坐标，添加间距
-    
-    // 绘制第二部分（较大字体）
-    ctx.setFontSize(40);
-    ctx.fillText(timeDesc[1], startX, 200);
-    startX += width2 + 20; // 更新x坐标，添加间距
-    
-    // 绘制第三部分
-    ctx.setFontSize(28);
-    ctx.fillText(timeDesc[2], startX, 200);
+        // 计算总宽度，用于横向居中排列
+        ctx.font = "28px sans-serif";
+        const width1 = ctx.measureText(timeDesc[0]).width;
+        ctx.font = "40px sans-serif";
+        const width2 = ctx.measureText(timeDesc[1]).width;
+        ctx.font = "28px sans-serif";
+        const width3 = ctx.measureText(timeDesc[2]).width;
+        
+        const totalWidth = width1 + width2 + width3 + 40; // 加上间距
+        let startX = (500 - totalWidth) / 2; // 计算起始x坐标，使整体居中
+        
+        // 绘制第一部分
+        ctx.font = "28px sans-serif";
+        ctx.fillText(timeDesc[0], startX, 200);
+        startX += width1 + 20; // 更新x坐标，添加间距
+        
+        // 绘制第二部分（较大字体）
+        ctx.font = "40px sans-serif";
+        ctx.fillText(timeDesc[1], startX, 200);
+        startX += width2 + 20; // 更新x坐标，添加间距
+        
+        // 绘制第三部分
+        ctx.font = "28px sans-serif";
+        ctx.fillText(timeDesc[2], startX, 200);
 
-    // 绘制完整日期
-    ctx.setFontSize(32); 
-    ctx.fillText(
-      getTime(current.value.time, current.value.timeType == "lunar"),
-      250,
-      300
-    );
+        // 绘制完整日期
+        ctx.font = "32px sans-serif"; 
+        ctx.fillText(
+          getTime(current.value.time, current.value.timeType == "lunar"),
+          250,
+          300
+        );
 
-    // 绘制类型标签
-    // ctx.setFillStyle("#FFFFFF");
-    // ctx.setFontSize(22);
-    // ctx.fillText(getTypeDesc(current.value.type), 250, 350);
+        // 绘制类型标签
+        // ctx.fillStyle = "#FFFFFF";
+        // ctx.font = "22px sans-serif";
+        // ctx.fillText(getTypeDesc(current.value.type), 250, 350);
 
-    ctx.draw(false, () => {
-      // 将Canvas转换为临时图片
-      uni.canvasToTempFilePath({
-        canvasId: "shareCanvas",
-        success: (res) => {
-          resolve(res.tempFilePath);
-        },
-        fail: (err) => {
-          reject(err);
-        },
+        // 将Canvas转换为临时图片
+        uni.canvasToTempFilePath({
+          x: 0,
+          y: 0,
+          width: 500,
+          height: 400,
+          destWidth: 500 * dpr,
+          destHeight: 400 * dpr,
+          canvasId: 'shareCanvas',
+          success: (res) => {
+            resolve(res.tempFilePath);
+          },
+          fail: (err) => {
+            reject(err);
+          },
+        });
       });
-    });
   });
 };
 

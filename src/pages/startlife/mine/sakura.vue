@@ -18,10 +18,10 @@
       <view class="u-flex u-row-center u-m-t-40">
         <view class="rotating-image">
           <view class="u-text-center" style="margin-top: 100px">
-            <text class="u-color-white u-font-xl">{{ luckyTag }}</text>
+            <text class="u-color-white u-font-30">{{ luckyTag }}</text>
           </view>
           <view class="u-text-center" style="margin-top: 20px">
-            <text class="u-color-white u-font-lg">{{ luckyStatus }}</text>
+            <text class="u-color-white u-font-40">{{ luckyStatus }}</text>
           </view>
         </view>
       </view>
@@ -53,7 +53,7 @@ const petalImageUrl = "https://crownclown.xyz/huaban.png";
 const initPetalFloat = () => {
   try {
     // 获取窗口尺寸
-    const systemInfo = uni.getSystemInfoSync();
+    const systemInfo = uni.getWindowInfo();
     windowWidth.value = systemInfo.windowWidth;
     windowHeight.value = systemInfo.windowHeight;
 
@@ -271,7 +271,7 @@ const handleTouch = (e: any) => {
 
 // 监听窗口变化
 const handleResize = () => {
-  const systemInfo = uni.getSystemInfoSync();
+  const systemInfo = uni.getWindowInfo();
   windowWidth.value = systemInfo.windowWidth;
   windowHeight.value = systemInfo.windowHeight;
 };

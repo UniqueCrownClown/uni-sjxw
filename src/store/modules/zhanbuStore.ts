@@ -1,4 +1,18 @@
 import { defineStore } from "pinia";
+// 六爻占卜结果
+export interface LiuYaoResult {
+  time: string;
+  ganzhi: string;
+  gua_xiang: string;
+  gua_degree: string;
+  gua_name: string;
+  gua_biaozhu: string;
+  gua_ci: string;
+  gua_xiang_ci: string;
+  gua_explain: string;
+  gua_detail: string;
+  gua_advice: string;
+}
 // 星座配置
 export interface ZodiacConfig {
   id: string;
@@ -52,6 +66,7 @@ export interface CombineFortuneResult {
 export const useZhanbuStore = defineStore("zhanbu", {
   state: () => ({
     fortuneResult: null as CombineFortuneResult | null,
+    liuyaoResult: null as LiuYaoResult | null,
   }),
   actions: {
     setFortuneResult(params: CombineFortuneResult) {
@@ -62,6 +77,15 @@ export const useZhanbuStore = defineStore("zhanbu", {
     },
     clearFortuneResult() {
       this.fortuneResult = null;
+    },
+    setLiuyaoResult(params: LiuYaoResult) {
+      this.liuyaoResult = params;
+    },
+    getLiuyaoResult() {
+      return this.liuyaoResult;
+    },
+    clearLiuyaoResult() {
+      this.liuyaoResult = null;
     },
   },
 });

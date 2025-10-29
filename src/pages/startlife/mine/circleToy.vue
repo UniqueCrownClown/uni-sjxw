@@ -383,7 +383,7 @@ onMounted(() => {
   options.value = ["选项一", "选项二", "选项三", "选项四"];
 
   // 获取屏幕宽度，设置转盘大小
-  const systemInfo = uni.getSystemInfoSync();
+  const systemInfo = uni.getWindowInfo();
   const screenWidth = systemInfo.screenWidth || 375;
   const rpxToPx = screenWidth / 750; // 微信小程序中 750rpx = 屏幕宽度
   canvasSize.value = Math.min(screenWidth * 0.8, 300);

@@ -1,9 +1,27 @@
 {
   "pages": [
     {
-      "path": "pages/startlife/index/index",
+      "path": "pages/startlife/mine/index",
       "style": {
-        "navigationBarTitleText": "startlife-index"
+        "navigationBarTitleText": "startlife-mine"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/liuyao",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-liuyao"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/liuyaoResult",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-liuyaoResult"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/zhanbu",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-zhanbu"
       }
     },
     {
@@ -13,9 +31,9 @@
       }
     },
     {
-      "path": "pages/startlife/mine/index",
+      "path": "pages/startlife/index/index",
       "style": {
-        "navigationBarTitleText": "startlife-mine"
+        "navigationBarTitleText": "startlife-index"
       }
     },
     {
@@ -31,15 +49,15 @@
       }
     },
     {
-      "path": "pages/startlife/mine/zhanbu",
+      "path": "pages/startlife/mine/animalSign",
       "style": {
-        "navigationBarTitleText": "startlife-mine-zhanbu"
+        "navigationBarTitleText": "startlife-mine-animalSign"
       }
     },
     {
-      "path": "pages/startlife/mine/zhanbuResult",
+      "path": "pages/startlife/mine/animalSignResult",
       "style": {
-        "navigationBarTitleText": "占卜结果"
+        "navigationBarTitleText": "startlife-mine-animalSignResult"
       }
     },
     {
@@ -52,6 +70,12 @@
       "path": "pages/startlife/mine/decisionTools",
       "style": {
         "navigationBarTitleText": "决策工具"
+      }
+    },
+    {
+      "path": "pages/startlife/mine/testTools",
+      "style": {
+        "navigationBarTitleText": "测试工具"
       }
     },
     {

@@ -190,8 +190,8 @@ import { ref, computed, onMounted } from "vue";
 import { onShareAppMessage } from "@dcloudio/uni-app";
 
 const handleTomine = () => {
-  uni.switchTab({
-    url: "/pages/startlife/mine/index",
+  uni.navigateTo({
+    url: "/pages/startlife/mine/testTools",
   });
 };
 

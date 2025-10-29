@@ -10,17 +10,17 @@
           </view>
           <!-- <view class="ignore-year">忽略年份</view> -->
         </view>
-        <picker-view :indicator-style="indicatorStyle" :value="selectValue" @change="bindChange">
-          <picker-view-column>
+        <picker-view class="picker-view" :indicator-style="indicatorStyle" :value="selectValue" @change="bindChange">
+          <picker-view-column class="uni-picker-view-column">
             <view class="item" v-for="(item, index) in years" :key="index">{{ item }}年</view>
           </picker-view-column>
-          <picker-view-column>
+          <picker-view-column class="uni-picker-view-column">
             <view class="item" v-for="(item, index) in months" :key="index">{{ item }}</view>
           </picker-view-column>
-          <picker-view-column>
+          <picker-view-column class="uni-picker-view-column">
             <view class="item" v-for="(item, index) in days" :key="index">{{ item }}</view>
           </picker-view-column>
-          <picker-view-column v-if="isHourShow">
+          <picker-view-column class="uni-picker-view-column" v-if="isHourShow">
             <view class="item" v-for="(item, index) in lunarHour" :key="index">{{
               isActive ? item.solar : item.label
             }}</view>
@@ -50,7 +50,7 @@ export default {
       years: [],
       months: [],
       days: [],
-      indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth / (750 / 100))}px;`,
+      indicatorStyle: `height: ${Math.round(uni.getWindowInfo().screenWidth / (750 / 100))}px;`,
       lunarHour: [],
       date: '',
       hour: '',
@@ -471,7 +471,7 @@ export default {
         right: 30rpx;
       }
     }
-    picker-view {
+    .picker-view {
       width: 100%;
       height: 500rpx;
       margin: 40rpx auto;
@@ -484,7 +484,7 @@ export default {
         font-weight: bold;
       }
       .uni-picker-view-wrapper {
-        uni-picker-view-column {
+        .uni-picker-view-column {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -517,17 +517,19 @@ export default {
       width: 100%;
       display: flex;
       background-color: #f7f7f7;
-      view {
+      .left {
         width: 50%;
         line-height: 110rpx;
         text-align: center;
         font-size: 32rpx;
-      }
-      .left {
         color: #a6a6a6;
         border-right: 1px solid transparent;
       }
       .right {
+        width: 50%;
+        line-height: 110rpx;
+        text-align: center;
+        font-size: 32rpx;
         color: $main-color;
         border-left: 1px solid #e6e6e6;
       }

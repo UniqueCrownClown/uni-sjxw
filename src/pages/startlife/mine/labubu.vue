@@ -1,7 +1,12 @@
 <template>
   <view class="container">
     <view class="u-m-l-20 u-m-t-50">
-      <u-icon name="home" color="#D9D919" size="50" @click="handleTomine"></u-icon>
+      <u-icon
+        name="home"
+        color="#D9D919"
+        size="50"
+        @click="handleTomine"
+      ></u-icon>
     </view>
     <view class="u-p-20 u-m-t-40" style="font-size: 28px; color: #4b2910"
       >你像是LABUBU家族中的那个成员呢?</view
@@ -35,8 +40,8 @@ const handleClick = () => {
   });
 };
 const handleTomine = () => {
-  uni.switchTab({
-    url: "/pages/startlife/mine/index",
+  uni.navigateTo({
+    url: "/pages/startlife/mine/testTools",
   });
 };
 </script>
