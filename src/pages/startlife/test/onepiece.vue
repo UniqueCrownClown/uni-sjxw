@@ -143,18 +143,18 @@
         </view>
       </view>
 
+      <!-- 角色介绍 -->
+      <view class="character-intro">
+        <view class="intro-title">角色介绍</view>
+        <view class="intro-text">{{ matchedCharacter?.introduction }}</view>
+      </view>
+
       <!-- 性格匹配度 -->
       <view class="matching-description">
         <view class="description-title">性格匹配度</view>
         <view class="description-text">{{
           matchedCharacter?.personalityMatch || "无"
         }}</view>
-      </view>
-
-      <!-- 角色介绍 -->
-      <view class="character-intro">
-        <view class="intro-title">角色介绍</view>
-        <view class="intro-text">{{ matchedCharacter?.introduction }}</view>
       </view>
 
       <!-- 操作按钮 -->
@@ -818,9 +818,8 @@ onShareAppMessage(() => {
 }
 
 .character-image-placeholder {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 260px;
+  height: 140px;
   border: 4px solid #e0e0e0;
   background-color: #f5f5f5;
   display: flex;
@@ -832,7 +831,7 @@ onShareAppMessage(() => {
 
 // 角色信息样式优化
 .character-info {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 14px;
   padding: 18px;
   margin-bottom: 20px;
@@ -893,7 +892,7 @@ onShareAppMessage(() => {
 
 // 角色介绍样式优化
 .character-intro {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 14px;
   padding: 18px;
   margin-bottom: 24px;
