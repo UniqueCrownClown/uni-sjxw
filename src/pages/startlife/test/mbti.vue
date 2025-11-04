@@ -191,7 +191,7 @@ import { onShareAppMessage } from "@dcloudio/uni-app";
 
 const handleTomine = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/testTools",
+    url: "/pages/startlife/test/testTools",
   });
 };
 
@@ -513,7 +513,7 @@ onMounted(() => {
 onShareAppMessage(() => {
   return {
     title: "快来了解一下您的MBTI性格类型~~",
-    path: "/pages/startlife/mine/mbti",
+    path: "/pages/startlife/test/mbti",
   };
 });
 </script>

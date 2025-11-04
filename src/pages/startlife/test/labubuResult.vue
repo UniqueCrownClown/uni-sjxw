@@ -124,14 +124,14 @@ onLoad(() => {
 
 const handleClick = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/labubu",
+    url: "/pages/startlife/test/labubu",
   });
 };
 
 onShareAppMessage(() => {
   return {
     title: "看看你是labubu家族中的谁吧~~",
-    path: "/pages/startlife/mine/labubu",
+    path: "/pages/startlife/test/labubu",
     imageUrl: "https://crownclown.xyz/labubu_share.jpg",
   };
 });

@@ -7,6 +7,24 @@
       }
     },
     {
+      "path": "pages/startlife/test/testTools",
+      "style": {
+        "navigationBarTitleText": "有趣测试"
+      }
+    },
+    {
+      "path": "pages/startlife/test/mbti",
+      "style": {
+        "navigationBarTitleText": "MBTI性格测试"
+      }
+    },
+    {
+      "path": "pages/startlife/test/onepiece",
+      "style": {
+        "navigationBarTitleText": "海贼王角色测试"
+      }
+    },
+    {
       "path": "pages/startlife/mine/liuyao",
       "style": {
         "navigationBarTitleText": "startlife-mine-liuyao"
@@ -34,12 +52,6 @@
       "path": "pages/startlife/index/index",
       "style": {
         "navigationBarTitleText": "startlife-index"
-      }
-    },
-    {
-      "path": "pages/startlife/mine/mbti",
-      "style": {
-        "navigationBarTitleText": "startlife-mine-mbti"
       }
     },
     {
@@ -73,33 +85,27 @@
       }
     },
     {
-      "path": "pages/startlife/mine/testTools",
-      "style": {
-        "navigationBarTitleText": "测试工具"
-      }
-    },
-    {
       "path": "pages/startlife/mine/moment",
       "style": {
         "navigationBarTitleText": "startlife-mine-moment"
       }
     },
     {
-      "path": "pages/startlife/mine/labubuResult",
+      "path": "pages/startlife/test/labubuResult",
       "style": {
         "navigationBarTitleText": "startlife-mine-labubuResult"
       }
     },
     {
-      "path": "pages/startlife/mine/labubuTest",
+      "path": "pages/startlife/test/labubuTest",
       "style": {
         "navigationBarTitleText": "startlife-mine-labubuTest"
       }
     },
     {
-      "path": "pages/startlife/mine/labubu",
+      "path": "pages/startlife/test/labubu",
       "style": {
-        "navigationBarTitleText": "startlife-mine-labubu"
+        "navigationBarTitleText": "labubu角色测试"
       }
     },
     {
@@ -108,7 +114,6 @@
         "navigationBarTitleText": "startlife-every"
       }
     },
-
     {
       "path": "pages/startlife/progress/index",
       "style": {

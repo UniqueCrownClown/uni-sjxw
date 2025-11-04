@@ -405,7 +405,7 @@ onShow(() => {
   if (!liuyaoResult) {
     // 清空结果
     count.value = 1;
-    question.value = "我该什么时候结婚";
+    question.value = "我要怎么变好看";
     resultArr.value = [];
     result.value = [];
   }

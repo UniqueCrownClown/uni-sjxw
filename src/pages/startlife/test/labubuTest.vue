@@ -86,7 +86,7 @@ const handleClick = (_: any, index: number) => {
   // 跳转下一题
   if (indexPage.value === questionList.length) {
     uni.navigateTo({
-      url: "/pages/startlife/mine/labubuResult",
+      url: "/pages/startlife/test/labubuResult",
     });
     return;
   }

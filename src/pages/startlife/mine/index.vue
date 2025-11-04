@@ -266,7 +266,7 @@ const otherExploreList = ref([
   },
   {
     id: "testTools",
-    name: "测试工具",
+    name: "有趣测试",
     iconPath: "/static/assets/svg/10002.svg",
   },
   {
@@ -306,7 +306,7 @@ const handleCommand = (item: { id: string; name: string }) => {
   }
   if (item.id === "testTools") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/testTools",
+      url: "/pages/startlife/test/testTools",
     });
     return;
   }

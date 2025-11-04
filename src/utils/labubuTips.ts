@@ -263,14 +263,20 @@ export function calculateResult(userAnswers: any[], resultList: any[]) {
   // 累加得分
   userAnswers.forEach((optionIndex, questionIndex) => {
     if (optionIndex === null || optionIndex === undefined) return; // 跳过未答题
-
+    
+    // 添加边界检查，确保questionIndex在optionRoleMap范围内
+    if (!optionRoleMap[questionIndex]) return;
+    
+    // 添加边界检查，确保optionIndex在当前问题的选项范围内
     const mappings = optionRoleMap[questionIndex][optionIndex];
+    if (!mappings) return;
+    
     // 处理单个角色映射
-    if (mappings.roleId) {
+    if (mappings.roleId && scoreMap.hasOwnProperty(mappings.roleId)) {
       scoreMap[mappings.roleId] += mappings.weight;
     }
     // 处理双角色映射（部分选项关联两个角色）
-    if (mappings.roleId2) {
+    if (mappings.roleId2 && scoreMap.hasOwnProperty(mappings.roleId2)) {
       scoreMap[mappings.roleId2] += mappings.weight2;
     }
   });
@@ -293,10 +299,10 @@ export function calculateResult(userAnswers: any[], resultList: any[]) {
 
   if (tieRoles.length > 1) {
     const question4Answer = userAnswers[3]; // 问题4是直接角色关联题
-    if (question4Answer !== undefined) {
+    if (question4Answer !== undefined && optionRoleMap[3] && optionRoleMap[3][question4Answer]) {
       const question4Mappings = optionRoleMap[3][question4Answer];
       // 优先匹配问题4关联的角色
-      if (tieRoles.includes(question4Mappings.roleId)) {
+      if (question4Mappings && question4Mappings.roleId && tieRoles.includes(question4Mappings.roleId)) {
         matchedRoleId = question4Mappings.roleId;
       }
     }

@@ -66,5 +66,13 @@
   "uniStatistics": {
     "enable": false
   },
+  "h5": {
+    "devServer": {
+      "headers": {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp"
+      }
+    }
+  },
   "vueVersion": "3"
 }
