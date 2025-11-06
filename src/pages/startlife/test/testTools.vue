@@ -14,57 +14,74 @@
     >
       有趣测试
     </view>
-
-    <view class="test-cards">
-      <!-- Labubu测试卡片 -->
-      <view class="test-card" @click="goToLabubu">
-        <view class="card-image labubu-bg"></view>
-        <view class="card-content">
-          <view class="card-title">labubu角色测试</view>
-          <view class="card-desc">探索你像Labubu家族中的哪个成员</view>
-          <view class="card-info">
-            <text class="card-questions">12题</text>
-            <text class="card-time">约5分钟</text>
+    <view class="test-cards-container">
+      <view class="test-cards">
+        <!-- MBTI测试卡片 -->
+        <view class="test-card" @click="goToMbti">
+          <view class="card-image mbti-bg"></view>
+          <view class="card-content">
+            <view class="card-title">MBTI性格测试</view>
+            <view class="card-desc">专业的性格类型分析与发展建议</view>
+            <view class="card-info">
+              <text class="card-questions">93题</text>
+              <text class="card-time">约20-25分钟</text>
+            </view>
+          </view>
+          <view class="card-arrow">
+            <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
           </view>
         </view>
-        <view class="card-arrow">
-          <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
-        </view>
-      </view>
 
-      <!-- MBTI测试卡片 -->
-      <view class="test-card" @click="goToMbti">
-        <view
-          class="card-image mbti-bg"
-        ></view>
-        <view class="card-content">
-          <view class="card-title">MBTI性格测试</view>
-          <view class="card-desc">专业的性格类型分析与发展建议</view>
-          <view class="card-info">
-            <text class="card-questions">93题</text>
-            <text class="card-time">约20-25分钟</text>
+        <!-- Labubu测试卡片 -->
+        <view class="test-card" @click="goToLabubu">
+          <view class="card-image labubu-bg"></view>
+          <view class="card-content">
+            <view class="card-title">labubu角色测试</view>
+            <view class="card-desc">探索你像Labubu家族中的哪个成员</view>
+            <view class="card-info">
+              <text class="card-questions">12题</text>
+              <text class="card-time">约5分钟</text>
+            </view>
+          </view>
+          <view class="card-arrow">
+            <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
           </view>
         </view>
-        <view class="card-arrow">
-          <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
-        </view>
-      </view>
 
-      <!-- 海贼王角色测试卡片 -->
-      <view class="test-card" @click="goToOnePiece">
-        <view
-          class="card-image onepiece-bg u-font-40 u-color-white u-flex u-row-center"
-        ></view>
-        <view class="card-content">
-          <view class="card-title">海贼王角色测试</view>
-          <view class="card-desc">探索你最像《海贼王》中的哪个角色</view>
-          <view class="card-info">
-            <text class="card-questions">15题</text>
-            <text class="card-time">约8分钟</text>
+        <!-- 海贼王角色测试卡片 -->
+        <view class="test-card" @click="goToOnePiece">
+          <view
+            class="card-image onepiece-bg u-font-40 u-color-white u-flex u-row-center"
+          ></view>
+          <view class="card-content">
+            <view class="card-title">海贼王角色测试</view>
+            <view class="card-desc">探索你最像《海贼王》中的哪个角色</view>
+            <view class="card-info">
+              <text class="card-questions">15题</text>
+              <text class="card-time">约8分钟</text>
+            </view>
+          </view>
+          <view class="card-arrow">
+            <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
           </view>
         </view>
-        <view class="card-arrow">
-          <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
+
+        <!-- 火影忍者角色测试卡片 -->
+        <view class="test-card" @click="goToNaruto">
+          <view
+            class="card-image naruto-bg u-font-40 u-color-white u-flex u-row-center"
+          ></view>
+          <view class="card-content">
+            <view class="card-title">火影忍者角色测试</view>
+            <view class="card-desc">探索你最像《火影忍者》中的哪个角色</view>
+            <view class="card-info">
+              <text class="card-questions">15题</text>
+              <text class="card-time">约8分钟</text>
+            </view>
+          </view>
+          <view class="card-arrow">
+            <u-icon name="arrow-rightward" color="#999999" size="24"></u-icon>
+          </view>
         </view>
       </view>
     </view>
@@ -107,6 +124,12 @@ const goToOnePiece = () => {
   });
 };
 
+const goToNaruto = () => {
+  uni.redirectTo({
+    url: "/pages/startlife/test/naruto",
+  });
+};
+
 const handleTomine = () => {
   uni.switchTab({
     url: "/pages/startlife/mine/index",
@@ -120,12 +143,17 @@ const handleTomine = () => {
   background-color: #f8f8f8;
   min-height: 100vh;
 }
+.test-cards-container {
+  max-height: calc(100vh - 180px);
+  overflow: auto;
+}
 
 .test-cards {
   margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .test-card {
@@ -134,7 +162,7 @@ const handleTomine = () => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   display: flex;
-  height: 150px;
+  height: 120px;
   transition: transform 0.2s ease;
 
   &:active {
@@ -143,7 +171,7 @@ const handleTomine = () => {
 }
 
 .card-image {
-  width: 150px;
+  width: 120px;
   height: 100%;
   background-size: cover;
   background-position: center;
@@ -159,6 +187,10 @@ const handleTomine = () => {
 
 .onepiece-bg {
   background-image: url("https://crownclown.xyz/onepiece/beta-1.png");
+}
+
+.naruto-bg {
+  background-image: url("https://areal.me/which-naruto-character-are-you/show/7.png");
 }
 
 .card-content {

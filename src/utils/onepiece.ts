@@ -30,11 +30,12 @@ interface Character {
   imageUrl: string;
 }
 
-interface Question {
+export interface Question {
   qid: string;
   question: string;
   options: { text: string; value: number }[];
 }
+
 export const questions: Question[] = [
   {
     qid: "q1",

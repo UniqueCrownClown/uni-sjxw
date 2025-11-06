@@ -252,11 +252,22 @@ const nextQuestion = () => {
   if (currentQuestionIndex.value < questions.length - 1) {
     // 进入下一题
     currentQuestionIndex.value++;
+    
+    // 重置选中状态，确保不会显示上一题的选中效果
+    selectedOption.value = null;
+    
     // 检查是否已有该题的答案
     selectedContent.value =
       userAnswers.value[currentQuestionIndex.value] ?? null;
-    if (selectedContent.value === null) {
-      selectedOption.value = null;
+    
+    // 如果已有答案，设置对应的选中状态
+    if (selectedContent.value !== null) {
+      // 找到对应选项的索引
+      const currentQ = questions[currentQuestionIndex.value];
+      const optionIndex = currentQ.options.findIndex(
+        (opt) => opt.value === selectedContent.value?.selectedValue
+      );
+      selectedOption.value = optionIndex >= 0 ? optionIndex : null;
     }
   } else {
     // 完成测试，计算结果
@@ -268,10 +279,22 @@ const nextQuestion = () => {
 const prevQuestion = () => {
   if (currentQuestionIndex.value > 0) {
     currentQuestionIndex.value--;
+    
+    // 重置选中状态
+    selectedOption.value = null;
+    
+    // 获取上一题的答案
     selectedContent.value =
       userAnswers.value[currentQuestionIndex.value] ?? null;
-    if (selectedContent.value === null) {
-      selectedOption.value = null;
+    
+    // 如果已有答案，设置对应的选中状态
+    if (selectedContent.value !== null) {
+      // 找到对应选项的索引
+      const currentQ = questions[currentQuestionIndex.value];
+      const optionIndex = currentQ.options.findIndex(
+        (opt) => opt.value === selectedContent.value?.selectedValue
+      );
+      selectedOption.value = optionIndex >= 0 ? optionIndex : null;
     }
   }
 };
@@ -318,10 +341,6 @@ const handleBack = () => {
 };
 
 const shareResult = () => {
-  uni.showToast({
-    title: "分享功能开发中",
-    icon: "none",
-  });
 };
 
 // 新增：图片加载失败处理函数

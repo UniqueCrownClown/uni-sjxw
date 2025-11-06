@@ -25,6 +25,12 @@
       }
     },
     {
+      "path": "pages/startlife/test/naruto",
+      "style": {
+        "navigationBarTitleText": "火影忍者角色测试"
+      }
+    },
+    {
       "path": "pages/startlife/mine/liuyao",
       "style": {
         "navigationBarTitleText": "startlife-mine-liuyao"
