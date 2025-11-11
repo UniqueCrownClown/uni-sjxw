@@ -282,8 +282,13 @@ const otherExploreList = ref([
   {
     id: "sakura",
     name: "每日一签",
-    iconPath: "/static/assets/svg/10006.svg",
+    iconPath: "/static/assets/svg/10005.svg",
   },
+  {
+    id: "whiteNoice",
+    name: "白噪音",
+    iconPath: "/static/assets/svg/10006.svg",
+  }
 ]);
 
 const handleLogin = () => {
@@ -325,6 +330,12 @@ const handleCommand = (item: { id: string; name: string }) => {
   if (item.id === "sakura") {
     uni.navigateTo({
       url: "/pages/startlife/mine/sakura",
+    });
+    return;
+  }
+  if (item.id === "whiteNoice") {
+    uni.navigateTo({
+      url: "/pages/startlife/sound/whiteNoice",
     });
     return;
   }
