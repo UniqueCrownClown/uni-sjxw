@@ -62,7 +62,7 @@
       <view class="options-container">
         <view
           v-for="(option, index) in currentQuestion.options"
-          :key="index"
+          :key="currentQuestionIndex.toString() + index.toString()"
           class="option-item"
           :class="{ selected: selectedOption === index }"
           @click="selectOption(index, option, currentQuestion.qid)"
@@ -191,10 +191,10 @@ import {
 // 状态管理
 const currentQuestionIndex = ref(0);
 const selectedOption = ref<number | null>(null);
-const selectedContent = ref<{ qid: string; selectedValue: number } | null>(
+const selectedContent = ref<{ qid: string; selectedValue: number; selectedIndex: number } | null>(
   null
 );
-const userAnswers = ref<Array<{ qid: string; selectedValue: number }>>([]);
+const userAnswers = ref<Array<{ qid: string; selectedValue: number;selectedIndex:number }>>([]);
 const showResult = ref(false);
 const showIntro = ref(true); // 新增：控制引导页显示
 const matchedCharacter = ref<any>(null);
@@ -235,10 +235,13 @@ const selectOption = (index: number, option: any, qid: string) => {
   selectedContent.value = {
     qid,
     selectedValue: option.value,
+    selectedIndex: index,
   };
 
   // 选择选项后自动进入下一题
-  nextQuestion();
+  setTimeout(() => {
+    nextQuestion();
+  }, 500);
 };
 
 const nextQuestion = () => {
@@ -260,14 +263,9 @@ const nextQuestion = () => {
     selectedContent.value =
       userAnswers.value[currentQuestionIndex.value] ?? null;
     
-    // 如果已有答案，设置对应的选中状态
-    if (selectedContent.value !== null) {
-      // 找到对应选项的索引
-      const currentQ = questions[currentQuestionIndex.value];
-      const optionIndex = currentQ.options.findIndex(
-        (opt) => opt.value === selectedContent.value?.selectedValue
-      );
-      selectedOption.value = optionIndex >= 0 ? optionIndex : null;
+    // 如果已有答案，使用selectedIndex设置对应的选中状态
+    if (selectedContent.value !== null && selectedContent.value.selectedIndex !== undefined) {
+      selectedOption.value = selectedContent.value.selectedIndex;
     }
   } else {
     // 完成测试，计算结果
@@ -287,14 +285,9 @@ const prevQuestion = () => {
     selectedContent.value =
       userAnswers.value[currentQuestionIndex.value] ?? null;
     
-    // 如果已有答案，设置对应的选中状态
-    if (selectedContent.value !== null) {
-      // 找到对应选项的索引
-      const currentQ = questions[currentQuestionIndex.value];
-      const optionIndex = currentQ.options.findIndex(
-        (opt) => opt.value === selectedContent.value?.selectedValue
-      );
-      selectedOption.value = optionIndex >= 0 ? optionIndex : null;
+    // 如果已有答案，使用selectedIndex设置对应的选中状态
+    if (selectedContent.value !== null && selectedContent.value.selectedIndex !== undefined) {
+      selectedOption.value = selectedContent.value.selectedIndex;
     }
   }
 };
@@ -351,12 +344,14 @@ const handleImageError = () => {
 // 新增：随机查看结果方法
 const randomResult = () => {
   // 随机生成用户答案
-  const randomAnswers = questions.map((question) => ({
-    qid: question.qid,
-    selectedValue:
-      question.options[Math.floor(Math.random() * question.options.length)]
-        .value,
-  }));
+  const randomAnswers = questions.map((question) => {
+    const randomIndex = Math.floor(Math.random() * question.options.length);
+    return {
+      qid: question.qid,
+      selectedValue: question.options[randomIndex].value,
+      selectedIndex: randomIndex
+    };
+  });
 
   // 设置用户答案
   userAnswers.value = randomAnswers;

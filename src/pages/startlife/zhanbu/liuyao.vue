@@ -205,7 +205,7 @@ import { LiuYaoResult, useZhanbuStore } from "@/store/modules/zhanbuStore";
 // 返回按钮
 const handleTomine = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/zhanbu",
+    url: "/pages/startlife/zhanbu/zhanbu",
   });
 };
 
@@ -366,7 +366,7 @@ const handleSubmit = () => {
       zhanbuStore.setLiuyaoResult(res);
       // 跳转到占卜结果页面
       uni.navigateTo({
-        url: "/pages/startlife/mine/liuyaoResult",
+        url: "/pages/startlife/zhanbu/liuyaoResult",
       });
     })
     .catch((error) => {
@@ -413,7 +413,7 @@ onShow(() => {
 onShareAppMessage(() => {
   return {
     title: "快来使用六爻解答你的疑问吧~~",
-    path: "/pages/startlife/mine/liuyao",
+    path: "/pages/startlife/zhanbu/liuyao",
   };
 });
 </script>

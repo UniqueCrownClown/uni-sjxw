@@ -139,7 +139,7 @@ export interface FortuneResult {
 
 const handleTomine = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/zhanbu",
+    url: "/pages/startlife/zhanbu/zhanbu",
   });
 };
 

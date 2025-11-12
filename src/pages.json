@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/mine/sakura",
+      "style": {
+        "navigationBarTitleText": "startlife-mine-sakura"
+      }
+    },
+    {
       "path": "pages/startlife/sound/whiteNoice",
       "style": {
         "navigationBarTitleText": "白噪音"
@@ -37,27 +43,33 @@
       }
     },
     {
-      "path": "pages/startlife/mine/liuyao",
+      "path": "pages/startlife/zhanbu/zhanbu",
       "style": {
-        "navigationBarTitleText": "startlife-mine-liuyao"
+        "navigationBarTitleText": "startlife-zhanbu-zhanbu"
       }
     },
     {
-      "path": "pages/startlife/mine/liuyaoResult",
+      "path": "pages/startlife/zhanbu/animalSign",
       "style": {
-        "navigationBarTitleText": "startlife-mine-liuyaoResult"
+        "navigationBarTitleText": "startlife-zhanbu-animalSign"
       }
     },
     {
-      "path": "pages/startlife/mine/zhanbu",
+      "path": "pages/startlife/zhanbu/animalSignResult",
       "style": {
-        "navigationBarTitleText": "startlife-mine-zhanbu"
+        "navigationBarTitleText": "startlife-zhanbu-animalSignResult"
       }
     },
     {
-      "path": "pages/startlife/mine/sakura",
+      "path": "pages/startlife/zhanbu/liuyao",
       "style": {
-        "navigationBarTitleText": "startlife-mine-sakura"
+        "navigationBarTitleText": "startlife-zhanbu-liuyao"
+      }
+    },
+    {
+      "path": "pages/startlife/zhanbu/liuyaoResult",
+      "style": {
+        "navigationBarTitleText": "startlife-zhanbu-liuyaoResult"
       }
     },
     {
@@ -70,18 +82,6 @@
       "path": "pages/startlife/mine/circleToy",
       "style": {
         "navigationBarTitleText": "startlife-mine-circleToy"
-      }
-    },
-    {
-      "path": "pages/startlife/mine/animalSign",
-      "style": {
-        "navigationBarTitleText": "startlife-mine-animalSign"
-      }
-    },
-    {
-      "path": "pages/startlife/mine/animalSignResult",
-      "style": {
-        "navigationBarTitleText": "startlife-mine-animalSignResult"
       }
     },
     {

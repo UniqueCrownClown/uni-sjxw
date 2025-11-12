@@ -26,6 +26,14 @@
         </view>
       </view>
       <button class="action-button" open-type="share">传递好运</button>
+      <!-- <button class="action-button" @click="handleSakura" style="margin-top: 20px;">潮汕彩蛋</button> -->
+      <view style="margin-top: 20px; width: 100%">
+        <u-image
+          src="https://crownclown.xyz/chaoshan/laoye.png"
+          width="100%"
+          mode="widthFix"
+        ></u-image>
+      </view>
     </view>
   </view>
 </template>
@@ -313,6 +321,14 @@ onShareAppMessage(() => {
     path: "/pages/startlife/mine/sakura",
   };
 });
+
+const handleSakura = () => {
+  uni.showToast({
+    title: "潮汕彩蛋已发送",
+    icon: "success",
+    duration: 2000,
+  });
+};
 </script>
 
 <style>

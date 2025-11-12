@@ -16,6 +16,9 @@
           <text>{{ desc1 }}</text>
           <text>{{ desc2 }}</text>
         </view>
+        <view style="margin-bottom: 30px">
+          <button class="start-btn" @click="startTest">开始测试</button>
+        </view>
 
         <!-- 角色预览 -->
         <view class="characters-preview">
@@ -30,8 +33,6 @@
             </text>
           </view>
         </view>
-
-        <button class="start-btn" @click="startTest">开始测试</button>
       </view>
     </view>
 
@@ -50,15 +51,22 @@
           {{ currentQuestionIndex }} / {{ questions.length }}
         </view>
       </view>
+      <!-- 测试内容 -->
       <view class="question-container">
+        <view class="question-number">Q{{ currentQuestionIndex + 1 }}</view>
         <text class="question">{{ currentQuestion.question }}</text>
         <view class="options">
           <view
             v-for="(option, index) in currentQuestion.options"
-            :key="index"
+            :key="currentQuestion.question + index"
             class="option"
-            :class="{ selected: selectedOption === option.value }"
-            @click="selectOption(option.value)"
+            :class="{
+              selected:
+                currentQuestionIndex === 14
+                  ? selectedValues.includes(index)
+                  : selectedOption === index,
+            }"
+            @click="selectOption(index, option.value)"
           >
             <text class="option-text">{{ option.text }}</text>
           </view>
@@ -70,6 +78,14 @@
             @click="prevQuestion"
           >
             上一题
+          </button>
+          <!-- 第15个问题添加"得出结果"按钮 -->
+          <button
+            v-if="currentQuestionIndex === 14"
+            class="next-btn"
+            @click="calculateResult"
+          >
+            得出结果
           </button>
         </view>
 
@@ -89,7 +105,7 @@
           <image
             :src="resultCharacter.imageUrl"
             :alt="resultCharacter.name"
-            mode="aspectFit"
+            mode="widthFix"
           />
         </view>
         <text class="character-name">{{ resultCharacter.name }}</text>
@@ -156,9 +172,13 @@ const currentPage = ref("intro");
 // 当前问题索引
 const currentQuestionIndex = ref(0);
 // 用户选择的答案
-const userAnswers = ref<Array<{ qid: string; selectedValue: number }>>([]);
-// 当前选择的选项
+const userAnswers = ref<
+  Array<{ qid: string; selectedValue: number; selectedIndex: number }>
+>([]);
+// 当前选择的选项索引
 const selectedOption = ref<number | null>(null);
+// 当前选择的选项索引（用于第15个问题的多选）
+const selectedValues = ref<number[]>([]);
 // 匹配的角色结果
 const resultCharacter = ref<any>(null);
 
@@ -180,41 +200,73 @@ const startTest = () => {
   currentQuestionIndex.value = 0;
   userAnswers.value = [];
   selectedOption.value = null;
+  selectedValues.value = [];
 };
 
 // 选择选项
-const selectOption = (value: number) => {
-  selectedOption.value = value;
+const selectOption = (index: number, value: number) => {
+  // 第15个问题（索引14）是多选问题
+  if (currentQuestionIndex.value === 14) {
+    // 切换选项的选中状态
+    const selectedIndex = selectedValues.value.indexOf(index);
+    if (selectedIndex > -1) {
+      // 如果已选中，则取消选中
+      selectedValues.value.splice(selectedIndex, 1);
+    } else {
+      // 如果未选中，则添加到选中数组
+      selectedValues.value.push(index);
+    }
 
-  // 保存当前答案
-  const currentQid = currentQuestion.value.qid;
-  const existingAnswerIndex = userAnswers.value.findIndex(
-    (answer) => answer.qid === currentQid
-  );
+    // 移除所有qid为"15"的现有答案
+    userAnswers.value = userAnswers.value.filter(
+      (answer) => answer.qid !== "15"
+    );
 
-  if (existingAnswerIndex >= 0) {
-    // 更新已存在的答案
-    userAnswers.value[existingAnswerIndex].selectedValue = selectedOption.value;
-  } else {
-    // 添加新答案
-    userAnswers.value.push({
-      qid: currentQid,
-      selectedValue: selectedOption.value,
+    // 为每个选中的选项创建单独的答案记录
+    selectedValues.value.forEach((selectedIndex) => {
+      const selectedOption = currentQuestion.value.options[selectedIndex];
+      userAnswers.value.push({
+        qid: "15",
+        selectedValue: selectedOption.value,
+        selectedIndex: selectedIndex
+      });
     });
-  }
-
-  // 判断是否是最后一题
-  if (currentQuestionIndex.value === questions.length - 1) {
-    // 计算结果
-    calculateResult();
   } else {
-    // 使用nextTick确保DOM更新后再切换题目
-    nextTick(() => {
-      // 进入下一题
-      currentQuestionIndex.value++;
-      // 重置选择
-      selectedOption.value = null;
-    });
+    // 其他问题使用单选逻辑
+    selectedOption.value = index;
+
+    // 保存当前答案
+        const currentQid = currentQuestion.value.qid;
+        const existingAnswerIndex = userAnswers.value.findIndex(
+          (answer) => answer.qid === currentQid
+        );
+
+        if (existingAnswerIndex >= 0) {
+          // 更新已存在的答案
+          userAnswers.value[existingAnswerIndex].selectedValue = value;
+          userAnswers.value[existingAnswerIndex].selectedIndex = index;
+        } else {
+          // 添加新答案
+          userAnswers.value.push({
+            qid: currentQid,
+            selectedValue: value,
+            selectedIndex: index,
+          });
+        }
+
+    // 判断是否是最后一题
+    if (currentQuestionIndex.value === questions.length - 1) {
+      // 计算结果
+      calculateResult();
+    } else {
+      // 使用nextTick确保DOM更新后再切换题目
+      nextTick(() => {
+        // 进入下一题
+        currentQuestionIndex.value++;
+        // 重置选择
+        selectedOption.value = null;
+      });
+    }
   }
 };
 
@@ -222,17 +274,56 @@ const selectOption = (value: number) => {
 const prevQuestion = () => {
   if (currentQuestionIndex.value > 0) {
     currentQuestionIndex.value--;
-    // 恢复上一题的选择
+
+    // 重置选中状态
+    selectedOption.value = null;
+    selectedValues.value = [];
+
+    // 恢复上一题的答案
     const currentQid = currentQuestion.value.qid;
-    const existingAnswer = userAnswers.value.find(
-      (answer) => answer.qid === currentQid
-    );
-    selectedOption.value = existingAnswer ? existingAnswer.selectedValue : null;
+
+    if (currentQid === "15") {
+      // 第15个问题（多选）的处理
+      const q15Answers = userAnswers.value.filter(
+        (answer) => answer.qid === "15"
+      );
+      q15Answers.forEach((answer) => {
+        if (answer.selectedIndex !== undefined) {
+          selectedValues.value.push(answer.selectedIndex);
+        }
+      });
+    } else {
+      // 其他问题（单选）的处理
+      const existingAnswer = userAnswers.value.find(
+        (answer) => answer.qid === currentQid
+      );
+      if (existingAnswer && existingAnswer.selectedIndex !== undefined) {
+        selectedOption.value = existingAnswer.selectedIndex;
+      }
+    }
   }
 };
 
 // 计算结果
 const calculateResult = () => {
+  // 确保第15个问题的答案已保存
+  if (currentQuestionIndex.value === 14) {
+    // 移除所有qid为"15"的现有答案
+    userAnswers.value = userAnswers.value.filter(
+      (answer) => answer.qid !== "15"
+    );
+
+    // 为每个选中的选项创建单独的答案记录
+    selectedValues.value.forEach((selectedIndex) => {
+      const selectedOption = currentQuestion.value.options[selectedIndex];
+      userAnswers.value.push({
+        qid: "15",
+        selectedValue: selectedOption.value,
+        selectedIndex: selectedIndex
+      });
+    });
+  }
+
   resultCharacter.value = matchCharacter(userAnswers.value);
   currentPage.value = "result";
 };
@@ -243,18 +334,21 @@ const restartTest = () => {
   currentQuestionIndex.value = 0;
   userAnswers.value = [];
   selectedOption.value = null;
+  selectedValues.value = [];
   resultCharacter.value = null;
 };
 
 // 随机查看结果
 const randomResult = () => {
   // 随机生成用户答案
-  const randomAnswers = questions.map((question) => ({
-    qid: question.qid,
-    selectedValue:
-      question.options[Math.floor(Math.random() * question.options.length)]
-        .value,
-  }));
+  const randomAnswers = questions.map((question) => {
+    const randomIndex = Math.floor(Math.random() * question.options.length);
+    return {
+      qid: question.qid,
+      selectedValue: question.options[randomIndex].value,
+      selectedIndex: randomIndex
+    };
+  });
 
   // 设置用户答案
   userAnswers.value = randomAnswers;
@@ -267,7 +361,7 @@ const randomResult = () => {
 // uni-app分享功能
 onShareAppMessage(() => {
   return {
-    title: "测测你是《naruto》里的哪个角色~~",
+    title: "测测你是naruto里的哪个角色~~",
     path: "/pages/startlife/test/naruto",
   };
 });
@@ -474,8 +568,9 @@ onMounted(() => {
 }
 
 .start-btn {
-  padding: 10rpx 24rpx;
+  padding: 4rpx 24rpx;
   font-size: 16px;
+  font-weight: 600;
   border-radius: 20rpx;
 }
 
@@ -615,7 +710,6 @@ onMounted(() => {
 .info-item {
   width: 45%;
   margin-bottom: 10px;
-  padding: 5px 10px;
 }
 
 .label {

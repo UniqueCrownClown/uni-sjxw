@@ -127,14 +127,14 @@ const selectTool = (tool: string) => {
 // 跳转到六爻占卜页面
 const navigateToLiuyao = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/liuyao",
+    url: "/pages/startlife/zhanbu/liuyao",
   });
 };
 
 // 跳转到星座生肖占卜页面
 const navigateToAnimalSign = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/animalSign",
+    url: "/pages/startlife/zhanbu/animalSign",
   });
 };
 

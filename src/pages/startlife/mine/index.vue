@@ -317,7 +317,7 @@ const handleCommand = (item: { id: string; name: string }) => {
   }
   if (item.id === "zhanbu") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/zhanbu",
+      url: "/pages/startlife/zhanbu/zhanbu",
     });
     return;
   }

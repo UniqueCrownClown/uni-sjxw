@@ -863,7 +863,7 @@ function calculateUserAttrs(
 
   // 统计用户答案
   userAnswers.forEach((answer) => {
-    const { qid, selectedValue } = answer;
+    const { selectedValue } = answer;
     if (answerCounts.hasOwnProperty(selectedValue)) {
       answerCounts[selectedValue]++;
     }

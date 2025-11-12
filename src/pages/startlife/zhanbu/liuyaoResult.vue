@@ -112,7 +112,7 @@ const getLevelClass = (level: string) => {
 // 返回上一页
 const goBack = () => {
   uni.navigateTo({
-    url: "/pages/startlife/mine/liuyao",
+    url: "/pages/startlife/zhanbu/liuyao",
   });
   zhanbuStore.clearLiuyaoResult();
 };

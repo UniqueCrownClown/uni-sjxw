@@ -43,6 +43,14 @@
       style="background-color: #fff; border-radius: 20rpx"
     >
       <view class="some-words-header u-font-xl u-p-20">自家肉丸广告</view>
+      <view class="u-p-10">
+        <u-image
+          :src="'https://crownclown.xyz/zhurouyuan.webp'"
+          mode="widthFix"
+          class="u-radius-20"
+          width="100%"
+        ></u-image>
+      </view>
       <view
         class="u-p-10"
         style="line-height: 50rpx; text-indent: 20rpx; color: #606266"
