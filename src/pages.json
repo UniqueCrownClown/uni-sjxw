@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/poem/flower",
+      "style": {
+        "navigationBarTitleText": "startlife-poem-flower"
+      }
+    },
+    {
       "path": "pages/startlife/mine/sakura",
       "style": {
         "navigationBarTitleText": "startlife-mine-sakura"

@@ -276,7 +276,7 @@ const otherExploreList = ref([
   },
   {
     id: "zhanbu",
-    name: "赛博占卜",
+    name: "赛博起卦",
     iconPath: "/static/assets/svg/10004.svg",
   },
   {
@@ -288,7 +288,12 @@ const otherExploreList = ref([
     id: "whiteNoice",
     name: "白噪音",
     iconPath: "/static/assets/svg/10006.svg",
-  }
+  },
+  {
+    id: "poem",
+    name: "妙语生花",
+    iconPath: "/static/assets/svg/10007.svg",
+  },
 ]);
 
 const handleLogin = () => {
@@ -336,6 +341,12 @@ const handleCommand = (item: { id: string; name: string }) => {
   if (item.id === "whiteNoice") {
     uni.navigateTo({
       url: "/pages/startlife/sound/whiteNoice",
+    });
+    return;
+  }
+  if (item.id === "poem") {
+    uni.navigateTo({
+      url: "/pages/startlife/poem/flower",
     });
     return;
   }

@@ -1,7 +1,12 @@
 <template>
   <view class="moment-container">
     <view class="u-m-l-20 u-m-t-50 moment-header">
-      <u-icon name="home" color="#fff" size="50" @click="handleTomine"></u-icon>
+      <u-icon
+        name="home"
+        color="#D9D919"
+        size="50"
+        @click="handleTomine"
+      ></u-icon>
     </view>
     <view class="moment-main">
       <view class="u-p-20 u-flex u-row-left u-flex-wrap">
@@ -269,7 +274,7 @@ import { onLoad, onShareAppMessage } from "@dcloudio/uni-app";
 import { formateDate, getTimeDesc } from "@/utils/common";
 import {
   Moment,
-addMoment,
+  addMoment,
   getMoments,
   updateMoment,
   deleteMoment,
@@ -521,12 +526,15 @@ const generateShareImage: () => Promise<string> = () => {
   return new Promise((resolve, reject) => {
     // 使用 Canvas 2D 接口
     const query = uni.createSelectorQuery();
-    query.select('#shareCanvas')
-      .fields({ node: true, size: true } as any, (result) => console.log(result))
+    query
+      .select("#shareCanvas")
+      .fields({ node: true, size: true } as any, (result) =>
+        console.log(result)
+      )
       .exec((res) => {
         const canvas = res[0].node;
-        const ctx = canvas.getContext('2d');
-        
+        const ctx = canvas.getContext("2d");
+
         // 设置 canvas 尺寸
         const dpr = uni.getSystemInfoSync().pixelRatio;
         canvas.width = res[0].width * dpr;
@@ -558,26 +566,26 @@ const generateShareImage: () => Promise<string> = () => {
         const width2 = ctx.measureText(timeDesc[1]).width;
         ctx.font = "28px sans-serif";
         const width3 = ctx.measureText(timeDesc[2]).width;
-        
+
         const totalWidth = width1 + width2 + width3 + 40; // 加上间距
         let startX = (500 - totalWidth) / 2; // 计算起始x坐标，使整体居中
-        
+
         // 绘制第一部分
         ctx.font = "28px sans-serif";
         ctx.fillText(timeDesc[0], startX, 200);
         startX += width1 + 20; // 更新x坐标，添加间距
-        
+
         // 绘制第二部分（较大字体）
         ctx.font = "40px sans-serif";
         ctx.fillText(timeDesc[1], startX, 200);
         startX += width2 + 20; // 更新x坐标，添加间距
-        
+
         // 绘制第三部分
         ctx.font = "28px sans-serif";
         ctx.fillText(timeDesc[2], startX, 200);
 
         // 绘制完整日期
-        ctx.font = "32px sans-serif"; 
+        ctx.font = "32px sans-serif";
         ctx.fillText(
           getTime(current.value.time, current.value.timeType == "lunar"),
           250,
@@ -597,7 +605,7 @@ const generateShareImage: () => Promise<string> = () => {
           height: 400,
           destWidth: 500 * dpr,
           destHeight: 400 * dpr,
-          canvasId: 'shareCanvas',
+          canvasId: "shareCanvas",
           success: (res) => {
             resolve(res.tempFilePath);
           },

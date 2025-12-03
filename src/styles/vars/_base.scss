@@ -30,6 +30,10 @@ $main-color-light: #98e0c0;
   color: $main-color !important;
 }
 
+::v-deep .u-select__header__confirm {
+  color: $main-color !important;
+}
+
 .u-opacity-5 {
   opacity: 0.5;
 }

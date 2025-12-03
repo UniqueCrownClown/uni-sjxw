@@ -9,7 +9,7 @@
       ></u-icon>
     </view>
     <view v-if="result" class="result-container">
-      <view class="result-title">占卜结果</view>
+      <view class="result-title">起卦结果</view>
       <!-- 卦象基本信息 -->
       <view class="card basic-info">
         <view class="card-title">卦象信息</view>
@@ -79,8 +79,8 @@
 
     <view v-else class="empty-state">
       <u-icon name="info-circle" color="#999" size="48"></u-icon>
-      <text class="empty-text">暂无占卜结果</text>
-      <button class="back-btn" @click="goBack">返回占卜</button>
+      <text class="empty-text">暂无起卦结果</text>
+      <button class="back-btn" @click="goBack">返回起卦</button>
     </view>
   </view>
 </template>

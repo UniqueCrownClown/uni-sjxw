@@ -10,11 +10,11 @@
     </view>
 
     <view class="container">
-      <view class="page-title">占卜工具</view>
+      <view class="page-title">起卦工具</view>
 
       <!-- 工具选择区域 -->
       <view class="tools-section">
-        <view class="section-title">选择占卜方式</view>
+        <view class="section-title">选择起卦方式</view>
         <view class="tools-grid">
           <view
             class="tool-card"
@@ -27,8 +27,7 @@
                 mode="aspectFit"
               ></image>
             </view>
-            <view class="tool-name">六爻占卜</view>
-            <view class="tool-desc">传统六爻占卜，预测吉凶祸福</view>
+            <view class="tool-name">六爻起卦</view>
           </view>
 
           <view
@@ -42,15 +41,14 @@
                 mode="aspectFit"
               ></image>
             </view>
-            <view class="tool-name">星座生肖占卜</view>
-            <view class="tool-desc">结合星座与生肖，预测今日运势</view>
+            <view class="tool-name">星座生肖起卦</view>
           </view>
         </view>
       </view>
 
       <!-- 工具使用区域 -->
       <view class="usage-section">
-        <!-- 六爻占卜预览 -->
+        <!-- 六爻起卦预览 -->
         <view v-if="selectedTool === 'liuyao'" class="liuyao-tool-preview">
           <view class="tool-preview-container">
             <view class="preview-image">
@@ -60,8 +58,7 @@
               ></image>
             </view>
             <view class="preview-description">
-              <view class="preview-title">六爻占卜</view>
-              <view class="preview-text">传统六爻占卜，预测吉凶祸福</view>
+              <view class="preview-title">六爻起卦</view>
             </view>
           </view>
           <view class="button-container">
@@ -70,12 +67,12 @@
               @click="navigateToLiuyao"
               class="navigate-button"
             >
-              进入六爻占卜
+              进入六爻起卦
             </u-button>
           </view>
         </view>
 
-        <!-- 星座生肖占卜预览 -->
+        <!-- 星座生肖起卦预览 -->
         <view
           v-if="selectedTool === 'animalSign'"
           class="animalSign-tool-preview"
@@ -88,8 +85,7 @@
               ></image>
             </view>
             <view class="preview-description">
-              <view class="preview-title">星座生肖占卜</view>
-              <view class="preview-text">结合星座与生肖，预测今日运势</view>
+              <view class="preview-title">星座生肖起卦</view>
             </view>
           </view>
           <view class="button-container">
@@ -98,10 +94,16 @@
               @click="navigateToAnimalSign"
               class="navigate-button"
             >
-              进入星座生肖占卜
+              进入星座生肖起卦
             </u-button>
           </view>
         </view>
+      </view>
+    </view>
+
+    <view class="test-footer">
+      <view class="test-footer-main">
+        起卦仅供娱乐参考，学习传统文化，不建议作为专业评估。
       </view>
     </view>
   </view>
@@ -124,14 +126,14 @@ const selectTool = (tool: string) => {
   selectedTool.value = tool;
 };
 
-// 跳转到六爻占卜页面
+// 跳转到六爻起卦页面
 const navigateToLiuyao = () => {
   uni.navigateTo({
     url: "/pages/startlife/zhanbu/liuyao",
   });
 };
 
-// 跳转到星座生肖占卜页面
+// 跳转到星座生肖起卦页面
 const navigateToAnimalSign = () => {
   uni.navigateTo({
     url: "/pages/startlife/zhanbu/animalSign",
@@ -233,13 +235,6 @@ onLoad(() => {
   margin-bottom: 10rpx;
 }
 
-.tool-desc {
-  font-size: 24rpx;
-  color: #666;
-  text-align: center;
-  line-height: 1.4;
-}
-
 .usage-section {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 20rpx;
@@ -286,12 +281,6 @@ onLoad(() => {
   margin-bottom: 20rpx;
 }
 
-.preview-text {
-  font-size: 28rpx;
-  color: #666;
-  line-height: 1.5;
-}
-
 .button-container {
   margin: 20px 0;
   width: 100%;
@@ -303,5 +292,26 @@ onLoad(() => {
   height: 50px;
   font-size: 18px;
   border-radius: 25px;
+}
+
+.test-footer {
+  position: fixed;
+  bottom: 40rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .test-footer-main {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 85%;
+    margin: 0 auto;
+    border-radius: 8px;
+    padding: 5px;
+    text-align: center;
+    color: #765d47;
+    font-size: 11px;
+  }
 }
 </style>

@@ -48,10 +48,10 @@
         </view>
       </view>
 
-      <!-- 开始占卜按钮 -->
+      <!-- 开始起卦按钮 -->
       <view class="button-container">
         <view class="custom-button" @click="startDivination">
-          <view class="button-text">今日运势占卜</view>
+          <view class="button-text">今日运势起卦</view>
           <view class="button-icon">✨</view>
         </view>
       </view>
@@ -80,7 +80,7 @@ import { createAiClient } from "@/api/modules/ai";
 import { getTextGenerationConfig } from "@/utils/apiConfig";
 import { useZhanbuStore } from "@/store/modules/zhanbuStore";
 
-// 占卜类型
+// 起卦类型
 export type FortuneType = "daily" | "mood" | "couple" | "number";
 
 // 星座配置
@@ -105,14 +105,14 @@ export interface AnimalConfig {
   years: number[];
 }
 
-// 占卜请求参数
+// 起卦请求参数
 export interface DailyFortuneParams {
   zodiac: string; // 星座
   animal: string; // 生肖
   date: string;
 }
 
-// 占卜结果
+// 起卦结果
 export interface FortuneResult {
   id: string;
   type: FortuneType;
@@ -185,7 +185,7 @@ const generateDailyFortune = async (
   params: DailyFortuneParams
 ): Promise<FortuneResult> => {
   try {
-    const prompt = `你是一位深耕东西方命理交汇领域的资深占卜师，兼具东方生肖命理的深邃积淀与西方星座占星的精准洞察，更通晓五行生克、天干地支与黄道十二宫的呼应关系。请根据以下信息为用户推算运势：
+    const prompt = `你是一位深耕东西方命理交汇领域的资深起卦师，兼具东方生肖命理的深邃积淀与西方星座占星的精准洞察，更通晓五行生克、天干地支与黄道十二宫的呼应关系。请根据以下信息为用户推算运势：
   
   星座：${params.zodiac}
   生肖：${params.animal}
@@ -193,7 +193,7 @@ const generateDailyFortune = async (
   
   请基于用户提供的星座、生肖及当前日期，构建多维度运势分析框架，实现东西方命理逻辑的自然融合。解读需紧扣 “星座 + 生肖 + 当前日期” 的核心要素，避免生硬拼接，确保解读逻辑自洽。
   
-  请按照以下JSON格式返回占卜结果：
+  请按照以下JSON格式返回起卦结果：
   {
     "luckyNumber": "根据推算得到的幸运数",
     "luckyColor": "根据推算得到的幸运颜色",
@@ -224,7 +224,7 @@ const generateDailyFortune = async (
         {
           role: "system",
           content:
-            "你是一位深耕东西方命理交汇领域的资深占卜师，精通星座学、生肖学。你的话语充满神秘色彩，解读富有权威和感染力。请严格按照JSON格式返回，不要包含任何其他文字。请务必用中文回答。",
+            "你是一位深耕东西方命理交汇领域的资深起卦师，精通星座学、生肖学。你的话语充满神秘色彩，解读富有权威和感染力。请严格按照JSON格式返回，不要包含任何其他文字。请务必用中文回答。",
         },
         {
           role: "user",
@@ -276,7 +276,7 @@ const generateDailyFortune = async (
     return fortune;
   } catch (error) {
     console.error(error);
-    throw new Error("占卜师暂时无法感应到星象，请稍后重试");
+    throw new Error("起卦师暂时无法感应到星象，请稍后重试");
   }
 };
 const phrases = [
@@ -287,10 +287,10 @@ const phrases = [
   "生肖的智慧正在显现...",
   "宇宙的能量正在汇聚...",
   "命运之轮正在转动...",
-  "星辰指引着方向...",
-  "水晶球正在感知...",
+  "真相水晶球正在感知...",
+  "当前星辰指引着方向...",
 ];
-// 开始占卜
+// 开始起卦
 const startDivination = () => {
   // 检查是否选择了星座和生肖
   if (!selectedZodiac.value || !selectedAnimal.value) {
@@ -334,7 +334,7 @@ const startDivination = () => {
   })
     .then((result: FortuneResult) => {
       console.log(result);
-      // 保存AI返回的占卜结果
+      // 保存AI返回的起卦结果
       // 保存到Pinia状态管理
       zhanbuStore.setFortuneResult({
         ...result,
@@ -342,13 +342,13 @@ const startDivination = () => {
         selectedAnimal: selectedAnimal.value,
       });
 
-      // 跳转到占卜结果页面
+      // 跳转到起卦结果页面
       navigateToResultPage();
     })
     .catch((error) => {
-      console.error("占卜失败:", error);
+      console.error("起卦失败:", error);
       uni.showToast({
-        title: "占卜失败，请重试",
+        title: "起卦失败，请重试",
         icon: "none",
       });
     })
@@ -363,11 +363,11 @@ const startDivination = () => {
     });
 };
 
-// 跳转到占卜结果页面
+// 跳转到起卦结果页面
 const navigateToResultPage = () => {
   // 跳转到结果页面
   uni.navigateTo({
-    url: `/pages/startlife/mine/animalSignResult`,
+    url: `/pages/startlife/zhanbu/animalSignResult`,
   });
 };
 

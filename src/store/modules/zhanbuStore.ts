@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-// 六爻占卜结果
+// 六爻起卦结果
 export interface LiuYaoResult {
   time: string;
   ganzhi: string;
@@ -35,7 +35,7 @@ export interface AnimalConfig {
   years: number[];
 }
 
-// 占卜类型
+// 起卦类型
 type FortuneType = "daily" | "mood" | "couple" | "number";
 
 export interface CombineFortuneResult {

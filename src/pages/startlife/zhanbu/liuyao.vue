@@ -99,7 +99,7 @@
 
       <view class="instruction-section">
         <u-section
-          title="六爻占卜流程"
+          title="六爻起卦流程"
           line-color="#D9D919"
           :right="false"
         ></u-section>
@@ -112,7 +112,7 @@
               style="margin-top: 10rpx"
             ></u-icon>
             <text class="instruction-text"
-              >进行占卜之前，默念所测之事，点击龟壳开始摇卦占卜；</text
+              >进行起卦之前，默念所测之事，点击龟壳开始摇卦起卦；</text
             >
           </view>
           <view class="instruction-item">
@@ -240,7 +240,7 @@ const generateDailyFortune = async (params: any): Promise<LiuYaoResult> => {
   六爻结果：按 “初爻→二爻→三爻→四爻→五爻→六爻”的顺序，分别为${result.value.join(
     "，"
   )}
-  请按照以下JSON格式返回占卜结果：
+  请按照以下JSON格式返回起卦结果：
   {
     "time": "当前的起卦时间包含星期几和农历日期",
     "ganzhi": "根据推算得到的干支,无需包括‘年’，‘月’，‘日’，’时‘等时间单位",
@@ -364,7 +364,7 @@ const handleSubmit = () => {
   generateDailyFortune({ date: new Date().toISOString().split("T")[0] })
     .then((res) => {
       zhanbuStore.setLiuyaoResult(res);
-      // 跳转到占卜结果页面
+      // 跳转到起卦结果页面
       uni.navigateTo({
         url: "/pages/startlife/zhanbu/liuyaoResult",
       });

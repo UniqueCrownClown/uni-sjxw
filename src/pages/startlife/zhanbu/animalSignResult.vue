@@ -10,7 +10,7 @@
       </view>
   
       <view class="container">
-        <view class="result-title">占卜结果</view>
+        <view class="result-title">起卦结果</view>
   
         <!-- 日期显示区域 -->
         <view class="date-section">
@@ -45,7 +45,7 @@
           </view>
         </view>
   
-        <!-- AI占卜结果区域 -->
+        <!-- AI起卦结果区域 -->
         <view v-if="fortuneResult" class="result-section">
           <view class="section-title">详细运势</view>
           <view class="result-content">
@@ -209,7 +209,7 @@
   import conversion from "@/components/wan-calendar/calendar";
   import { formateDate } from "@/utils/common";
   
-  // 获取占卜结果
+  // 获取起卦结果
   const zhanbuStore = useZhanbuStore();
   const fortuneResult: any = computed(() => zhanbuStore.getFortuneResult());
   
