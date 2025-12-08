@@ -2,21 +2,8 @@
 
 uni-app Vue3 + TypeScript + Vite + Pinia + Unocss 项目
 
-支持小程序，H5，App
-
-![图片](https://img.cdn.sugarat.top/mdImg/MTY1MzIxODc4OTk1OQ==653218789959)
-
-![Unocss](https://fastly.jsdelivr.net/gh/MellowCo/image-host/2022/202211121156442.png)
-
-|                                     H5                                      |                                 微信小程序                                  |                                  App(iOS)                                   |                                        App(Android)                                         |
-| :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
-| ![图片](https://img.cdn.sugarat.top/mdImg/MTY1MzE5Mzc4MzUyMQ==653193783521) | ![图片](https://img.cdn.sugarat.top/mdImg/MTY1MzE5Mzc1Mzk1MQ==653193753951) | ![图片](https://img.cdn.sugarat.top/mdImg/MTY1MzIxMDc2NTcwNg==653210765706) | <img src="https://img.cdn.sugarat.top/mdImg/MTY1MzIxMzkyOTQxNg==653213929416" width="360"/> |
-
-其它模板
-* Vue3的uni-app 纯js模板：[uni-app-template](https://github.com/ATQQ/uni-app-template)
-* Vue3的Web应用模板：[vite-vue3-template](https://github.com/ATQQ/vite-vue3-template)
-
 ## Env Suggest
+
 **Node >= 18**
 
 **pnpm 8**
