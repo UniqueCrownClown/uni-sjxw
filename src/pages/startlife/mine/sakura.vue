@@ -25,6 +25,7 @@
           </view>
         </view>
       </view>
+      <button class="action-button" @click="handleGenerateImage" v-if="false">生成图片</button>
       <button class="action-button" open-type="share">传递好运</button>
       <!-- <button class="action-button" @click="handleSakura" style="margin-top: 20px;">潮汕彩蛋</button> -->
       <view style="margin-top: 20px; width: 100%">
@@ -42,6 +43,7 @@
 import { luckyStatusArr, luckyTags } from "@/utils/luckword";
 import { ref, onMounted, onUnmounted } from "vue";
 import { onShareAppMessage } from "@dcloudio/uni-app";
+import { generateRecipeImage } from "@/api/modules/image";
 
 const windowWidth = ref(0);
 const windowHeight = ref(0);
@@ -328,6 +330,15 @@ const handleSakura = () => {
     icon: "success",
     duration: 2000,
   });
+};
+
+const handleGenerateImage = async () => {
+  try {
+    const image = await generateRecipeImage("");
+    console.log("生成的图片URL:", image.url);
+  } catch (error) {
+    console.error("图片生成失败:", error);
+  }
 };
 </script>
 
