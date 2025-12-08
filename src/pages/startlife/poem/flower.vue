@@ -12,7 +12,7 @@
     <view class="box-border p-4 w-full">
       <view
         class="text-xl font-blod text-center text-gray-600 my-2 drop-shadow-md"
-        >妙语生花</view
+        >庸俗的李白</view
       >
       <view class="text-base text-center text-gray-500 my-2"
         >要是能重来 我要选李白 至少我还能写写诗来澎湃 逗逗女孩</view
@@ -33,6 +33,7 @@
           <view class="w-200 font-blod">核心情感</view>
           <view class="flex-1">
             <u-input
+              @click="emotionShow = true"
               v-model="formData.emotionValue"
               placeholder="请输入核心情感"
               :custom-style="inputStyle"
@@ -52,6 +53,7 @@
           <view class="w-200 font-blod">场景关键词</view>
           <view class="flex-1">
             <u-input
+              @click="sceneShow = true"
               v-model="formData.sceneValue"
               placeholder="请输入场景关键词"
               :custom-style="inputStyle"
@@ -71,6 +73,7 @@
           <view class="w-200 font-blod">诗词风格</view>
           <view class="flex-1">
             <u-input
+              @click="styleShow = true"
               v-model="formData.styleValue"
               placeholder="请输入诗词风格"
               :custom-style="inputStyle"
@@ -147,7 +150,7 @@ const handleTomine = () => {
 // 表单数据
 const formData = ref({
   nickname: "刘亦菲",
-  emotionValue: "告白",
+  emotionValue: "思念",
   sceneValue: "星河",
   styleValue: "浪漫豪放",
 });
@@ -229,18 +232,25 @@ const generatePoem = async () => {
 
   isLoading.value = true;
 
-  const poemData = await geneateByAi();
-  console.log(poemData);
+  try {
+    const poemData = await geneateByAi();
+    console.log(poemData);
 
-  generatedPoem.value = poemData.poem;
-  explanation.value = poemData.explanation;
+    generatedPoem.value = poemData.poem;
+    explanation.value = poemData.explanation;
 
-  isLoading.value = false;
-
-  uni.showToast({
-    title: "情诗生成成功",
-    icon: "success",
-  });
+    uni.showToast({
+      title: "诗句生成成功",
+      icon: "success",
+    });
+  } catch (error: any) {
+    uni.showToast({
+      title: error.message,
+      icon: "none",
+    });
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 // 复制情诗
@@ -263,69 +273,96 @@ const copyPoem = () => {
 };
 //
 const geneateByAi = async () => {
-  const prompt = `请以李白的浪漫豪放风格创作一首情诗（七言律诗/绝句，4-8句，可灵活调整），核心要求如下：
+  try {
+    const prompt = `请以李白的浪漫豪放风格创作一首诗（七言律诗/绝句，8句，可灵活调整），核心要求如下：
 
-1. 【个性化核心要素】
-- 倾诉对象昵称：${formData.value.nickname}
-- 核心情感：${formData.value.emotionValue}
-- 场景关键词：${formData.value.sceneValue}
-- 诗词风格：${formData.value.styleValue}
-- 禁止元素：避免婉约柔媚的表达，不使用低俗艳俗词汇，保持诗仙的洒脱与仙气。
+        1. 【个性化核心要素】
+        - 核心情感：${formData.value.emotionValue}
+        - 场景关键词：${formData.value.sceneValue}
+        - 诗词风格：${formData.value.styleValue}
+        - 禁止元素：避免婉约柔媚的表达，不使用低俗艳俗词汇，保持诗仙的洒脱与仙气。
 
-2. 【李白风格强制约束】
-- 意象要求：必须使用李白高频宏大意象（优先选星、月、银河、酒、风、云、剑、江河、高山等），用天地山河衬深情；
-- 情感表达：直白炽热，不含蓄扭捏（如李白“思君如潮水”式直抒胸臆），可带一丝侠气与酒气；
-- 句式要求：语言雄浑流畅，朗朗上口，押韵自然（平水韵/新韵均可，需统一），适当用夸张、比喻手法（如“银河为媒”“酒浇相思”）；
-- 风格基调：浪漫不羁，既有“举杯邀月”的仙气，又有“天生我材”的自信，哪怕写思念，也不失豪放气场。
+        2. 【李白风格强制约束】
+        - 意象要求：必须使用李白高频宏大意象（优先选星、月、银河、酒、风、云、剑、江河、高山等），用天地山河衬深情；
+        - 情感表达：直白炽热，不含蓄扭捏（如李白“思君如潮水”式直抒胸臆），可带一丝侠气与酒气；
+        - 句式要求：语言雄浑流畅，朗朗上口，押韵自然（平水韵/新韵均可，需统一），适当用夸张、比喻手法（如“银河为媒”“酒浇相思”）；
+        - 风格基调：浪漫不羁，既有“举杯邀月”的仙气，又有“天生我材”的自信，哪怕写思念，也不失豪放气场。
 
-3. 【创作细节引导】
-- 开头：用场景关键词切入（如“星垂平野”“月照江楼”），快速营造意境；
-- 中间：融入昵称与核心情感，让情感与场景深度绑定；
-- 结尾：要么盼重逢（豪迈版，如“何日同饮星河”），要么诉执念（深情版，如“此心不负星辰约”），留有余味；
-- 加分项：可加入李白式“酒”元素（如“醉里思君”“举杯邀月”），或“剑”元素（如“剑挑相思”“仗剑赴君”），强化风格辨识度。
+        3. 【创作细节引导】
+        - 开头：用场景关键词切入（如“星垂平野”“月照江楼”），快速营造意境；
+        - 中间：融入昵称与核心情感，让情感与场景深度绑定，不要完整插入昵称，可节选昵称一个相关字；
+        - 结尾：要么盼重逢（豪迈版，如“何日同饮星河”），要么诉执念（深情版，如“此心不负星辰约”），留有余味；
+        - 加分项：可加入李白式“酒”元素（如“醉里思君”“举杯邀月”），或“剑”元素（如“剑挑相思”“仗剑赴君”），强化风格辨识度。
 
-4. 【输出格式】
-- 先给出完整情诗（诗句用李白风格字体感呈现，如加粗或分行）；
-- 再附1-2句简短解析：说明诗中李白风格的体现（如意象、句式、情感）与个性化元素的融合点。
+        4. 【输出格式】
+        - 先给出完整诗句（诗句用李白风格字体感呈现，如加粗或分行）；
+        - 再附1-2句简短解析：说明诗中李白风格的体现（如意象、句式、情感）与个性化元素的融合点。
 
-请严格遵循以上要求，拒绝模板化、平庸化表达，创作一首让人惊艳的专属情诗！
-请按照以下JSON格式返回结果：
-{
-"poem": "",
-"explanation": "",
-}`;
+        请严格遵循以上要求，拒绝模板化、平庸化表达，创作一首让人惊艳的专属诗句！
+        请按照以下JSON格式返回结果：
+        {
+        "poem": "",
+        "explanation": "",
+    }`;
 
-  const aiClient = createAiClient();
-  const apiConfig = getTextGenerationConfig();
+    const aiClient = createAiClient();
+    const apiConfig = getTextGenerationConfig();
 
-  const response = await aiClient.post("/chat/completions", {
-    model: apiConfig.model,
-    messages: [
-      {
-        role: "system",
-        content:
-          "你是一位深耕诗词领域的创作大师，饱读诗词，既擅长李白的浪漫豪放和也精通李白的清新婉约风格。请严格按照JSON格式返回，不要包含任何其他文字。",
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    temperature: 0.8,
-    stream: false,
-  });
+    const response = await aiClient.post("/chat/completions", {
+      model: apiConfig.model,
+      messages: [
+        {
+          role: "system",
+          content:
+            "你是一位深耕诗词领域的创作大师，饱读诗词，既擅长李白的浪漫豪放和也精通李白的清新婉约风格。请严格按照JSON格式返回，不要包含任何其他文字。",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: 0.8,
+      stream: false,
+    });
 
-  const aiResponse = response.data.choices[0].message.content;
-  let cleanResponse = aiResponse.trim();
-  if (cleanResponse.startsWith("```json")) {
-    cleanResponse = cleanResponse
-      .replace(/```json\s*/, "")
-      .replace(/```\s*$/, "");
-  } else if (cleanResponse.startsWith("```")) {
-    cleanResponse = cleanResponse.replace(/```\s*/, "").replace(/```\s*$/, "");
+    const aiResponse = response.data.choices[0].message.content;
+    let cleanResponse = aiResponse.trim();
+    if (cleanResponse.startsWith("```json")) {
+      cleanResponse = cleanResponse
+        .replace(/```json\s*/, "")
+        .replace(/```\s*$/, "");
+    } else if (cleanResponse.startsWith("```")) {
+      cleanResponse = cleanResponse
+        .replace(/```\s*/, "")
+        .replace(/```\s*$/, "");
+    }
+    const fixedJsonStr = cleanResponse
+      // 步骤1：先移除所有JSON结构外的换行/回车/制表符（只留字符串内的换行）
+      .replace(
+        /(\r\n|\n|\r|\t)/g,
+        (match: any, p1: any, offset: any, str: string) => {
+          // 判断当前换行是否在双引号内（仅保留引号内的换行）
+          const before = str.substring(0, offset);
+          const quoteCount = (before.match(/"/g) || []).length;
+          // 引号数为奇数 → 在字符串内，保留换行；偶数 → 结构外，移除
+          return quoteCount % 2 === 1 ? match : "";
+        }
+      )
+      // 步骤2：将字符串内的裸换行替换为JSON合法的\n（JS中写\\n）
+      .replace(/"([^"]+)"/g, (match: string) => {
+        return match
+          .replace(/(\r\n|\n|\r)/g, "\\n")
+          .replace(/\s+/g, " ")
+          .trim();
+      })
+      // 步骤3：清理多余空格（避免结构错误）
+      .replace(/\s+/g, " ")
+      .trim();
+    return JSON.parse(fixedJsonStr);
+  } catch (error) {
+    console.error(error);
+    throw new Error("创作灵感堵车呢，请稍后重试");
   }
-
-  return JSON.parse(cleanResponse);
 };
 onShareAppMessage(() => {
   return {
