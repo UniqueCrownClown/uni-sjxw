@@ -206,11 +206,11 @@ const stepRemain = computed(() => {
 });
 
 const percent = computed(() => {
-  return (finished.value / total.value) * 100;
+  return ((finished.value / total.value) * 100).toFixed();
 });
 
 const percentWords = computed(() => {
-  const progress = Math.floor(percent.value);
+  const progress = Math.floor(Number.parseInt(percent.value));
   let word = "";
   progressTips.some((item) => {
     if (progress >= Number(item.progress)) {
@@ -223,7 +223,7 @@ const percentWords = computed(() => {
 });
 
 const percentEmotion = computed(() => {
-  const progress = Math.floor(percent.value);
+  const progress = Math.floor(Number.parseInt(percent.value));
   let emotion = "";
   progressTips.some((item) => {
     if (progress >= Number(item.progress)) {
