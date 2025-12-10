@@ -212,13 +212,11 @@ onLoad(() => {
 
 .coin0 {
   background-color: $main-color;
-  //background-image: url("https://s21.ax1x.com/2025/09/12/pVW1f56.jpg");
   background-image: url("https://crownclown.xyz/icon_back.jpg");
 }
 
 .coin1 {
   background-color: #fff;
-  // background-image: url("https://s21.ax1x.com/2025/09/12/pVW1WUx.jpg");
   background-image: url("https://crownclown.xyz/icon_front.jpg");
   transform: rotateY(180deg); /* 反面初始旋转180度 */
 }

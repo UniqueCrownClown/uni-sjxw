@@ -17,7 +17,7 @@
     <view>
       <view class="u-flex u-row-around">
         <view>
-          <u-button type="primary" @click="handleCard">去打卡</u-button>
+          <u-button @click="handleCard">去打卡</u-button>
         </view>
         <view offset="1">
           <u-button @click="handleEdit">编辑</u-button>
@@ -36,15 +36,15 @@
         <view class="u-flex u-row-between u-p-20">
           <view>
             <view>已完成天数</view>
-            <view class="u-font-lg u-p-10 u-text-center">{{ finished }}</view>
+            <view class="u-font-xl u-p-10 u-text-center">{{ finished }}</view>
           </view>
           <view>
             <view>总天数</view>
-            <view class="u-font-lg u-p-10 u-text-center">{{ total }}</view>
+            <view class="u-font-xl u-p-10 u-text-center">{{ total }}</view>
           </view>
           <view>
-            <view>剩余天数</view>
-            <view class="u-font-lg u-p-10 u-text-center">{{ remaining }}</view>
+            <view>未完成天数</view>
+            <view class="u-font-xl u-p-10 u-text-center text-rose">{{ remaining }}</view>
           </view>
         </view>
         <u-line-progress
@@ -137,7 +137,7 @@
         <view v-if="!isPoster">
           <view class="u-flex u-row-center u-p-20">
             <u-image
-              src="https://s21.ax1x.com/2025/08/18/pVBV1aT.md.png"
+              src="https://crownclown.xyz/startlife/zhang10.png"
               width="120rpx"
               height="120rpx"
             ></u-image>
@@ -184,6 +184,7 @@ import { usePlanStore } from "@/store/modules/planStore";
 import { deletePlan, getRecord } from "@/api/modules/startlife";
 import { dingImgArr, progressTips, zhangTips } from "@/utils/tips";
 import dynamicPoster from "@/components/dynamic-poster/index.vue";
+import { formateDate } from "@/utils/common";
 
 const planStore = usePlanStore();
 
@@ -238,31 +239,31 @@ const wallList = ref([
   {
     id: 1,
     name: "坚持10天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBV1aT.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang10.png",
     unlock: false,
   },
   {
     id: 2,
     name: "坚持20天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVGiF.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang20.png",
     unlock: false,
   },
   {
     id: 3,
     name: "坚持30天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBV3IU.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang30.png",
     unlock: false,
   },
   {
     id: 4,
     name: "坚持40天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVlZV.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang40.png",
     unlock: false,
   },
   {
     id: 5,
     name: "坚持50天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVJG4.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang50.png",
     unlock: false,
   },
 ]);
@@ -427,8 +428,21 @@ const initData = () => {
   // 检查是否解锁
   checkUnlock();
 };
+const calcCurrentDay = (
+  startTime: string,
+  endTime: string = formateDate(new Date(), "yyyy-mm-dd")
+) => {
+  const end = new Date(endTime);
+  const start = new Date(startTime);
+  const diff = end.getTime() - start.getTime();
+  const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return day + 1;
+};
 onMounted(() => {
   finished.value = selectedPlan.value?.count || 0;
+  total.value = calcCurrentDay(selectedPlan.value?.startTime || "") < 50
+    ? 50
+    : calcCurrentDay(selectedPlan.value?.startTime || "");
   initData();
 });
 </script>

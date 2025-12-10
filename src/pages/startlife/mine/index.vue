@@ -199,7 +199,11 @@ import { onShow, onShareAppMessage } from "@dcloudio/uni-app";
 import { formateDate } from "@/utils/common";
 import { aboutTips, feedbackTips, chengjiuTips } from "@/utils/tips";
 import { getUserInfo, clearUserInfo, getPlans } from "@/api/modules/startlife";
+import { usePlanStore } from "@/store/modules/planStore";
 import dynamicPoster from "@/components/dynamic-poster/index.vue";
+
+
+const planStore = usePlanStore();
 
 const userInfo = ref({
   nickName: "未登录",
@@ -403,21 +407,21 @@ const chengjiuList = ref([
     id: 7,
     name: "7天觉醒者",
     desc: "在同一个计划中连续打卡7天",
-    icon: "https://s21.ax1x.com/2025/08/18/pVBVKrq.md.png",
+    icon: "https://crownclown.xyz/startlife/juexing.png",
     unlock: false,
   },
   {
     id: 21,
     name: "21天蜕变者",
     desc: "在同一个计划中连续打卡21天",
-    icon: "https://s21.ax1x.com/2025/08/18/pVBVuMn.md.png",
+    icon: "https://crownclown.xyz/startlife/tuibian.png",
     unlock: false,
   },
   {
     id: 50,
     name: "50天涅槃者",
     desc: "在同一个计划中连续打卡50天",
-    icon: "https://s21.ax1x.com/2025/08/18/pVBVMq0.md.png",
+    icon: "https://crownclown.xyz/startlife/niepan.png",
     unlock: false,
   },
 ]);
@@ -474,7 +478,7 @@ const textItems = ref([
 ]);
 const imageItems = ref([
   {
-    src: "https://s21.ax1x.com/2025/08/18/pVBVKrq.md.png",
+    src: "",
     x: width / 2 - 80,
     y: 30,
     width: 160,
@@ -521,7 +525,8 @@ const savePoster = () => {
 
 const checkUnLock = () => {
   const myPlans = getPlans();
-  const plan = myPlans.find((item: any) => item.checked);
+  const plan =
+    planStore.selectedPlan || myPlans.find((item: any) => item.checked);
   if (!plan) {
     return;
   }
@@ -560,9 +565,9 @@ onShow(() => {
 
 onShareAppMessage(() => {
   return {
-    title: "快来和我一起快乐打卡吧~~",
+    title: "快来和我一起自律吧~~",
     path: "/pages/startlife/index/index",
-    imageUrl: "https://s21.ax1x.com/2025/09/03/pVgdO2V.jpg",
+    imageUrl: "https://crownclown.xyz/labubu_share.jpg",
   };
 });
 </script>

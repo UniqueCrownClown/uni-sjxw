@@ -160,7 +160,7 @@
         <view v-if="!isPoster">
           <view class="u-flex u-row-center u-p-20">
             <u-image
-              src="https://s21.ax1x.com/2025/08/18/pVBV1aT.md.png"
+              src="https://crownclown.xyz/startlife/zhang10.png"
               width="120rpx"
               height="120rpx"
             ></u-image>
@@ -244,7 +244,9 @@ import { usePlanStore } from "@/store/modules/planStore";
 const planStore = usePlanStore();
 
 // 定义计划项的类型
-interface PlanItem extends Plan {}
+interface PlanItem extends Plan {
+  percent?: number;
+}
 
 const handleClick = () => {
   planStore.setIsEdit(false);
@@ -261,31 +263,31 @@ const wallList = ref([
   {
     id: 1,
     name: "坚持10天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBV1aT.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang10.png",
     unlock: false,
   },
   {
     id: 2,
     name: "坚持20天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVGiF.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang20.png",
     unlock: false,
   },
   {
     id: 3,
     name: "坚持30天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBV3IU.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang30.png",
     unlock: false,
   },
   {
     id: 4,
     name: "坚持40天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVlZV.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang40.png",
     unlock: false,
   },
   {
     id: 5,
     name: "坚持50天",
-    iconPath: "https://s21.ax1x.com/2025/08/18/pVBVJG4.md.png",
+    iconPath: "https://crownclown.xyz/startlife/zhang50.png",
     unlock: false,
   },
 ]);
@@ -387,6 +389,17 @@ const handleSuccessClose = () => {
   successShow.value = false;
   // 刷新一下当前月的事件
   eventDates.value = getEventDates(currentPlan.value);
+};
+
+const calcCurrentDay = (
+  startTime: string,
+  endTime: string = formateDate(new Date(), "yyyy-mm-dd")
+) => {
+  const end = new Date(endTime);
+  const start = new Date(startTime);
+  const diff = end.getTime() - start.getTime();
+  const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return day + 1;
 };
 
 const handleRecord = () => {
@@ -546,6 +559,8 @@ const handleChangePlan = (plan: Plan) => {
   checkUnlock();
 };
 const handleChange = (index: number) => {
+  // 手动触发，先更新myPlan
+  planStore.setSelectedPlan(planList.value[index]);
   // 刷新数据
   handleChangePlan(planList.value[index]);
   showPlan.value = false;
@@ -565,7 +580,7 @@ const initData = () => {
         percent: ((item.count / 50) * 100).toFixed(),
       };
     });
-    const plan = planStore.selectedPlan || planList.value[0];
+    const plan = planStore.selectedPlan || myPlans.find((item: Plan) => item.checked);;
     handleChangePlan(plan);
   }
 };

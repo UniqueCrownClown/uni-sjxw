@@ -26,11 +26,6 @@ function addPlan(plan: Plan) {
     uni.setStorageSync("myPlans", [{ ...plan, checked: true }]);
     return;
   }
-  // 兼容处理一下plan.checked,保证同时只有一个是true
-  if (plan.checked) {
-    // 先把其他的checked都设为false
-    plans = plans.map((item: Plan) => ({ ...item, checked: false }));
-  }
   if (plans.find((item: Plan) => item.name === plan.name)) {
     uni.showToast({
       title: "计划名称已存在",
@@ -129,6 +124,45 @@ function clearUserInfo() {
   uni.removeStorageSync("userInfo");
 }
 
+export interface ConfigMap {
+  key: string;
+  value: string;
+}
+
+function getConfigMap() {
+  return uni.getStorageSync("configMap") || [];
+}
+
+function addConfigMap(payload: ConfigMap) {
+  const configMap = getConfigMap();
+  configMap.push(payload);
+  uni.setStorageSync("configMap", configMap);
+}
+
+function updateConfigMap(payload: ConfigMap) {
+  const configMap = getConfigMap();
+  const index = configMap.findIndex(
+    (item: ConfigMap) => item.key === payload.key
+  );
+  if (index !== -1) {
+    configMap[index] = payload;
+    uni.setStorageSync("configMap", configMap);
+  }
+}
+// IfAbsent: 如果不存在则添加, 否则更新
+function mergeConfigMap(payload: ConfigMap) {
+  const configMap = getConfigMap();
+  if (configMap.some((item: ConfigMap) => item.key === payload.key)) {
+    updateConfigMap(payload);
+    return;
+  }
+  addConfigMap(payload);
+}
+
+function clearConfigMap() {
+  uni.removeStorageSync("configMap");
+}
+
 export {
   addPlan,
   getPlans,
@@ -142,4 +176,9 @@ export {
   setUserInfo,
   getUserInfo,
   clearUserInfo,
+  addConfigMap,
+  updateConfigMap,
+  getConfigMap,
+  mergeConfigMap,
+  clearConfigMap,
 };

@@ -87,7 +87,7 @@
                   size="32"
                   style="color: #f5f5f5"
                 ></u-icon>
-                <text class="u-font-xl u-p-l-20 u-p-r-20">{{ item.name }}</text>
+                <text class="u-font-xl u-p-l-10 u-p-r-10">{{ item.name }}</text>
                 <u-icon name="arrow-right" size="26"> </u-icon>
               </view>
               <view>
@@ -95,7 +95,7 @@
               </view>
               <view class="u-p-10 u-flex u-row-between">
                 <view>
-                  <text>已坚持 {{ item.count }}/50天</text>
+                  <text>已坚持<text class="u-font-xl u-p-l-10 u-p-r-10">{{ item.count }}</text>天</text>
                 </view>
                 <view>
                   <u-button

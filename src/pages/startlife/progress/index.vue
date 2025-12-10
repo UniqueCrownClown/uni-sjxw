@@ -37,10 +37,10 @@
           >打卡排行榜</u-button
         >
       </view>
-      <view class="u-font-xl u-text-center u-m-b-20">
-        <text>您已创建计划</text>
+      <view class="progress-block u-font-xl u-text-center u-m-b-20 bg-[#8ad2b3] text-white">
+        <text>当前计划：{{ currentPlan }}</text>
       </view>
-      <view class="progress-block">
+      <view class="progress-block bg-white">
         <view
           class="progress-block-main"
           style="width: 90%; border-radius: 20rpx"
@@ -61,7 +61,7 @@
               border-radius: 0 0 20rpx 20rpx;
             "
           >
-            Day{{ currentDay }}/50</view
+            Day{{ currentDay }}/{{ currentDay < 50 ? 50 : currentDay }}</view
           >
         </view>
         <view class="u-text-center" style="width: 100%; margin-top: 20rpx">
@@ -106,7 +106,7 @@
 
             <view class="block-container">
               <view
-                v-for="elem in 50"
+                v-for="elem in item.blockCount"
                 :key="elem"
                 :class="[
                   'block-item',
@@ -144,26 +144,36 @@ const handleClick = () => {
 
 const isEmptyPlan = ref(true);
 
+const currentPlan = ref(null as Plan | null);
 const currentDay = ref(0);
 const cStartTime = ref("");
 const cEndTime = ref("");
 
 const currentPercent = computed(() => {
-  return ((currentDay.value / 50) * 100).toFixed();
+  return (currentDay.value / 50) * 100 < 100
+    ? (currentDay.value / 50) * 100
+    : 100;
 });
 const planList = ref([
   {
     name: "每天运动30分钟",
     day: "1,2,3,4,5,6,7,8,9",
+    blockCount: 50,
     startTime: "1994-07-24",
   },
 ]);
 
 const calcDay = (day: string) => {
+  if (!day || day === "") {
+    return 0;
+  }
   return day.split(",").length;
 };
 
 const calcPercent = (day: string) => {
+  if (!day || day === "") {
+    return 0;
+  }
   return (day.split(",").length / 50) * 100;
 };
 
@@ -197,28 +207,35 @@ const initData = () => {
   } else {
     isEmptyPlan.value = false;
     // 取默认的plan来计算
-    const data = getPlans();
-    cStartTime.value = data.find((item: Plan) => item.checked)?.startTime;
-    cEndTime.value = data.find((item: Plan) => item.checked)?.endTime;
+    const data =
+      planStore.selectedPlan || myPlans.find((item: Plan) => item.checked);
+    currentPlan.value = data.name;
+    cStartTime.value = data.startTime;
+    cEndTime.value = data.endTime;
     currentDay.value = calcCurrentDay(cStartTime.value);
     const getDayCount = (name: string, startTime: string) => {
       const recordData = getRecord(name);
+      if (!recordData || recordData.length === 0) {
+        return "";
+      }
       return recordData
         .map((item: any) => calcCurrentDay(startTime, item.time))
         .join(",");
     };
-    planList.value = data.map((item: any) => {
+    const getBlockCount = (startTime: string) => {
+      const days = calcCurrentDay(startTime);
+      return days <= 50 ? 50 : Math.ceil(days / 10) * 10;
+    };
+    planList.value = myPlans.map((item: any) => {
       return {
         ...item,
         day: getDayCount(item.name, item.startTime),
+        blockCount: getBlockCount(item.startTime),
       };
     });
+    console.log(planList.value);
   }
 };
-
-// onMounted(() => {
-//   initData();
-// });
 
 onShow(() => {
   initData();
@@ -257,7 +274,6 @@ onShow(() => {
 }
 
 .progress-block {
-  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
