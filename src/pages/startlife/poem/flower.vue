@@ -113,7 +113,7 @@
           <view class="text-sm text-center text-gray-500 my-4">
             {{ explanation }}
           </view>
-          <view class="mt-4 flex justify-evenly items-center">
+          <view class="mt-4 flex justify-between items-center">
             <u-button type="primary" @click="copyPoem">复制情诗</u-button>
             <button
               class="action-button"

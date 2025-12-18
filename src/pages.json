@@ -7,6 +7,12 @@
       }
     },
     {
+      "path": "pages/startlife/moment/moment",
+      "style": {
+        "navigationBarTitleText": "startlife-moment-moment"
+      }
+    },
+    {
       "path": "pages/startlife/poem/flower",
       "style": {
         "navigationBarTitleText": "startlife-poem-flower"
@@ -100,12 +106,6 @@
       "path": "pages/startlife/mine/decisionTools",
       "style": {
         "navigationBarTitleText": "决策工具"
-      }
-    },
-    {
-      "path": "pages/startlife/mine/moment",
-      "style": {
-        "navigationBarTitleText": "startlife-mine-moment"
       }
     },
     {

@@ -314,7 +314,7 @@ const modalTitle = ref("");
 const handleCommand = (item: { id: string; name: string }) => {
   if (item.id === "moment") {
     uni.navigateTo({
-      url: "/pages/startlife/mine/moment",
+      url: "/pages/startlife/moment/moment",
     });
     return;
   }

@@ -67,7 +67,7 @@ export const progressTips = [
   },
 ];
 
-export const themeName = "时记小屋";
+export const themeName = "微微趣享";
 export const themeDesc =
   "每天进步一点点，养成习惯，记录自己的50天挑战，遇见更美好的自己！";
 

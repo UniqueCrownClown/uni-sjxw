@@ -1,11 +1,11 @@
 <template>
-  <view class="moment-container">
-    <view class="u-m-l-20 u-m-t-50 moment-header">
+  <view class="startlife-moment-time">
+    <view class="flex justify-center items-center">
       <u-icon
-        name="home"
-        color="#D9D919"
+        name="question-circle"
+        color="#ffffff"
         size="50"
-        @click="handleTomine"
+        @click="momentPopup = true"
       ></u-icon>
     </view>
     <view class="moment-main">
@@ -65,14 +65,6 @@
         </view>
       </view>
     </view>
-    <view class="moment-footer safe-area-inset-bottom">
-      <u-icon
-        name="question-circle"
-        color="#ffffff"
-        size="50"
-        @click="momentPopup = true"
-      ></u-icon>
-    </view>
     <u-popup v-model="momentPopup" mode="center" width="90%" :closeable="true">
       <view
         class="u-p-40 u-p-t-80 u-content-color u-text-center u-font-lg"
@@ -115,7 +107,6 @@
                   v-for="(item, index) in radioList"
                   :key="index"
                   :name="item.name"
-                  active-color="#8ad2b3"
                   >{{ item.label }}</u-radio
                 >
               </u-radio-group>
@@ -152,7 +143,7 @@
             >
           </view>
           <view style="width: 40%">
-            <u-button type="primary" shape="circle" @click="handleSubmit"
+            <u-button type="text" shape="circle" @click="handleSubmit"
               >确认</u-button
             >
           </view>
@@ -218,7 +209,7 @@
             <u-icon
               name="edit-pen"
               size="60"
-              color="#83cbac"
+              color="#999999"
               @click="handleEditClick"
             ></u-icon>
           </view>
@@ -249,7 +240,7 @@
                 border-radius: 10rpx;
               "
             ></button>
-            <u-icon name="share-fill" size="60" color="#83cbac" />
+            <u-icon name="share-fill" size="60" color="#999999" />
           </view>
         </view>
       </view>
@@ -269,8 +260,8 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import { onLoad, onShareAppMessage } from "@dcloudio/uni-app";
+import { getCurrentInstance, ref } from "vue";
+import { onShow, onShareAppMessage, onReady } from "@dcloudio/uni-app";
 import { formateDate, getTimeDesc } from "@/utils/common";
 import {
   Moment,
@@ -281,6 +272,12 @@ import {
 } from "@/api/modules/moment";
 import WanCalendar from "@/components/wan-calendar/wan-calendar.vue";
 import conversion from "@/components/wan-calendar/calendar";
+
+// 组件实例
+let instance: any;
+
+// canvas实例
+let canvas: any;
 
 const blockList = ref<Moment[]>([]);
 type RepeatType = "0" | "1" | "2";
@@ -474,12 +471,6 @@ const initData = () => {
     );
 };
 
-const handleTomine = () => {
-  uni.switchTab({
-    url: "/pages/startlife/mine/index",
-  });
-};
-
 const selectOptions = ref([48, 9, 15, 1]);
 const setCurrentDate = () => {
   const year = new Date().getFullYear() - 1950;
@@ -516,9 +507,20 @@ const selectDate = (data: any) => {
 
 const momentPopup = ref(false);
 
-onLoad(() => {
+onShow(() => {
   setCurrentDate();
   initData();
+});
+
+// 添加可以被父组件调用的刷新数据方法
+const refreshData = () => {
+  setCurrentDate();
+  initData();
+};
+
+// 导出方法，使父组件可以调用
+defineExpose({
+  refreshData,
 });
 
 // 生成分享图片
@@ -527,12 +529,13 @@ const generateShareImage: () => Promise<string> = () => {
     // 使用 Canvas 2D 接口
     const query = uni.createSelectorQuery();
     query
+      .in(instance)
       .select("#shareCanvas")
       .fields({ node: true, size: true } as any, (result) =>
         console.log(result)
       )
       .exec((res) => {
-        const canvas = res[0].node;
+        canvas = res[0].node || res[0].context;
         const ctx = canvas.getContext("2d");
 
         // 设置 canvas 尺寸
@@ -598,21 +601,25 @@ const generateShareImage: () => Promise<string> = () => {
         // ctx.fillText(getTypeDesc(current.value.type), 250, 350);
 
         // 将Canvas转换为临时图片
-        uni.canvasToTempFilePath({
-          x: 0,
-          y: 0,
-          width: 500,
-          height: 400,
-          destWidth: 500 * dpr,
-          destHeight: 400 * dpr,
-          canvasId: "shareCanvas",
-          success: (res) => {
-            resolve(res.tempFilePath);
+        uni.canvasToTempFilePath(
+          {
+            x: 0,
+            y: 0,
+            width: 500,
+            height: 400,
+            destWidth: 500 * dpr,
+            destHeight: 400 * dpr,
+            canvasId: "shareCanvas",
+            canvas,
+            success: (res) => {
+              resolve(res.tempFilePath);
+            },
+            fail: (err) => {
+              reject(err);
+            },
           },
-          fail: (err) => {
-            reject(err);
-          },
-        });
+          instance
+        );
       });
   });
 };
@@ -624,7 +631,7 @@ onShareAppMessage(async () => {
 
     return {
       title: `分享给你一个重要的时刻：${current.value.name}`,
-      path: "/pages/startlife/mine/moment",
+      path: "/pages/startlife/moment/moment",
       imageUrl: shareImageUrl, // 使用动态生成的图片
     };
   } catch (error) {
@@ -633,52 +640,18 @@ onShareAppMessage(async () => {
     // 如果生成失败，使用默认图片
     return {
       title: "分享给你一个重要的时刻~~",
-      path: "/pages/startlife/mine/moment",
+      path: "/pages/startlife/moment/moment",
     };
   }
 });
+
+// 组件就绪时初始化
+onReady(async () => {
+  // 可以在这里预加载资源
+  instance = getCurrentInstance();
+});
 </script>
 <style lang="scss" scoped>
-.moment-container {
-  padding: 0;
-  background-image: url("https://crownclown.xyz/moment.png");
-  background-size: cover;
-  min-height: 100vh;
-  /* 确保占满整个视口高度 */
-  height: 100vh;
-  /* 使用Flex布局 */
-  display: flex;
-  flex-direction: column;
-  /* 隐藏可能的滚动条 */
-  overflow: hidden;
-  .moment-header {
-    /* 固定头部高度和位置 */
-    height: 100rpx;
-    padding: 20rpx;
-    display: flex;
-    align-items: center;
-  }
-
-  .moment-main {
-    /* 占满剩余空间 */
-    flex: 1;
-    /* 支持垂直滚动 */
-    overflow-y: auto;
-    /* 添加内边距，保持内容与边缘的距离 */
-    padding: 20rpx;
-    /* 隐藏横向滚动条 */
-    overflow-x: hidden;
-  }
-
-  .moment-footer {
-    /* 固定底部高度和位置 */
-    padding-top: 20rpx;
-    margin-bottom: 20rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
 .moment-block {
   width: 46%;
   margin: 20rpx 2%;
@@ -689,7 +662,7 @@ onShareAppMessage(async () => {
   color: #fff;
   .moment-block-badge {
     background-color: #fff;
-    color: #8ad2b3;
+    color: #999999;
     font-weight: 600;
     border-radius: 10rpx;
     margin: 10rpx;
@@ -701,7 +674,7 @@ onShareAppMessage(async () => {
   padding: 10rpx;
   min-height: 172px;
   margin: 0;
-  background: linear-gradient(to bottom right, #4f9679 0%, #98e0c0 100%);
+  background: linear-gradient(to bottom right, #2979ff 0%, #f5f5f5 100%);
 }
 ::v-deep .u-mode-center-box {
   background-color: transparent !important;
